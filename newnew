@@ -13,7 +13,7 @@
     <script>
         var video = document.getElementById('video');
         // --- ★★★ ใส่ลิงก์ .m3u8 ของคุณตรงนี้ ★★★ ---
-        var videoSrc = 'https://raw.githubusercontent.com/lancerza/test/refs/heads/main/2121'; 
+        var videoSrc = 'https://tinyurl.com/mry8vkjd'; 
         
         if (Hls.isSupported()) {
             var hls = new Hls();
