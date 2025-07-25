@@ -1,33 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-    <title>My Stream</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <title>My Proxy Stream</title>
     <style>
-        body { margin: 0; background-color: #000; }
-        video { width: 100vw; height: 100vh; }
+        body { background-color: #000; margin: 0; }
+        video { width: 100%; height: 100vh; }
     </style>
 </head>
 <body>
-    <video id="video" controls autoplay muted></video>
-    <script>
-        var video = document.getElementById('video');
-        // --- ★★★ แก้ไขลิงก์ให้ถูกต้องแล้ว ★★ ---
-        var videoSrc = 'https://raw.githubusercontent.com/lancerza/test/main/new24.m3u8'; 
-        
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play();
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-            video.addEventListener('loadedmetadata', function() {
-                video.play();
-            });
-        }
-    </script>
+    <video controls autoplay src="https://my-stream-proxy.my-streaming-server.workers.dev"></video>
 </body>
 </html>
