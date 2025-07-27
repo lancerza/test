@@ -5,13 +5,13 @@
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-4/playlist.m3u8",
     "logo": "https://ballthaitv.com/api/table/icon/ch373.pngv"
   },
-  "hls_truehd1": {
+  "hls_truehd2": {
     "name": "ทรูสปอร์ตHD2",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-5/playlist.m3u8",
     "logo": "https://ballthaitv.com/api/table/icon/ch374.png"
   },
-  "hls_truehd1": {
+  "hls_truehd3": {
     "name": "ทรูสปอร์ตHD3",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-6/playlist.m3u8",
