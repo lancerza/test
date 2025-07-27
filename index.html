@@ -14,9 +14,14 @@
         
         <div class="player-wrapper">
             <video id="video"></video>
+            
+            <div id="loading-indicator" class="loading-indicator hidden">
+                <video id="loading-video" loop muted playsinline src="https://cdn.pixabay.com/video/2022/03/14/110646-687352371_large.mp4"></video>
+            </div>
             <div id="play-overlay" class="play-overlay">
                 <button id="big-play-btn" class="big-play-btn">▶</button>
             </div>
+
             <div class="custom-controls">
                 <button id="play-pause-btn" class="control-btn">▶️</button>
                 <input type="range" id="progress-bar" value="0" step="1">
@@ -31,10 +36,6 @@
             </div>
     </div>
 
-    <div id="loading-overlay" class="loading-overlay hidden">
-        <video id="loading-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-curved-road-on-a-black-background-32105-large.mp4"></video>
-        <div class="loading-text">กำลังโหลดช่อง...</div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="script.js" defer></script>
 </body>
