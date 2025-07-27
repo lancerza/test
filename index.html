@@ -20,7 +20,7 @@
         }
         .container {
             width: 95%;
-            max-width: 1200px; /* ขยายความกว้างสูงสุดเพื่อรองรับ Grid */
+            max-width: 1200px;
             margin: 20px auto;
         }
         video {
@@ -42,8 +42,6 @@
         }
         .channel-info .logo { height: 50px; margin: 0; }
         .channel-name { font-size: 24px; font-weight: bold; color: #ffffff; margin: 0; }
-
-        /* --- Channel Grid Styles (Updated) --- */
         .channel-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -132,7 +130,7 @@
             tile.dataset.channelId = channelId;
             tile.onclick = () => {
                 loadChannel(channelId);
-                videoElement.scrollIntoView({ behavior: 'smooth' }); // Scroll to player on mobile
+                videoElement.scrollIntoView({ behavior: 'smooth' });
             };
             const logoImg = document.createElement('img');
             logoImg.src = channel.logo;
@@ -187,6 +185,10 @@
         }
         player = new shaka.Player(videoElement);
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
+
+        // Configure UI for live streams
+        player.configure('ui.stream_type', 'live');
+        
         const savedVolume = localStorage.getItem('playerVolume');
         const savedMuted = localStorage.getItem('playerMuted');
         if (savedVolume) videoElement.volume = parseFloat(savedVolume);
