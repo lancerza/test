@@ -1,19 +1,19 @@
 {
   "hls_Mono29": {
     "name": "Mono29",
-    "category": "บันเทิง",
+    "category": "กีฬา",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/1080p/index.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
   },
   "hls_Mono29Music": {
     "name": "Mono29Music",
-    "category": "เพลง",
+    "category": "IPTV",
     "url": "https://monomax-ye61nx.cdn.byteark.com/fleetstream/Mono29MusicStation/1080p/index.m3u8",
     "logo": "https://www.mono.co.th/wp-content/uploads/2020/04/MONO29-MUSIC-STATION.png"
   },
   "hls_test": {
     "name": "Test Channel",
-    "category": "ทั่วไป",
+    "category": "IPTV",
     "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     "logo": "https://i.imgur.com/v822y6d.png"
   }
