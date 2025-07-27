@@ -118,8 +118,9 @@
         player = new shaka.Player();
         await player.attach(videoElement);
         
+        // --- START: Corrected UI Configuration ---
         player.configure({
-            ui: {
+            ui: { // This key must not have a dot in front of it.
                 stream_type: 'live',
                 controlPanelElements: [
                     'play_pause',
@@ -132,6 +133,7 @@
                 ]
             }
         });
+        // --- END: Corrected UI Configuration ---
 
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
