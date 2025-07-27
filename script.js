@@ -8,13 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const video = document.getElementById('video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
-    
-    // Autoplay elements
     const playOverlay = document.getElementById('play-overlay');
     const bigPlayBtn = document.getElementById('big-play-btn');
-
-    // Loading elements
-    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingIndicator = document.getElementById('loading-indicator');
     const loadingVideo = document.getElementById('loading-video');
 
     // Custom controls elements
@@ -26,13 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById('fullscreen-btn');
 
     // --- Loading & Player Logic ---
-    function showChannelLoading(isLoading) {
+    function showLoadingIndicator(isLoading) {
         if (isLoading) {
-            loadingOverlay.classList.remove('hidden');
+            loadingIndicator.classList.remove('hidden');
             loadingVideo.play();
         } else {
-            loadingOverlay.classList.add('hidden');
+            loadingIndicator.classList.add('hidden');
             loadingVideo.pause();
+            loadingVideo.currentTime = 0; // Rewind for next time
         }
     }
 
@@ -116,11 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         loadChannel: async (channelId) => {
-            if (!channels[channelId]) return;
-            showChannelLoading(true);
-            
-            // Wait a brief moment to ensure the loading animation is visible
-            await new Promise(resolve => setTimeout(resolve, 300));
+            if (!channels[channelId] || currentChannelId === channelId) return;
+            showLoadingIndicator(true);
 
             currentChannelId = channelId;
             const channel = channels[channelId];
@@ -137,8 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (error) {
                 console.error("Error loading channel:", error);
-            } finally {
-                showChannelLoading(false);
             }
         }
     };
@@ -163,7 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function setupEventListeners() {
         bigPlayBtn.addEventListener('click', playerControls.handleInitialPlay);
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
-        video.addEventListener('play', playerControls.updatePlayButton);
+        video.addEventListener('play', () => {
+            playerControls.updatePlayButton();
+            showLoadingIndicator(false); // Hide loading when play starts
+        });
         video.addEventListener('pause', playerControls.updatePlayButton);
         progressBar.addEventListener('input', playerControls.setProgress);
         video.addEventListener('timeupdate', playerControls.updateProgress);
