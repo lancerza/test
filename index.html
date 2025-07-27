@@ -118,22 +118,22 @@
         player = new shaka.Player();
         await player.attach(videoElement);
         
-        // --- 📌 START: Updated UI Configuration ---
+        // --- 📌 START: Corrected UI Configuration ---
         player.configure({
-            ui: {
+            ui: { // ลบจุดข้างหน้าออก
                 stream_type: 'live',
                 controlPanelElements: [
                     'play_pause',
                     'time_and_duration',
-                    'spacer', // เพิ่มระยะห่าง
+                    'spacer',
                     'mute',
                     'volume',
-                    'fullscreen', // ✨ เพิ่มปุ่มเต็มจอ
+                    'fullscreen',
                     'overflow_menu'
                 ]
             }
         });
-        // --- END: Updated UI Configuration ---
+        // --- END: Corrected UI Configuration ---
 
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
