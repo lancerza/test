@@ -6,7 +6,7 @@
   },
   "hls_ts": {
     "name": "Test Channel (TS)",
-    "url": "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8/media-9/segment-0.ts",
+    "url": "http://45.150.128.170:8080/live/test123/36572/37371.ts",
     "logo": "https://i.imgur.com/O8q5gE8.png"
   }
 }
