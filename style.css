@@ -21,13 +21,15 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: #00aaff;
 #volume-slider { width: 100px; }
 .time-display { color: white; font-size: 14px; user-select: none; }
 
-/* --- Autoplay Overlay Styles --- */
-.play-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 3; transition: opacity 0.3s ease; }
+/* --- Autoplay & Loading Overlay Styles --- */
+.play-overlay, .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
 .big-play-btn { background: rgba(0, 170, 255, 0.8); border: 2px solid white; color: white; width: 100px; height: 100px; border-radius: 50%; font-size: 50px; cursor: pointer; transition: all 0.2s ease; }
 .big-play-btn:hover { background: #00aaff; transform: scale(1.1); }
+#loading-video { width: 100%; max-width: 400px; }
+.loading-text { margin-top: 20px; font-size: 20px; color: #fff; text-shadow: 0 0 10px #000; }
 .hidden { opacity: 0; pointer-events: none; }
 
-/* --- Channel Grid Styles (Updated for smaller size) --- */
+/* --- Channel Grid Styles --- */
 .channel-category-header { font-size: 24px; font-weight: bold; color: #00aaff; margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #333; }
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; }
 .channel-tile { background-color: #2a2a2e; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.2s ease-in-out; border: 2px solid transparent; min-height: 100px; position: relative; }
