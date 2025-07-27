@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         handleInitialPlay: () => {
-            video.muted = false; // Unmute after user interaction
+            video.muted = false;
             video.play();
             playOverlay.classList.add('hidden');
         }
@@ -81,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (hls) {
                 hls.loadSource(channel.url);
             }
-            // Ensure play overlay is hidden when changing channels
             if (!playOverlay.classList.contains('hidden')) {
                  playerControls.handleInitialPlay();
             } else {
@@ -94,9 +93,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const timeManager = {
         update: () => {
             const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const thaiDate = now.toLocaleDateString('th-TH', options);
-            const thaiTime = now.toLocaleTimeString('th-TH');
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const thaiDate = now.toLocaleDateString('th-TH', dateOptions);
+            const thaiTime = now.toLocaleTimeString('th-TH', timeOptions);
             document.getElementById('datetime-display').textContent = `${thaiDate}, ${thaiTime}`;
         },
         start: () => {
@@ -133,7 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            hls = new Hls();
+            // 📌 START: Performance Improvement
+            const hlsConfig = {
+                // จำนวน segment ที่จะเก็บไว้ใน buffer สำหรับ live stream
+                liveSyncDurationCount: 5,
+                // ถ้า lag ตามหลัง live เกินจำนวน segment นี้ ให้ข้ามไปที่ live edge
+                liveMaxLatencyDurationCount: 10,
+            };
+            hls = new Hls(hlsConfig);
+            // 📌 END: Performance Improvement
             hls.attachMedia(video);
         }
         
@@ -143,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const firstChannelId = Object.keys(channels)[0];
         if (firstChannelId) {
-            // Load the first channel but don't play it yet, wait for user interaction
             currentChannelId = firstChannelId;
             const channel = channels[firstChannelId];
             channelManager.updateActiveButton();
