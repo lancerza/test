@@ -40,30 +40,33 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: #00aaff;
 
 /* --- START: Mobile Styles --- */
 @media (max-width: 600px) {
-    .container {
-        padding: 0 5px;
+    .container { padding: 0 5px; }
+    #datetime-display { font-size: 14px; padding: 5px 10px; }
+    .channel-category-header { font-size: 20px; }
+    .channel-buttons { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
+    .channel-tile { min-height: 90px; padding: 8px; }
+    .channel-tile img { max-height: 40px; }
+    .channel-tile-name { font-size: 11px; }
+
+    /* --- Custom Controls for Mobile --- */
+    .custom-controls {
+        gap: 0; /* Remove gap to use justify-content */
+        justify-content: space-between; /* Space out elements */
     }
-    #datetime-display {
-        font-size: 14px;
-        padding: 5px 10px;
+    #play-pause-btn {
+        /* Move to the start */
+        order: 1;
     }
-    .channel-category-header {
-        font-size: 20px;
+    #progress-bar {
+        order: 2;
+        margin: 0 10px;
     }
-    .channel-buttons {
-        /* Adjust grid to have smaller gaps and ensure 3 columns */
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-        gap: 10px;
+    #fullscreen-btn {
+        order: 3;
     }
-    .channel-tile {
-        min-height: 90px;
-        padding: 8px;
-    }
-    .channel-tile img {
-        max-height: 40px;
-    }
-    .channel-tile-name {
-        font-size: 11px;
+    /* Hide less important controls on small screens */
+    #time-display, #mute-btn, #volume-slider {
+        display: none;
     }
 }
 /* --- END: Mobile Styles --- */
