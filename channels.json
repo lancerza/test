@@ -4,17 +4,17 @@
     "url": "https://keela2.com/stream/16/index.m3u8?username=PrVx9n8jKo&password=hw4bIEKgiM",
     "logo": "https://api.rentm3u8.com/images/png/hd-tsport1.png"
   },
-  "hls_ts": {
+  "hls_m3u8": {
     "name": "MonoPlus",
     "url": "https://keela2.com/stream/16/index.m3u8?username=PrVx9n8jKo&password=hw4bIEKgiM",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdWSGln0d7bKsgK1XdcBCManhFubvm5HjdBQ&s"
       },
-  "hls_ts": {
+  "hls_m3u8": {
     "name": "Mono29",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/1080p/index.m3u8",
     "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkA…CgoKCgoKCgoKCgoLCAfgfRaemLkadkDMAAAAASUVORK5CYII="
       },
-  "hls_ts": {
+  "hls_m3u8": {
     "name": "Mono29Music",
     "url": "https://monomax-ye61nx.cdn.byteark.com/fleetstream/Mono29MusicStation/1080p/index.m3u8",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:AN…VjSkrS-T8EuBpK_X9mZp9YQCTAIO4WgZeTKtNb6Y&usqp=CAU"
