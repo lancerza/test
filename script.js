@@ -1,13 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let hls, channels = {}, currentChannelId = null;
+    // --- START: Configuration Object ---
+    const CONFIG = {
+        HLS: {
+            startLevel: 0,
+            capLevelToPlayerSize: true,
+            liveSyncDurationCount: 5,
+            liveMaxLatencyDurationCount: 10,
+        },
+        DEFAULT_CATEGORY: 'IPTV'
+        DEFAULT_CATEGORY: 'กีฬา'
+        
+    };
+    // --- END: Configuration Object ---
 
+    // --- Global Variables ---
+    let hls;
+    let channels = {};
+    let currentChannelId = null;
+
+    // --- DOM Elements ---
     const video = document.getElementById('video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
-    const loadingIndicator = document.getElementById('loading-indicator');
-    const loadingVideo = document.getElementById('loading-video');
     const playOverlay = document.getElementById('play-overlay');
     const bigPlayBtn = document.getElementById('big-play-btn');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const loadingVideo = document.getElementById('loading-video');
     const errorOverlay = document.getElementById('error-overlay');
     const errorMessage = document.getElementById('error-message');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -16,6 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById('mute-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+    // --- Player Logic ---
+    function showLoadingIndicator(isLoading) {
+        if (isLoading) {
+            loadingIndicator.classList.remove('hidden');
+            loadingVideo.play();
+        } else {
+            loadingIndicator.classList.add('hidden');
+            loadingVideo.pause();
+            loadingVideo.currentTime = 0;
+        }
+    }
 
     const playerControls = {
         showError: (message) => {
@@ -46,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    // --- Channel Logic ---
     const channelManager = {
         updateActiveButton: () => {
             const tiles = document.querySelectorAll('.channel-tile');
@@ -56,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const groupedChannels = {};
             for (const channelId in channels) {
                 const channel = channels[channelId];
-                const category = channel.category || 'ทั่วไป';
+                // Use the config object for the default category
+                const category = channel.category || CONFIG.DEFAULT_CATEGORY;
                 if (!groupedChannels[category]) groupedChannels[category] = [];
                 groupedChannels[category].push({ id: channelId, ...channel });
             }
@@ -91,18 +123,24 @@ document.addEventListener("DOMContentLoaded", () => {
         loadChannel: async (channelId) => {
             if (!channels[channelId] || currentChannelId === channelId) return;
             playerControls.hideError();
+            showLoadingIndicator(true);
+            await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
             const channel = channels[channelId];
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
-                video.play().catch(e => console.error("Play was prevented:", e));
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => console.error("Play was prevented:", error));
+                }
             } catch (error) {
                 console.error("Error loading channel:", error);
             }
         }
     };
     
+    // --- Datetime Logic ---
     const timeManager = {
         update: () => {
             const now = new Date();
@@ -118,10 +156,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    // --- Event Listener Setup ---
     function setupEventListeners() {
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
             playerControls.updatePlayButton();
+            showLoadingIndicator(false);
         });
         video.addEventListener('pause', playerControls.updatePlayButton);
         progressBar.addEventListener('input', playerControls.setProgress);
@@ -135,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
     }
 
+    // --- Initialization ---
     async function init() {
         try {
             const response = await fetch('channels.json');
@@ -145,7 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            hls = new Hls({ startLevel: 0, capLevelToPlayerSize: true, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
+            // Use the config object for HLS settings
+            hls = new Hls(CONFIG.HLS);
             hls.attachMedia(video);
             hls.on(Hls.Events.ERROR, function (event, data) {
                 if (data.fatal) {
