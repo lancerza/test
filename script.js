@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         handleInitialPlay: () => {
-            video.muted = false; // Unmute after user interaction
+            video.muted = false;
             video.play();
             playOverlay.classList.add('hidden');
         }
@@ -51,26 +51,50 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Channel Logic ---
     const channelManager = {
         updateActiveButton: () => {
-            const tiles = channelButtonsContainer.querySelectorAll('.channel-tile');
+            const tiles = document.querySelectorAll('.channel-tile');
             tiles.forEach(tile => tile.classList.toggle('active', tile.dataset.channelId === currentChannelId));
         },
         createChannelButtons: () => {
             channelButtonsContainer.innerHTML = '';
+            const groupedChannels = {};
             for (const channelId in channels) {
                 const channel = channels[channelId];
-                const tile = document.createElement('a');
-                tile.className = 'channel-tile';
-                tile.dataset.channelId = channelId;
-                tile.onclick = () => channelManager.loadChannel(channelId);
-                const logoImg = document.createElement('img');
-                logoImg.src = channel.logo;
-                logoImg.alt = channel.name;
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'channel-tile-name';
-                nameSpan.innerText = channel.name;
-                tile.appendChild(logoImg);
-                tile.appendChild(nameSpan);
-                channelButtonsContainer.appendChild(tile);
+                const category = channel.category || 'ทั่วไป';
+                if (!groupedChannels[category]) {
+                    groupedChannels[category] = [];
+                }
+                groupedChannels[category].push({ id: channelId, ...channel });
+            }
+
+            for (const category in groupedChannels) {
+                const header = document.createElement('h2');
+                header.className = 'channel-category-header';
+                header.textContent = category;
+                channelButtonsContainer.appendChild(header);
+
+                const grid = document.createElement('div');
+                grid.className = 'channel-buttons';
+                
+                groupedChannels[category].forEach(channel => {
+                    const tile = document.createElement('a');
+                    tile.className = 'channel-tile';
+                    tile.dataset.channelId = channel.id;
+                    tile.onclick = () => channelManager.loadChannel(channel.id);
+                    
+                    const logoImg = document.createElement('img');
+                    logoImg.src = channel.logo;
+                    logoImg.alt = channel.name;
+                    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'channel-tile-name';
+                    nameSpan.innerText = channel.name;
+                    
+                    tile.appendChild(logoImg);
+                    tile.appendChild(nameSpan);
+                    grid.appendChild(tile);
+                });
+
+                channelButtonsContainer.appendChild(grid);
             }
         },
         loadChannel: (channelId) => {
@@ -133,18 +157,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            // --- 📌 START: Mobile Performance Tuning ---
             const hlsConfig = {
-                // บังคับให้เริ่มเล่นที่คุณภาพต่ำสุด (level 0) ก่อนเสมอ
                 startLevel: 0,
-                // ไม่เลือกคุณภาพวิดีโอที่ขนาดใหญ่กว่าขนาดของ Player
                 capLevelToPlayerSize: true,
-                // (Optional) ตั้งค่าการบัฟเฟอร์สำหรับ Live Stream ให้เหมาะสมขึ้น
                 liveSyncDurationCount: 5,
                 liveMaxLatencyDurationCount: 10,
             };
             hls = new Hls(hlsConfig);
-            // --- 📌 END: Mobile Performance Tuning ---
             hls.attachMedia(video);
         }
         
