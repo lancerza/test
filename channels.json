@@ -1,23 +1,8 @@
 {
-  "3bb1": {
-    "name": "3BB 1",
-    "url": "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/2/2.mpd",
-    "logo": "https://i.imgur.com/Y8ZN49Q.png",
-    "epg": "ละครเย็น - 17:00 | ข่าวค่ำ - 18:30 | รายการพิเศษ - 20:00",
-    "license_key": "ca20a93cf8e3421dafbd5bdb1990081b:86ae86a7391c481ea93eecdb740f0a14"
-  },
-  "3bb2": {
-    "name": "3BB 2",
-    "url": "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/3/3.mpd",
-    "logo": "https://i.imgur.com/Y8ZN49Q.png",
-    "epg": "ซีรีส์ญี่ปุ่น - 16:00 | เกมโชว์ - 18:00 | หนังไทย - 20:00",
-    "license_key": "4d4426a505f64382a9841155d721cee6:0f4770219ccb4be5836a7517057e51c3"
-  },
-  "3bb3": {
-    "name": "3BB 3",
-    "url": "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/4/4.mpd",
-    "logo": "https://i.imgur.com/Y8ZN49Q.png",
-    "epg": "การ์ตูน - 15:00 | กีฬา - 17:00 | ข่าวดึก - 21:00",
-    "license_key": "1e98456bcbea44b7ad05831387e364ef:3d14fd4f9d3149a79b35a7124fccbd67"
+  "test_channel": {
+    "name": "Big Buck Bunny (Test)",
+    "url": "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths-hls/hls.m3u8",
+    "logo": "https://i.imgur.com/8pPzRk2.png",
+    "license_key": "00:00" 
   }
 }
