@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3BB Online TV - V2</title>
+    <title>Online TV Player</title>
+    <link rel="icon" href="data:;base64,=">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
     <style>
         /* --- Base Styles --- */
         body {
             margin: 0;
             padding: 0;
-            background: #121212; /* Darker background */
+            background: #121212;
             color: #e0e0e0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -38,14 +39,6 @@
         .channel-controls {
             text-align: center;
             margin: 20px 0;
-            padding: 20px;
-            background: #1e1e1e;
-            border-radius: 12px;
-        }
-
-        .logo {
-            height: 50px;
-            margin-bottom: 20px;
         }
 
         .channel-buttons {
@@ -79,15 +72,28 @@
             box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
         }
         
-        /* --- EPG Box --- */
-        .epg-box {
+        /* --- Channel Info Section --- */
+        .channel-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             margin-top: 20px;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: center;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+        }
+
+        .channel-info .logo {
+            height: 50px;
+            margin: 0;
+        }
+
+        .channel-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
         }
 
         /* --- Loading Spinner --- */
@@ -124,15 +130,15 @@
 
     <div class="container">
         <div class="channel-controls">
-            <img id="channel-logo" class="logo" src="" alt="โลโก้ช่อง"/>
             <div id="channel-buttons-container" class="channel-buttons">
                 </div>
         </div>
 
-        <video id="video" autoplay controls poster="https://via.placeholder.com/1000x562/000000/FFFFFF?text=เลือกช่องเพื่อรับชม"></video>
+        <video id="video" autoplay controls></video>
 
-        <div class="epg-box" id="epg-box">
-            <strong>EPG:</strong> กำลังโหลดข้อมูลช่อง...
+        <div id="channel-info" class="channel-info" style="display: none;">
+            <img id="channel-logo" class="logo" src="" alt="Channel Logo"/>
+            <h2 id="channel-name" class="channel-name"></h2>
         </div>
     </div>
 
@@ -148,22 +154,18 @@
 
     // --- DOM ELEMENTS ---
     const videoElement = document.getElementById('video');
-    const channelLogo = document.getElementById('channel-logo');
-    const epgBox = document.getElementById('epg-box');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const loadingSpinner = document.getElementById('loading-spinner');
+    const channelInfoContainer = document.getElementById('channel-info');
+    const channelLogo = document.getElementById('channel-logo');
+    const channelNameElement = document.getElementById('channel-name');
 
-    /**
-     * Toggles the visibility of the loading spinner.
-     * @param {boolean} show - True to show, false to hide.
-     */
+    /** Toggles the loading spinner */
     function showLoading(show) {
         loadingSpinner.style.display = show ? 'flex' : 'none';
     }
     
-    /**
-     * Updates the active state of channel buttons.
-     */
+    /** Updates the active state of channel buttons */
     function updateActiveButton() {
         const buttons = channelButtonsContainer.querySelectorAll('button');
         buttons.forEach(button => {
@@ -171,11 +173,9 @@
         });
     }
 
-    /**
-     * Creates channel buttons dynamically from the channels data.
-     */
+    /** Creates channel buttons from data */
     function createChannelButtons() {
-        channelButtonsContainer.innerHTML = ''; // Clear existing buttons
+        channelButtonsContainer.innerHTML = '';
         for (const channelId in channels) {
             const channel = channels[channelId];
             const button = document.createElement('button');
@@ -186,75 +186,66 @@
         }
     }
 
-    /**
-     * Loads a selected channel, configures DRM, and updates the UI.
-     * @param {string} channelId - The ID of the channel to load.
-     */
+    /** Loads a channel, configures DRM, and updates the UI */
     async function loadChannel(channelId) {
-        if (!channels[channelId]) {
-            console.error("ไม่พบข้อมูลช่อง:", channelId);
-            return;
-        }
+        if (!channels[channelId]) return;
 
         showLoading(true);
         currentChannelId = channelId;
         const channel = channels[channelId];
 
-        // 1. Update UI
+        // Update UI
+        channelInfoContainer.style.display = 'flex';
         channelLogo.src = channel.logo;
-        channelLogo.alt = `โลโก้ ${channel.name}`;
-        epgBox.innerHTML = `<strong>📺 ${channel.name}</strong><br><strong>EPG:</strong> ${channel.epg}`;
+        channelLogo.alt = `Logo for ${channel.name}`;
+        channelNameElement.innerText = channel.name;
         updateActiveButton();
 
-        // 2. Configure DRM
+        // Configure DRM
         const [keyId, key] = channel.license_key.split(':');
         player.configure({
             drm: { clearKeys: { [keyId]: key } }
         });
 
-        // 3. Load Manifest
+        // Load Manifest
         try {
             await player.load(channel.url);
-            console.log("✅ กำลังเล่นช่อง:", channel.name);
-            localStorage.setItem('lastChannelId', channelId); // Save last successfully played channel
+            localStorage.setItem('lastChannelId', channelId);
         } catch (error) {
-            console.error(`❌ เกิดข้อผิดพลาดในการโหลดช่อง ${channel.name}:`, error);
-            epgBox.innerHTML = `<strong>เกิดข้อผิดพลาดในการโหลดช่อง ${channel.name}</strong>`;
+            console.error(`Error loading channel ${channel.name}:`, error);
+            channelNameElement.innerText = `Error loading channel`;
+            channelLogo.src = '';
         } finally {
             showLoading(false);
         }
     }
 
-    /**
-     * Main initialization function for the application.
-     */
+    /** Main app initialization */
     async function init() {
         if (!shaka.Player.isBrowserSupported()) {
-            alert("ขออภัย เบราว์เซอร์ของคุณไม่รองรับการใช้งานค่ะ");
+            alert("Sorry, your browser is not supported.");
             return;
         }
         
         showLoading(true);
 
-        // 1. Fetch channel data
+        // Fetch channel data
         try {
             const response = await fetch('channels.json');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             channels = await response.json();
         } catch (e) {
-            console.error("ไม่สามารถโหลดไฟล์ channels.json:", e);
-            epgBox.innerHTML = '<strong>เกิดข้อผิดพลาดร้ายแรง: ไม่สามารถโหลดข้อมูลช่องได้</strong>';
+            console.error("Could not load channels.json:", e);
+            alert("Fatal Error: Could not load channel data.");
             showLoading(false);
             return;
         }
         
-        // 2. Initialize Player
+        // Init Player
         player = new shaka.Player(videoElement);
-        player.addEventListener('error', (e) => {
-            console.error("Shaka Player Error:", e.detail);
-        });
+        player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
-        // 3. Restore and save volume settings
+        // Restore and save volume settings
         const savedVolume = localStorage.getItem('playerVolume');
         const savedMuted = localStorage.getItem('playerMuted');
         if (savedVolume) videoElement.volume = parseFloat(savedVolume);
@@ -265,7 +256,7 @@
             localStorage.setItem('playerMuted', videoElement.muted);
         });
         
-        // 4. Create UI and load initial channel
+        // Create UI and load initial channel
         createChannelButtons();
         
         const lastChannelId = localStorage.getItem('lastChannelId');
@@ -275,12 +266,11 @@
         if (channelToLoad) {
             await loadChannel(channelToLoad);
         } else {
-            epgBox.innerText = "ไม่พบช่องให้เลือก";
+            channelNameElement.innerText = "No channels available.";
             showLoading(false);
         }
     }
 
-    // Start the application when the DOM is ready
     document.addEventListener("DOMContentLoaded", init);
     </script>
 </body>
