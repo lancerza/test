@@ -58,11 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
             else document.exitFullscreen();
-        },
-        handleInitialPlay: () => {
-            video.muted = false;
-            video.play();
-            playOverlay.classList.add('hidden');
         }
     };
 
@@ -119,14 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
-                if (!playOverlay.classList.contains('hidden')) {
-                    playerControls.handleInitialPlay();
-                } else {
-                    const playPromise = video.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => console.error("Play was prevented:", error));
-                    }
-                }
+                video.play().catch(e => console.error("Play was prevented:", e));
             } catch (error) {
                 console.error("Error loading channel:", error);
             }
@@ -151,10 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Event Listener Setup ---
     function setupEventListeners() {
-        bigPlayBtn.addEventListener('click', playerControls.handleInitialPlay);
+        // bigPlayBtn no longer needed for initial play
+        playOverlay.classList.add('hidden'); // Hide the overlay permanently
+
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
-            posterVideo.classList.add('hidden'); // Hide poster video on play
+            posterVideo.classList.add('hidden');
             playerControls.updatePlayButton();
             showLoadingIndicator(false);
         });
@@ -207,8 +197,26 @@ document.addEventListener("DOMContentLoaded", () => {
         timeManager.start();
         channelManager.createChannelButtons();
         
-        // Don't auto-load the first channel, wait for user interaction
-        // This makes the poster video visible on start
+        const firstChannelId = Object.keys(channels)[0];
+        if (firstChannelId) {
+            // --- START: Autoplay Logic ---
+            video.muted = true; // Start muted
+            await channelManager.loadChannel(firstChannelId);
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.warn("Autoplay was prevented by browser.", error);
+                    // If it still fails, show the click-to-play button as a final fallback
+                    playOverlay.classList.remove('hidden');
+                    bigPlayBtn.addEventListener('click', () => {
+                        video.muted = false;
+                        video.play();
+                        playOverlay.classList.add('hidden');
+                    }, { once: true });
+                });
+            }
+            // --- END: Autoplay Logic ---
+        }
     }
     
     init();
