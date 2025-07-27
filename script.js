@@ -1,17 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- START: Configuration Object (Corrected) ---
-    const CONFIG = {
-        HLS: {
-            startLevel: 0,
-            capLevelToPlayerSize: true,
-            liveSyncDurationCount: 5,
-            liveMaxLatencyDurationCount: 10,
-        },
-        // Removed duplicate key and added a comma
-        DEFAULT_CATEGORY: 'ทั่วไป' 
-    };
-    // --- END: Configuration Object ---
-
     // --- Global Variables ---
     let hls;
     let channels = {};
@@ -38,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLoadingIndicator(isLoading) {
         if (isLoading) {
             loadingIndicator.classList.remove('hidden');
-            loadingVideo.play();
+            loadingVideo.play().catch(() => {}); // Gracefully handle play interruption
         } else {
             loadingIndicator.classList.add('hidden');
             loadingVideo.pause();
@@ -54,7 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
         hideError: () => {
             if (errorOverlay) errorOverlay.classList.add('hidden');
         },
-        togglePlay: () => video.paused ? video.play() : video.pause(),
+        togglePlay: () => {
+            if (video.paused) {
+                video.play().catch(e => { if (e.name !== 'AbortError') console.error("Error playing video:", e); });
+            } else {
+                video.pause();
+            }
+        },
         updatePlayButton: () => playPauseBtn.textContent = video.paused ? '▶️' : '⏸️',
         formatTime: (time) => {
             const minutes = Math.floor(time / 60);
@@ -86,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const groupedChannels = {};
             for (const channelId in channels) {
                 const channel = channels[channelId];
-                const category = channel.category || CONFIG.DEFAULT_CATEGORY;
+                const category = channel.category || 'ทั่วไป';
                 if (!groupedChannels[category]) groupedChannels[category] = [];
                 groupedChannels[category].push({ id: channelId, ...channel });
             }
@@ -128,10 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => console.error("Play was prevented:", error));
-                }
+                video.play().catch(e => { if (e.name !== 'AbortError') console.error("Error playing video:", e); });
             } catch (error) {
                 console.error("Error loading channel:", error);
             }
@@ -184,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            hls = new Hls(CONFIG.HLS);
+            hls = new Hls({ startLevel: 0, capLevelToPlayerSize: true, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
             hls.attachMedia(video);
             hls.on(Hls.Events.ERROR, function (event, data) {
                 if (data.fatal) {
@@ -216,16 +206,16 @@ document.addEventListener("DOMContentLoaded", () => {
             await channelManager.loadChannel(firstChannelId);
             const playPromise = video.play();
             if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    playOverlay.classList.add('hidden');
-                }).catch(error => {
-                    console.warn("Autoplay was prevented by browser.", error);
-                    playOverlay.classList.remove('hidden');
-                    bigPlayBtn.addEventListener('click', () => {
-                        video.muted = false;
-                        video.play();
-                        playOverlay.classList.add('hidden');
-                    }, { once: true });
+                playPromise.catch(error => {
+                    if (error.name !== 'AbortError') {
+                        console.warn("Autoplay was prevented by browser.", error);
+                        playOverlay.classList.remove('hidden');
+                        bigPlayBtn.addEventListener('click', () => {
+                            video.muted = false;
+                            video.play();
+                            playOverlay.classList.add('hidden');
+                        }, { once: true });
+                    }
                 });
             }
         }
