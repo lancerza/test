@@ -1,12 +1,12 @@
 {
   "hls_test_1": {
-    "name": "Test Channel 1 (HLS)",
-    "url": "https://storage.googleapis.com/shaka-demo-assets/bbb-dark-truths-hls/hls.m3u8",
-    "logo": "https://i.imgur.com/8pPzRk2.png"
+    "name": "บีอินสปอตส์ 1",
+    "url": "https://dolive.thaim3u.com/doodii-live/siamsport-1/playlist.m3u8",
+    "logo": "	https://dookeela.live/uploads/1664500365.png"
   },
   "hls_test_2": {
-    "name": "Test Channel 2 (HLS)",
-    "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
-    "logo": "https://i.imgur.com/8pPzRk2.png"
+    "name": "Monomax",
+    "url": "http://45.150.128.170:8080/live/test123/36572/37371.ts",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzxVW5NHO5TmQlrUqSfz8zvtX-N3sIsLX1Tw&s"
   }
 }
