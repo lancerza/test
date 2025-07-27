@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             loadingIndicator.classList.add('hidden');
             loadingVideo.pause();
-            loadingVideo.currentTime = 0; // Rewind for next time
+            loadingVideo.currentTime = 0;
         }
     }
 
@@ -94,7 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     const tile = document.createElement('a');
                     tile.className = 'channel-tile';
                     tile.dataset.channelId = channel.id;
-                    tile.onclick = () => channelManager.loadChannel(channel.id);
+                    
+                    // --- START: Mobile Click Fix ---
+                    // Changed from tile.onclick to addEventListener for better mobile support
+                    tile.addEventListener('click', () => {
+                        channelManager.loadChannel(channel.id);
+                        playerWrapper.scrollIntoView({ behavior: 'smooth' });
+                    });
+                    // --- END: Mobile Click Fix ---
                     
                     const logoImg = document.createElement('img');
                     logoImg.src = channel.logo;
@@ -116,6 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!channels[channelId] || currentChannelId === channelId) return;
             showLoadingIndicator(true);
 
+            await new Promise(resolve => setTimeout(resolve, 300));
+
             currentChannelId = channelId;
             const channel = channels[channelId];
             channelManager.updateActiveButton();
@@ -127,7 +136,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!playOverlay.classList.contains('hidden')) {
                     playerControls.handleInitialPlay();
                 } else {
-                    video.play();
+                    const playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.error("Play被阻止:", error);
+                        });
+                    }
                 }
             } catch (error) {
                 console.error("Error loading channel:", error);
@@ -157,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
             playerControls.updatePlayButton();
-            showLoadingIndicator(false); // Hide loading when play starts
+            showLoadingIndicator(false);
         });
         video.addEventListener('pause', playerControls.updatePlayButton);
         progressBar.addEventListener('input', playerControls.setProgress);
