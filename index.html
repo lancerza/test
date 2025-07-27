@@ -13,15 +13,14 @@
         <div id="datetime-display"></div>
         
         <div class="player-wrapper">
-            <video id="poster-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-a-clean-shot-of-a-bokeh-lights-background-39725-large.mp4"></video>
-
-            <video id="video"></video>
+            <video id="poster-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-in-a-circle-of-light-42826-large.mp4"></video>
+            <video id="video" autoplay muted playsinline></video>
             
             <div id="loading-indicator" class="loading-indicator hidden">
-                <video id="loading-video" loop muted playsinline src="assets/loading.mp4"></video>
+                <video id="loading-video" loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-curved-road-on-a-black-background-32105-large.mp4"></video>
             </div>
 
-            <div id="play-overlay" class="play-overlay">
+            <div id="play-overlay" class="play-overlay hidden">
                 <button id="big-play-btn" class="big-play-btn">▶</button>
             </div>
 
@@ -29,8 +28,8 @@
                 <button id="play-pause-btn" class="control-btn">▶️</button>
                 <input type="range" id="progress-bar" value="0" step="1">
                 <div id="time-display" class="time-display">00:00 / 00:00</div>
-                <button id="mute-btn" class="control-btn">🔊</button>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+                <button id="mute-btn" class="control-btn">🔇</button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0">
                 <button id="fullscreen-btn" class="control-btn">⛶</button>
             </div>
         </div>
