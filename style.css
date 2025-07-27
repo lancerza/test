@@ -1,6 +1,6 @@
 /* --- Base Styles --- */
 body { margin: 0; padding: 0; background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-.container { width: 95%; max-width: 1200px; margin: 20px auto; }
+.container { width: 100%; max-width: 1200px; margin: 20px auto; box-sizing: border-box; padding: 0 10px; }
 
 /* --- Datetime Display --- */
 #datetime-display { color: #f0f0f0; font-size: 18px; font-weight: 500; text-align: center; margin-bottom: 20px; padding: 8px 15px; background-color: rgba(42, 42, 46, 0.7); border-radius: 8px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); width: fit-content; margin-left: auto; margin-right: auto; }
@@ -21,13 +21,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: #00aaff;
 #volume-slider { width: 100px; }
 .time-display { color: white; font-size: 14px; user-select: none; }
 
-/* --- Autoplay & Loading Styles --- */
+/* --- Autoplay & Error Overlay Styles --- */
 .play-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 3; transition: opacity 0.3s ease; }
 .big-play-btn { background: rgba(0, 170, 255, 0.8); border: 2px solid white; color: white; width: 100px; height: 100px; border-radius: 50%; font-size: 50px; cursor: pointer; transition: all 0.2s ease; }
 .big-play-btn:hover { background: #00aaff; transform: scale(1.1); }
-
-.loading-indicator { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: #000; z-index: 4; transition: opacity 0.3s ease; }
-#loading-video { width: 100%; height: 100%; object-fit: cover; }
+.error-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 5; text-align: center; color: #ffcccc; font-size: 18px; padding: 20px; }
 .hidden { opacity: 0; pointer-events: none; }
 
 /* --- Channel Grid Styles --- */
@@ -39,3 +37,33 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: #00aaff;
 .channel-tile.active::before { content: '▶ กำลังเล่น'; position: absolute; top: 8px; left: 8px; background-color: #00aaff; color: white; padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; z-index: 2; }
 .channel-tile img { width: 100%; max-height: 45px; object-fit: contain; margin-bottom: 8px; flex-grow: 0; }
 .channel-tile-name { font-size: 12px; color: #e0e0e0; text-align: center; font-weight: 500; }
+
+/* --- START: Mobile Styles --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 5px;
+    }
+    #datetime-display {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+    .channel-category-header {
+        font-size: 20px;
+    }
+    .channel-buttons {
+        /* Adjust grid to have smaller gaps and ensure 3 columns */
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 10px;
+    }
+    .channel-tile {
+        min-height: 90px;
+        padding: 8px;
+    }
+    .channel-tile img {
+        max-height: 40px;
+    }
+    .channel-tile-name {
+        font-size: 11px;
+    }
+}
+/* --- END: Mobile Styles --- */
