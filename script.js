@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const video = document.getElementById('video');
+    const posterVideo = document.getElementById('poster-video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const playOverlay = document.getElementById('play-overlay');
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLoadingIndicator(isLoading) {
         if (isLoading) {
             loadingIndicator.classList.remove('hidden');
-            loadingVideo.play().catch(() => {}); // Gracefully handle play interruption
+            loadingVideo.play().catch(() => {});
         } else {
             loadingIndicator.classList.add('hidden');
             loadingVideo.pause();
@@ -61,7 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
         toggleMute: () => video.muted = !video.muted,
         updateMuteButton: () => muteBtn.textContent = video.muted || video.volume === 0 ? '🔇' : '🔊',
-        setVolume: () => video.volume = volumeSlider.value,
+        setVolume: () => {
+            video.volume = volumeSlider.value;
+            video.muted = Number(volumeSlider.value) === 0;
+        },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
             else document.exitFullscreen();
@@ -146,8 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Event Listener Setup ---
     function setupEventListeners() {
+        // Remove the big play button listener to rely on autoplay
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
+            posterVideo.classList.add('hidden');
+            playOverlay.classList.add('hidden');
             playerControls.updatePlayButton();
             showLoadingIndicator(false);
         });
@@ -158,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         volumeSlider.addEventListener('input', playerControls.setVolume);
         video.addEventListener('volumechange', () => {
             playerControls.updateMuteButton();
-            volumeSlider.value = video.volume;
+            volumeSlider.value = video.muted ? 0 : video.volume;
         });
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
     }
@@ -202,22 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const firstChannelId = Object.keys(channels)[0];
         if (firstChannelId) {
-            video.muted = true;
             await channelManager.loadChannel(firstChannelId);
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    if (error.name !== 'AbortError') {
-                        console.warn("Autoplay was prevented by browser.", error);
-                        playOverlay.classList.remove('hidden');
-                        bigPlayBtn.addEventListener('click', () => {
-                            video.muted = false;
-                            video.play();
-                            playOverlay.classList.add('hidden');
-                        }, { once: true });
-                    }
-                });
-            }
         }
     }
     
