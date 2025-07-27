@@ -155,6 +155,7 @@
         channelNameElement.innerText = channel.name;
         updateActiveButton();
         const [keyId, key] = channel.license_key.split(':');
+        // Configure DRM for the specific channel
         player.configure({ drm: { clearKeys: { [keyId]: key } } });
         try {
             await player.load(channel.url);
@@ -183,11 +184,19 @@
             showLoading(false);
             return;
         }
-        player = new shaka.Player(videoElement);
-        player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
 
-        // Configure UI for live streams
-        player.configure('ui.stream_type', 'live');
+        // ✨ --- START: Updated Player Initialization --- ✨
+        // 1. Define player configuration separately
+        const playerConfig = {
+            ui: {
+                stream_type: 'live'
+            }
+        };
+        // 2. Pass the config when creating the player
+        player = new shaka.Player(videoElement, playerConfig);
+        // ✨ --- END: Updated Player Initialization --- ✨
+
+        player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
         const savedVolume = localStorage.getItem('playerVolume');
         const savedMuted = localStorage.getItem('playerMuted');
