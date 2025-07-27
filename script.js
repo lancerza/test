@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         handleInitialPlay: () => {
-            video.muted = false;
+            video.muted = false; // Unmute after user interaction
             video.play();
             playOverlay.classList.add('hidden');
         }
@@ -133,15 +133,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            // 📌 START: Performance Improvement
+            // --- 📌 START: Mobile Performance Tuning ---
             const hlsConfig = {
-                // จำนวน segment ที่จะเก็บไว้ใน buffer สำหรับ live stream
+                // บังคับให้เริ่มเล่นที่คุณภาพต่ำสุด (level 0) ก่อนเสมอ
+                startLevel: 0,
+                // ไม่เลือกคุณภาพวิดีโอที่ขนาดใหญ่กว่าขนาดของ Player
+                capLevelToPlayerSize: true,
+                // (Optional) ตั้งค่าการบัฟเฟอร์สำหรับ Live Stream ให้เหมาะสมขึ้น
                 liveSyncDurationCount: 5,
-                // ถ้า lag ตามหลัง live เกินจำนวน segment นี้ ให้ข้ามไปที่ live edge
                 liveMaxLatencyDurationCount: 10,
             };
             hls = new Hls(hlsConfig);
-            // 📌 END: Performance Improvement
+            // --- 📌 END: Mobile Performance Tuning ---
             hls.attachMedia(video);
         }
         
