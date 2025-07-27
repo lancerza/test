@@ -12,11 +12,11 @@
   "hls_m3u8": {
     "name": "Mono29",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/1080p/index.m3u8",
-    "logo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkA…CgoKCgoKCgoKCgoLCAfgfRaemLkadkDMAAAAASUVORK5CYII="
+    "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
       },
   "hls_m3u8": {
     "name": "Mono29Music",
     "url": "https://monomax-ye61nx.cdn.byteark.com/fleetstream/Mono29MusicStation/1080p/index.m3u8",
-    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:AN…VjSkrS-T8EuBpK_X9mZp9YQCTAIO4WgZeTKtNb6Y&usqp=CAU"
+    "logo": "https://www.facebook.com/photo/?fbid=475710727945406&set=a.475710687945410"
   }
 }
