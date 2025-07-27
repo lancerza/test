@@ -1,22 +1,20 @@
 {
-  "hls_TrueidSports1": {
-    "name": "TrueidSports1",
-    "url": "https://keela2.com/stream/16/index.m3u8?username=PrVx9n8jKo&password=hw4bIEKgiM",
-    "logo": "https://dookeela.live/uploads/1664802455.png"
-      },
-  "hls_MonoMax": {
-    "name": "MonoMax",
-    "url": "http://45.150.128.170:8080/live/test123/36572/37371.ts",
-    "logo": "https://dookeela.live/uploads/1753517049.png"
-      },
   "hls_Mono29": {
     "name": "Mono29",
+    "category": "บันเทิง",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/1080p/index.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
-      },
+  },
   "hls_Mono29Music": {
     "name": "Mono29Music",
+    "category": "เพลง",
     "url": "https://monomax-ye61nx.cdn.byteark.com/fleetstream/Mono29MusicStation/1080p/index.m3u8",
     "logo": "https://www.mono.co.th/wp-content/uploads/2020/04/MONO29-MUSIC-STATION.png"
-    }
+  },
+  "hls_test": {
+    "name": "Test Channel",
+    "category": "ทั่วไป",
+    "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "logo": "https://i.imgur.com/v822y6d.png"
+  }
 }
