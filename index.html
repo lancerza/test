@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web TV Player</title>
     <link rel="icon" href="data:;base64,=">
+    
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,11 +15,9 @@
         
         <div class="player-wrapper">
             <video id="video"></video>
-
             <div id="play-overlay" class="play-overlay">
                 <button id="big-play-btn" class="big-play-btn">▶</button>
             </div>
-
             <div class="custom-controls">
                 <button id="play-pause-btn" class="control-btn">▶️</button>
                 <input type="range" id="progress-bar" value="0" step="1">
