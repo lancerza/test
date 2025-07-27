@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3BB Online TV</title>
+    <title>3BB Online TV - V2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
     <style>
+        /* --- Base Styles --- */
         body {
             margin: 0;
             padding: 0;
-            background: #000;
-            color: #fff;
-            font-family: 'Helvetica Neue', sans-serif;
+            background: #121212; /* Darker background */
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,62 +23,100 @@
             width: 95%;
             max-width: 1000px;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
-
+        
+        /* --- Video Player --- */
         video {
             width: 100%;
             border-radius: 12px;
-            box-shadow: 0 0 25px rgba(30, 144, 255, 0.2);
-            background-color: #1a1a1a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background-color: #000;
         }
 
+        /* --- Channel Controls --- */
         .channel-controls {
             text-align: center;
             margin: 20px 0;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 12px;
+        }
+
+        .logo {
+            height: 50px;
+            margin-bottom: 20px;
         }
 
         .channel-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 20px;
         }
 
         .channel-buttons button {
             padding: 12px 24px;
             font-size: 16px;
-            border: none;
+            font-weight: bold;
+            border: 2px solid transparent;
             border-radius: 8px;
-            background: #1e90ff;
-            color: white;
+            background: #333;
+            color: #e0e0e0;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
         }
 
         .channel-buttons button:hover {
-            background-color: #0073e6;
-            transform: scale(1.05);
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .channel-buttons button.active {
+            background-color: #1e90ff;
+            color: white;
+            border-color: #64b5f6;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.5);
         }
         
-        .channel-buttons button.active {
-            background-color: #ff4500;
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
-        }
-
-        .logo {
-            height: 50px;
-            margin-bottom: 15px;
-        }
-
+        /* --- EPG Box --- */
         .epg-box {
             margin-top: 20px;
-            background: #1a1a1a;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
             font-size: 16px;
             line-height: 1.6;
             text-align: center;
+        }
+
+        /* --- Loading Spinner --- */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .spinner {
+            border: 8px solid #444;
+            border-top: 8px solid #1e90ff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -86,135 +125,163 @@
     <div class="container">
         <div class="channel-controls">
             <img id="channel-logo" class="logo" src="" alt="โลโก้ช่อง"/>
-            <div class="channel-buttons">
+            <div id="channel-buttons-container" class="channel-buttons">
                 </div>
         </div>
 
         <video id="video" autoplay controls poster="https://via.placeholder.com/1000x562/000000/FFFFFF?text=เลือกช่องเพื่อรับชม"></video>
 
         <div class="epg-box" id="epg-box">
-            <strong>EPG:</strong> กรุณาเลือกช่อง...
+            <strong>EPG:</strong> กำลังโหลดข้อมูลช่อง...
         </div>
     </div>
 
+    <div id="loading-spinner" class="spinner-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
     <script>
-        // --- DATA ---
-        const channels = {
-            "3bb1": {
-                name: "3BB 1",
-                url: "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/2/2.mpd",
-                logo: "https://i.imgur.com/Y8ZN49Q.png", // ใช้โลโก้ที่ชัดเจน
-                epg: "ละครเย็น - 17:00 | ข่าวค่ำ - 18:30 | รายการพิเศษ - 20:00",
-                license_key: "ca20a93cf8e3421dafbd5bdb1990081b:86ae86a7391c481ea93eecdb740f0a14"
-            },
-            "3bb2": {
-                name: "3BB 2",
-                url: "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/3/3.mpd",
-                logo: "https://i.imgur.com/Y8ZN49Q.png",
-                epg: "ซีรีส์ญี่ปุ่น - 16:00 | เกมโชว์ - 18:00 | หนังไทย - 20:00",
-                license_key: "4d4426a505f64382a9841155d721cee6:0f4770219ccb4be5836a7517057e51c3"
-            },
-            "3bb3": {
-                name: "3BB 3",
-                url: "https://udn-streamer1.cdn.3bbtv.com:8443/3bb/live/4/4.mpd",
-                logo: "https://i.imgur.com/Y8ZN49Q.png",
-                epg: "การ์ตูน - 15:00 | กีฬา - 17:00 | ข่าวดึก - 21:00",
-                license_key: "1e98456bcbea44b7ad05831387e364ef:3d14fd4f9d3149a79b35a7124fccbd67"
-            }
-        };
+    // --- GLOBAL VARIABLES ---
+    let player;
+    let channels = {};
+    let currentChannelId = null;
 
-        // --- ELEMENTS ---
-        const videoElement = document.getElementById('video');
-        const channelLogo = document.getElementById('channel-logo');
-        const epgBox = document.getElementById('epg-box');
-        const channelButtonsContainer = document.querySelector('.channel-buttons');
-        let player;
-        let currentChannelId = null;
+    // --- DOM ELEMENTS ---
+    const videoElement = document.getElementById('video');
+    const channelLogo = document.getElementById('channel-logo');
+    const epgBox = document.getElementById('epg-box');
+    const channelButtonsContainer = document.getElementById('channel-buttons-container');
+    const loadingSpinner = document.getElementById('loading-spinner');
 
-        /**
-         * ✨ **จุดเด่น** แก้ไขการตั้งค่า DRM ให้ถูกต้อง
-         * แยก keyId และ key ออกจากกันแล้วส่งให้ Shaka Player
-         */
-        async function loadChannel(channelId) {
+    /**
+     * Toggles the visibility of the loading spinner.
+     * @param {boolean} show - True to show, false to hide.
+     */
+    function showLoading(show) {
+        loadingSpinner.style.display = show ? 'flex' : 'none';
+    }
+    
+    /**
+     * Updates the active state of channel buttons.
+     */
+    function updateActiveButton() {
+        const buttons = channelButtonsContainer.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.classList.toggle('active', button.dataset.channelId === currentChannelId);
+        });
+    }
+
+    /**
+     * Creates channel buttons dynamically from the channels data.
+     */
+    function createChannelButtons() {
+        channelButtonsContainer.innerHTML = ''; // Clear existing buttons
+        for (const channelId in channels) {
             const channel = channels[channelId];
-            if (!channel) {
-                console.error("ไม่พบช่อง:", channelId);
-                return;
-            }
+            const button = document.createElement('button');
+            button.innerText = channel.name;
+            button.dataset.channelId = channelId;
+            button.onclick = () => loadChannel(channelId);
+            channelButtonsContainer.appendChild(button);
+        }
+    }
 
-            currentChannelId = channelId;
-            updateActiveButton();
+    /**
+     * Loads a selected channel, configures DRM, and updates the UI.
+     * @param {string} channelId - The ID of the channel to load.
+     */
+    async function loadChannel(channelId) {
+        if (!channels[channelId]) {
+            console.error("ไม่พบข้อมูลช่อง:", channelId);
+            return;
+        }
 
-            // แสดงโลโก้และ EPG
-            channelLogo.src = channel.logo;
-            channelLogo.alt = `โลโก้ ${channel.name}`;
-            epgBox.innerHTML = `<strong>📺 ${channel.name}</strong><br><strong>EPG:</strong> ${channel.epg}`;
+        showLoading(true);
+        currentChannelId = channelId;
+        const channel = channels[channelId];
 
-            // แยก license_key เป็น keyId และ key
-            const [keyId, key] = channel.license_key.split(':');
+        // 1. Update UI
+        channelLogo.src = channel.logo;
+        channelLogo.alt = `โลโก้ ${channel.name}`;
+        epgBox.innerHTML = `<strong>📺 ${channel.name}</strong><br><strong>EPG:</strong> ${channel.epg}`;
+        updateActiveButton();
 
-            // ตั้งค่า DRM สำหรับ Shaka Player
-            player.configure({
-                drm: {
-                    clearKeys: {
-                        [keyId]: key 
-                    }
-                }
-            });
+        // 2. Configure DRM
+        const [keyId, key] = channel.license_key.split(':');
+        player.configure({
+            drm: { clearKeys: { [keyId]: key } }
+        });
 
-            // โหลดวิดีโอ
-            try {
-                await player.load(channel.url);
-                console.log("กำลังเล่นช่อง:", channel.name);
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการโหลดช่อง:", error);
-                epgBox.innerText = `ไม่สามารถโหลดช่อง ${channel.name} ได้`;
-            }
+        // 3. Load Manifest
+        try {
+            await player.load(channel.url);
+            console.log("✅ กำลังเล่นช่อง:", channel.name);
+            localStorage.setItem('lastChannelId', channelId); // Save last successfully played channel
+        } catch (error) {
+            console.error(`❌ เกิดข้อผิดพลาดในการโหลดช่อง ${channel.name}:`, error);
+            epgBox.innerHTML = `<strong>เกิดข้อผิดพลาดในการโหลดช่อง ${channel.name}</strong>`;
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    /**
+     * Main initialization function for the application.
+     */
+    async function init() {
+        if (!shaka.Player.isBrowserSupported()) {
+            alert("ขออภัย เบราว์เซอร์ของคุณไม่รองรับการใช้งานค่ะ");
+            return;
         }
         
-        // ฟังก์ชันสำหรับสร้างปุ่มช่องแบบไดนามิก
-        function createChannelButtons() {
-            for (const channelId in channels) {
-                const channel = channels[channelId];
-                const button = document.createElement('button');
-                button.innerText = channel.name;
-                button.onclick = () => loadChannel(channelId);
-                button.dataset.channelId = channelId; // เพิ่ม data attribute
-                channelButtonsContainer.appendChild(button);
-            }
-        }
+        showLoading(true);
 
-        // ฟังก์ชันสำหรับอัปเดตสไตล์ปุ่มที่กำลังใช้งาน
-        function updateActiveButton() {
-            const buttons = channelButtonsContainer.querySelectorAll('button');
-            buttons.forEach(button => {
-                if (button.dataset.channelId === currentChannelId) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
+        // 1. Fetch channel data
+        try {
+            const response = await fetch('channels.json');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            channels = await response.json();
+        } catch (e) {
+            console.error("ไม่สามารถโหลดไฟล์ channels.json:", e);
+            epgBox.innerHTML = '<strong>เกิดข้อผิดพลาดร้ายแรง: ไม่สามารถโหลดข้อมูลช่องได้</strong>';
+            showLoading(false);
+            return;
         }
         
-        // ฟังก์ชันเริ่มต้นการทำงานทั้งหมด
-        async function init() {
-            if (!shaka.Player.isBrowserSupported()) {
-                alert("เบราว์เซอร์ของคุณไม่รองรับการใช้งานค่ะ");
-                return;
-            }
+        // 2. Initialize Player
+        player = new shaka.Player(videoElement);
+        player.addEventListener('error', (e) => {
+            console.error("Shaka Player Error:", e.detail);
+        });
+        
+        // 3. Restore and save volume settings
+        const savedVolume = localStorage.getItem('playerVolume');
+        const savedMuted = localStorage.getItem('playerMuted');
+        if (savedVolume) videoElement.volume = parseFloat(savedVolume);
+        if (savedMuted) videoElement.muted = savedMuted === 'true';
 
-            player = new shaka.Player(videoElement);
-            player.addEventListener('error', (e) => console.error("Shaka Player Error:", e.detail));
-            
-            createChannelButtons();
-            
-            // โหลดช่องแรกเป็นค่าเริ่มต้น
-            const firstChannelId = Object.keys(channels)[0];
-            await loadChannel(firstChannelId);
+        videoElement.addEventListener('volumechange', () => {
+            localStorage.setItem('playerVolume', videoElement.volume);
+            localStorage.setItem('playerMuted', videoElement.muted);
+        });
+        
+        // 4. Create UI and load initial channel
+        createChannelButtons();
+        
+        const lastChannelId = localStorage.getItem('lastChannelId');
+        const firstChannelId = Object.keys(channels)[0];
+        const channelToLoad = lastChannelId && channels[lastChannelId] ? lastChannelId : firstChannelId;
+
+        if (channelToLoad) {
+            await loadChannel(channelToLoad);
+        } else {
+            epgBox.innerText = "ไม่พบช่องให้เลือก";
+            showLoading(false);
         }
+    }
 
-        // เริ่มทำงานเมื่อหน้าเว็บโหลดเสร็จ
-        document.addEventListener("DOMContentLoaded", init);
+    // Start the application when the DOM is ready
+    document.addEventListener("DOMContentLoaded", init);
     </script>
 </body>
 </html>
