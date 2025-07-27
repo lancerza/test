@@ -28,6 +28,7 @@
             class="video-js"
             controls
             autoplay
+            muted
             preload="auto"
             width="1000"
             height="562"
@@ -85,12 +86,10 @@
         channelNameElement.innerText = channel.name;
         updateActiveButton();
 
-        // 📌 4. Load source using the Video.js method
         player.src({
             src: channel.url,
-            type: 'application/x-mpegURL' // This type helps browsers play .m3u8 and .ts files
+            type: 'application/x-mpegURL'
         });
-        player.play();
     }
 
     async function init() {
@@ -102,8 +101,17 @@
             return;
         }
 
-        // Initialize Video.js player
         player = videojs('video');
+        
+        // Add a ready listener to attempt playing
+        player.ready(function() {
+            const promise = player.play();
+            if (promise !== undefined) {
+                promise.catch(error => {
+                    console.warn("Autoplay was prevented.", error);
+                });
+            }
+        });
 
         createChannelButtons();
         const firstChannelId = Object.keys(channels)[0];
