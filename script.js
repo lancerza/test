@@ -6,14 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const video = document.getElementById('video');
+    const posterVideo = document.getElementById('poster-video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const playOverlay = document.getElementById('play-overlay');
     const bigPlayBtn = document.getElementById('big-play-btn');
     const loadingIndicator = document.getElementById('loading-indicator');
     const loadingVideo = document.getElementById('loading-video');
-
-    // Custom controls elements
+    const errorOverlay = document.getElementById('error-overlay');
+    const errorMessage = document.getElementById('error-message');
     const playPauseBtn = document.getElementById('play-pause-btn');
     const progressBar = document.getElementById('progress-bar');
     const timeDisplay = document.getElementById('time-display');
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-    // --- Loading & Player Logic ---
+    // --- Player Logic ---
     function showLoadingIndicator(isLoading) {
         if (isLoading) {
             loadingIndicator.classList.remove('hidden');
@@ -34,6 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const playerControls = {
+        showError: (message) => {
+            errorMessage.textContent = message;
+            errorOverlay.classList.remove('hidden');
+        },
+        hideError: () => errorOverlay.classList.add('hidden'),
         togglePlay: () => video.paused ? video.play() : video.pause(),
         updatePlayButton: () => playPauseBtn.textContent = video.paused ? '▶️' : '⏸️',
         formatTime: (time) => {
@@ -50,11 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
         updateMuteButton: () => muteBtn.textContent = video.muted || video.volume === 0 ? '🔇' : '🔊',
         setVolume: () => video.volume = volumeSlider.value,
         toggleFullscreen: () => {
-            if (!document.fullscreenElement) {
-                playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
-            } else {
-                document.exitFullscreen();
-            }
+            if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
+            else document.exitFullscreen();
         },
         handleInitialPlay: () => {
             video.muted = false;
@@ -75,72 +78,53 @@ document.addEventListener("DOMContentLoaded", () => {
             for (const channelId in channels) {
                 const channel = channels[channelId];
                 const category = channel.category || 'ทั่วไป';
-                if (!groupedChannels[category]) {
-                    groupedChannels[category] = [];
-                }
+                if (!groupedChannels[category]) groupedChannels[category] = [];
                 groupedChannels[category].push({ id: channelId, ...channel });
             }
-
             for (const category in groupedChannels) {
                 const header = document.createElement('h2');
                 header.className = 'channel-category-header';
                 header.textContent = category;
                 channelButtonsContainer.appendChild(header);
-
                 const grid = document.createElement('div');
                 grid.className = 'channel-buttons';
-                
                 groupedChannels[category].forEach(channel => {
                     const tile = document.createElement('a');
                     tile.className = 'channel-tile';
                     tile.dataset.channelId = channel.id;
-                    
-                    // --- START: Mobile Click Fix ---
-                    // Changed from tile.onclick to addEventListener for better mobile support
                     tile.addEventListener('click', () => {
                         channelManager.loadChannel(channel.id);
                         playerWrapper.scrollIntoView({ behavior: 'smooth' });
                     });
-                    // --- END: Mobile Click Fix ---
-                    
                     const logoImg = document.createElement('img');
                     logoImg.src = channel.logo;
                     logoImg.alt = channel.name;
-                    
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'channel-tile-name';
                     nameSpan.innerText = channel.name;
-                    
                     tile.appendChild(logoImg);
                     tile.appendChild(nameSpan);
                     grid.appendChild(tile);
                 });
-
                 channelButtonsContainer.appendChild(grid);
             }
         },
         loadChannel: async (channelId) => {
             if (!channels[channelId] || currentChannelId === channelId) return;
+            playerControls.hideError();
             showLoadingIndicator(true);
-
             await new Promise(resolve => setTimeout(resolve, 300));
-
             currentChannelId = channelId;
             const channel = channels[channelId];
             channelManager.updateActiveButton();
-
             try {
-                if (hls) {
-                    hls.loadSource(channel.url);
-                }
+                if (hls) hls.loadSource(channel.url);
                 if (!playOverlay.classList.contains('hidden')) {
                     playerControls.handleInitialPlay();
                 } else {
                     const playPromise = video.play();
                     if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.error("Play被阻止:", error);
-                        });
+                        playPromise.catch(error => console.error("Play was prevented:", error));
                     }
                 }
             } catch (error) {
@@ -170,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bigPlayBtn.addEventListener('click', playerControls.handleInitialPlay);
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
+            posterVideo.classList.add('hidden'); // Hide poster video on play
             playerControls.updatePlayButton();
             showLoadingIndicator(false);
         });
@@ -196,29 +181,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            const hlsConfig = {
-                startLevel: 0,
-                capLevelToPlayerSize: true,
-                liveSyncDurationCount: 5,
-                liveMaxLatencyDurationCount: 10,
-            };
-            hls = new Hls(hlsConfig);
+            hls = new Hls({ startLevel: 0, capLevelToPlayerSize: true, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
             hls.attachMedia(video);
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ\n(Network Error)');
+                            hls.startLoad();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                             playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ\n(Media Error)');
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้');
+                            hls.destroy();
+                            break;
+                    }
+                }
+            });
         }
         
         setupEventListeners();
         timeManager.start();
         channelManager.createChannelButtons();
         
-        const firstChannelId = Object.keys(channels)[0];
-        if (firstChannelId) {
-            currentChannelId = firstChannelId;
-            const channel = channels[firstChannelId];
-            channelManager.updateActiveButton();
-            if (hls) {
-                hls.loadSource(channel.url);
-            }
-        }
+        // Don't auto-load the first channel, wait for user interaction
+        // This makes the poster video visible on start
     }
     
     init();
