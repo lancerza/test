@@ -5,15 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Online TV Grid Player</title>
     <link rel="icon" href="data:;base64,=">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/controls.min.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
     <style>
         body { margin: 0; padding: 0; background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .container { width: 95%; max-width: 1200px; margin: 20px auto; }
-        video { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); background-color: #000; margin-bottom: 20px; }
-        .channel-info { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 10px; background-color: #1e1e1e; border-radius: 12px; }
+        /* เราใช้ UI ของ Shaka ดังนั้นเราจะซ่อน UI ของเบราว์เซอร์เอง */
+        video::-webkit-media-controls { display: none !important; }
+        video::-moz-media-controls { display: none !important; }
+        video::media-controls { display: none !important; }
+
+        /* เราจะใช้คลาส .shaka-video-container ที่ Shaka สร้างขึ้น */
+        .shaka-video-container { width: 100%; }
+        video { width: 100%; }
+
+        .channel-info { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; padding: 10px; background-color: #1e1e1e; border-radius: 12px; }
         .channel-info .logo { height: 50px; margin: 0; }
         .channel-name { font-size: 24px; font-weight: bold; color: #ffffff; margin: 0; }
-        .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; }
+        .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px; margin-top: 20px; }
         .channel-tile { background-color: #2a2a2e; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-decoration: none; cursor: pointer; transition: all 0.2s ease-in-out; border: 2px solid transparent; min-height: 120px; }
         .channel-tile:hover { transform: scale(1.05); background-color: #3c3c41; }
         .channel-tile.active { border-color: #1e90ff; background-color: #25395c; transform: scale(1.05); box-shadow: 0 0 20px rgba(30, 144, 255, 0.4); }
@@ -26,7 +37,10 @@
 </head>
 <body>
     <div class="container">
-        <video id="video" autoplay controls></video>
+        <div data-shaka-player-container style="width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);">
+             <video id="video" autoplay poster="//shaka-player-demo.appspot.com/assets/poster.jpg"></video>
+        </div>
+
         <div id="channel-info" class="channel-info" style="display: none;">
             <img id="channel-logo" class="logo" src="" alt="Channel Logo"/>
             <h2 id="channel-name" class="channel-name"></h2>
@@ -39,6 +53,7 @@
 
     <script>
     let player, channels = {}, currentChannelId = null;
+    const videoContainer = document.querySelector('[data-shaka-player-container]');
     const videoElement = document.getElementById('video');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const loadingSpinner = document.getElementById('loading-spinner');
@@ -46,6 +61,7 @@
     const channelLogo = document.getElementById('channel-logo');
     const channelNameElement = document.getElementById('channel-name');
 
+    // ... (ฟังก์ชัน showLoading, updateActiveButton, createChannelButtons ไม่เปลี่ยนแปลง) ...
     function showLoading(show) { loadingSpinner.style.display = show ? 'flex' : 'none'; }
     function updateActiveButton() {
         const tiles = channelButtonsContainer.querySelectorAll('.channel-tile');
@@ -60,7 +76,7 @@
             tile.dataset.channelId = channelId;
             tile.onclick = () => {
                 loadChannel(channelId);
-                videoElement.scrollIntoView({ behavior: 'smooth' });
+                videoContainer.scrollIntoView({ behavior: 'smooth' });
             };
             const logoImg = document.createElement('img');
             logoImg.src = channel.logo;
@@ -73,6 +89,7 @@
             channelButtonsContainer.appendChild(tile);
         }
     }
+
     async function loadChannel(channelId) {
         if (!channels[channelId]) return;
         showLoading(true);
@@ -96,6 +113,7 @@
             showLoading(false);
         }
     }
+
     async function init() {
         if (!shaka.Player.isBrowserSupported()) {
             alert("Sorry, your browser is not supported.");
@@ -112,10 +130,16 @@
             return;
         }
 
-        player = new shaka.Player(videoElement);
+        player = new shaka.Player();
+        await player.attach(videoElement); // ใช้ attach แทน
 
-        // เราได้ลบ player.configure() ที่เกี่ยวกับ UI ออกทั้งหมดแล้ว
-        // ทำให้เบราว์เซอร์ใช้ UI ของตัวเองซึ่งไม่มีปัญหานี้
+        // 📌 2. นำการตั้งค่า UI กลับมาใส่
+        player.configure({
+            ui: {
+                // ตัวเลือกนี้จะทำงานเมื่อ CSS ถูกโหลดแล้ว
+                stream_type: 'live' 
+            }
+        });
 
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
