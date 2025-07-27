@@ -118,10 +118,8 @@
         player = new shaka.Player();
         await player.attach(videoElement);
         
-        // --- 📌 START: Corrected UI Configuration ---
         player.configure({
-            // ลบจุดข้างหน้า ui ออก
-            ui: { 
+            ui: {
                 stream_type: 'live',
                 controlPanelElements: [
                     'play_pause',
@@ -134,7 +132,6 @@
                 ]
             }
         });
-        // --- END: Corrected UI Configuration ---
 
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
