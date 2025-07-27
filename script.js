@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- START: Configuration Object ---
+    // --- START: Configuration Object (Corrected) ---
     const CONFIG = {
         HLS: {
             startLevel: 0,
             capLevelToPlayerSize: true,
             liveSyncDurationCount: 5,
             liveMaxLatencyDurationCount: 10,
-        }, // 📌 Added missing comma here
-        DEFAULT_CATEGORY: 'IPTV'
-        DEFAULT_CATEGORY: 'กีฬา'
+        },
+        // Removed duplicate key and added a comma
+        DEFAULT_CATEGORY: 'ทั่วไป' 
     };
     // --- END: Configuration Object ---
 
