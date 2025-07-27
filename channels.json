@@ -1,20 +1,20 @@
 {
-  "hls_m3u8": {
+  "hls_TrueidSports1": {
     "name": "TrueidSports1",
     "url": "https://keela2.com/stream/16/index.m3u8?username=PrVx9n8jKo&password=hw4bIEKgiM",
     "logo": "https://api.rentm3u8.com/images/png/hd-tsport1.png"
   },
-  "hls_m3u8": {
+  "hls_MonoPlus": {
     "name": "MonoPlus",
     "url": "https://keela2.com/stream/16/index.m3u8?username=PrVx9n8jKo&password=hw4bIEKgiM",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdWSGln0d7bKsgK1XdcBCManhFubvm5HjdBQ&s"
       },
-  "hls_m3u8": {
+  "hls_Mono29": {
     "name": "Mono29",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/1080p/index.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
       },
-  "hls_m3u8": {
+  "hls_Mono29Music": {
     "name": "Mono29Music",
     "url": "https://monomax-ye61nx.cdn.byteark.com/fleetstream/Mono29MusicStation/1080p/index.m3u8",
     "logo": "https://www.facebook.com/photo/?fbid=475710727945406&set=a.475710687945410"
