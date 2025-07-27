@@ -6,18 +6,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const video = document.getElementById('video');
+    const playerWrapper = document.querySelector('.player-wrapper');
+    const channelButtonsContainer = document.getElementById('channel-buttons-container');
+    
+    // Autoplay elements
+    const playOverlay = document.getElementById('play-overlay');
+    const bigPlayBtn = document.getElementById('big-play-btn');
+
+    // Loading elements
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingVideo = document.getElementById('loading-video');
+
+    // Custom controls elements
     const playPauseBtn = document.getElementById('play-pause-btn');
     const progressBar = document.getElementById('progress-bar');
     const timeDisplay = document.getElementById('time-display');
     const muteBtn = document.getElementById('mute-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const playerWrapper = document.querySelector('.player-wrapper');
-    const channelButtonsContainer = document.getElementById('channel-buttons-container');
-    const playOverlay = document.getElementById('play-overlay');
-    const bigPlayBtn = document.getElementById('big-play-btn');
 
-    // --- Player Logic ---
+    // --- Loading & Player Logic ---
+    function showChannelLoading(isLoading) {
+        if (isLoading) {
+            loadingOverlay.classList.remove('hidden');
+            loadingVideo.play();
+        } else {
+            loadingOverlay.classList.add('hidden');
+            loadingVideo.pause();
+        }
+    }
+
     const playerControls = {
         togglePlay: () => video.paused ? video.play() : video.pause(),
         updatePlayButton: () => playPauseBtn.textContent = video.paused ? '▶️' : '⏸️',
@@ -97,18 +115,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 channelButtonsContainer.appendChild(grid);
             }
         },
-        loadChannel: (channelId) => {
+        loadChannel: async (channelId) => {
             if (!channels[channelId]) return;
+            showChannelLoading(true);
+            
+            // Wait a brief moment to ensure the loading animation is visible
+            await new Promise(resolve => setTimeout(resolve, 300));
+
             currentChannelId = channelId;
             const channel = channels[channelId];
             channelManager.updateActiveButton();
-            if (hls) {
-                hls.loadSource(channel.url);
-            }
-            if (!playOverlay.classList.contains('hidden')) {
-                 playerControls.handleInitialPlay();
-            } else {
-                 video.play();
+
+            try {
+                if (hls) {
+                    hls.loadSource(channel.url);
+                }
+                if (!playOverlay.classList.contains('hidden')) {
+                    playerControls.handleInitialPlay();
+                } else {
+                    video.play();
+                }
+            } catch (error) {
+                console.error("Error loading channel:", error);
+            } finally {
+                showChannelLoading(false);
             }
         }
     };
