@@ -150,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Event Listener Setup ---
     function setupEventListeners() {
-        // Remove the big play button listener to rely on autoplay
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
             posterVideo.classList.add('hidden');
@@ -209,6 +208,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const firstChannelId = Object.keys(channels)[0];
         if (firstChannelId) {
+            // 📌 START: Volume Initialization
+            video.muted = true;
+            video.volume = 0.75; // Set a default volume
+            volumeSlider.value = video.volume; // Update the slider UI
+            playerControls.updateMuteButton(); // Ensure mute icon is correct
+            // 📌 END: Volume Initialization
+            
             await channelManager.loadChannel(firstChannelId);
         }
     }
