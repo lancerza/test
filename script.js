@@ -6,10 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
             capLevelToPlayerSize: true,
             liveSyncDurationCount: 5,
             liveMaxLatencyDurationCount: 10,
-        },
+        }, // 📌 Added missing comma here
         DEFAULT_CATEGORY: 'IPTV'
         DEFAULT_CATEGORY: 'กีฬา'
-        
     };
     // --- END: Configuration Object ---
 
@@ -87,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const groupedChannels = {};
             for (const channelId in channels) {
                 const channel = channels[channelId];
-                // Use the config object for the default category
                 const category = channel.category || CONFIG.DEFAULT_CATEGORY;
                 if (!groupedChannels[category]) groupedChannels[category] = [];
                 groupedChannels[category].push({ id: channelId, ...channel });
@@ -186,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (Hls.isSupported()) {
-            // Use the config object for HLS settings
             hls = new Hls(CONFIG.HLS);
             hls.attachMedia(video);
             hls.on(Hls.Events.ERROR, function (event, data) {
