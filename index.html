@@ -10,9 +10,6 @@
     <style>
         body { margin: 0; padding: 0; background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .container { width: 95%; max-width: 1200px; margin: 20px auto; }
-        video::-webkit-media-controls { display: none !important; }
-        video::-moz-media-controls { display: none !important; }
-        video::media-controls { display: none !important; }
         .shaka-video-container { width: 100%; }
         video { width: 100%; }
         .channel-info { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; padding: 10px; background-color: #1e1e1e; border-radius: 12px; }
@@ -120,11 +117,24 @@
         }
         player = new shaka.Player();
         await player.attach(videoElement);
+        
+        // --- 📌 START: Updated UI Configuration ---
         player.configure({
             ui: {
-                stream_type: 'live' 
+                stream_type: 'live',
+                controlPanelElements: [
+                    'play_pause',
+                    'time_and_duration',
+                    'spacer', // เพิ่มระยะห่าง
+                    'mute',
+                    'volume',
+                    'fullscreen', // ✨ เพิ่มปุ่มเต็มจอ
+                    'overflow_menu'
+                ]
             }
         });
+        // --- END: Updated UI Configuration ---
+
         player.addEventListener('error', e => console.error("Shaka Player Error:", e.detail));
         
         const savedVolume = localStorage.getItem('playerVolume');
