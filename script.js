@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setVolume: () => {
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
+            // บันทึกค่า volume ลงใน localStorage
+            localStorage.setItem('playerVolume', volumeSlider.value);
         },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
@@ -80,6 +82,24 @@ document.addEventListener("DOMContentLoaded", () => {
             controlsTimeout = setTimeout(playerControls.hideControls, 3000);
         }
     };
+    
+    // --- User Settings ---
+    function restoreUserSettings() {
+        const savedVolume = localStorage.getItem('playerVolume');
+        if (savedVolume !== null) {
+            video.volume = savedVolume;
+            volumeSlider.value = savedVolume;
+        } else {
+            // ตั้งค่าเริ่มต้นถ้าไม่มีข้อมูล
+            video.volume = 0.5;
+            volumeSlider.value = 0.5;
+        }
+        // เริ่มต้นด้วยการปิดเสียงเสมอเมื่อโหลดหน้า
+        video.muted = true;
+        volumeSlider.value = 0;
+        playerControls.updateMuteButton();
+    }
+
 
     // --- Channel Logic ---
     const channelManager = {
@@ -176,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         volumeSlider.addEventListener('input', playerControls.setVolume);
         video.addEventListener('volumechange', () => {
             playerControls.updateMuteButton();
-            volumeSlider.value = video.muted ? 0 : video.volume;
+            // ไม่ต้องตั้งค่า volumeSlider.value ที่นี่เพื่อป้องกันการเกิด loop
         });
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
@@ -187,9 +207,13 @@ document.addEventListener("DOMContentLoaded", () => {
     async function init() {
         try {
             const response = await fetch('channels.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             channels = await response.json();
         } catch (e) {
-            alert("Fatal Error: Could not load channel data.");
+            console.error("Fatal Error: Could not load channel data.", e);
+            playerControls.showError("เกิดข้อผิดพลาด: ไม่สามารถโหลดข้อมูลช่องได้");
             return;
         }
 
@@ -217,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         setupEventListeners();
+        restoreUserSettings(); // เรียกใช้ฟังก์ชันเพื่อตั้งค่าผู้ใช้
         timeManager.start();
         channelManager.createChannelButtons();
         
