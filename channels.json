@@ -3,30 +3,30 @@
     "name": "ทรูสปอร์ตHD1",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-4/playlist.m3u8",
-    "logo": "https://ballthaitv.com/api/table/icon/ch373.png"
+    "logo": "https://pic.in.th/image/tr1.cPr8Pa"
   },
   "hls_truehd2": {
     "name": "ทรูสปอร์ตHD2",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-5/playlist.m3u8",
-    "logo": "https://ballthaitv.com/api/table/icon/ch374.png"
+    "logo": "https://pic.in.th/image/tr2.cPruqP"
   },
   "hls_truehd3": {
     "name": "ทรูสปอร์ตHD3",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-6/playlist.m3u8",
-    "logo": "https://ballthaitv.com/api/table/icon/ch375.png"
+    "logo": "https://pic.in.th/image/tr3.cPry6p"
   },
   "hls_truehd4": {
     "name": "ทรูสปอร์ตHD4",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-7/playlist.m3u8",
-    "logo": "https://github.com/lancerza/test/blob/main/logos/tr4.png"
+    "logo": "https://pic.in.th/image/tr4.cPr5k3"
   },
   "hls_truehd5": {
     "name": "ทรูสปอร์ตHD5",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-8/playlist.m3u8",
-    "logo": "https://github.com/lancerza/test/blob/main/logos/tr5.png"
+    "logo": "https://pic.in.th/image/tr5.cPrjt9"
   }
 }
