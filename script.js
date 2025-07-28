@@ -21,6 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById('fullscreen-btn');
 
     // --- Player Logic ---
+    function showLoadingIndicator(isLoading) {
+        if (isLoading) {
+            loadingIndicator.classList.remove('hidden');
+            loadingVideo.play().catch(() => {});
+        } else {
+            loadingIndicator.classList.add('hidden');
+            loadingVideo.pause();
+            loadingVideo.currentTime = 0;
+        }
+    }
+
     const playerControls = {
         showError: (message) => {
             if (errorMessage) errorMessage.textContent = message;
@@ -148,10 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Event Listener Setup ---
     function setupEventListeners() {
-        // bigPlayBtn.addEventListener('click', playerControls.handleInitialPlay); // This line is removed
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
-            posterVideo.classList.add('hidden');
+            if (posterVideo) posterVideo.classList.add('hidden');
             playerControls.updatePlayButton();
             showLoadingIndicator(false);
             playerControls.showControls();
