@@ -1,5 +1,18 @@
+/* --- Import Google Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&display=swap');
+
 /* --- Base Styles --- */
-body { margin: 0; padding: 0; background: #121212; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    color: #e0e0e0;
+    font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use new font */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
 .container { width: 100%; max-width: 1200px; margin: 20px auto; box-sizing: border-box; padding: 0 10px; }
 
 /* --- Datetime Display --- */
@@ -30,15 +43,47 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: #00aaff;
 .error-overlay { text-align: center; color: #ffcccc; font-size: 18px; padding: 20px; }
 .hidden { opacity: 0; pointer-events: none; }
 
-/* --- Channel Grid Styles --- */
-.channel-category-header { font-size: 24px; font-weight: bold; color: #00aaff; margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #333; }
+/* --- Channel Grid Styles (Updated) --- */
+.channel-category-header { font-size: 24px; font-weight: 700; color: #00aaff; margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid #333; }
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; }
-.channel-tile { background-color: #2a2a2e; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.2s ease-in-out; border: 2px solid transparent; min-height: 100px; position: relative; }
-.channel-tile:hover { transform: scale(1.05); background-color: #3c3c41; will-change: transform; }
-.channel-tile.active { border-color: #00aaff; background-color: #005c99; transform: scale(1.08); box-shadow: 0 0 25px rgba(0, 170, 255, 0.6); }
-.channel-tile.active::before { content: '▶ กำลังเล่น'; position: absolute; top: 8px; left: 8px; background-color: #00aaff; color: white; padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; z-index: 2; }
+.channel-tile {
+    background: linear-gradient(145deg, #2e2e32, #212124);
+    box-shadow: 5px 5px 10px #1c1c1f, -5px -5px 10px #343438;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+    min-height: 100px;
+    position: relative;
+}
+.channel-tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 170, 255, 0.2);
+}
+.channel-tile.active {
+    border-color: #00aaff;
+    box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
+}
+.channel-tile.active::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: #00ff7f; /* Lime green for "Live" */
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ff7f;
+    z-index: 2;
+}
 .channel-tile img { width: 100%; max-height: 45px; object-fit: contain; margin-bottom: 8px; flex-grow: 0; }
-.channel-tile-name { font-size: 12px; color: #e0e0e0; text-align: center; font-weight: 500; }
+.channel-tile-name { font-size: 13px; font-weight: 500; color: #e0e0e0; text-align: center; }
 
 /* --- Mobile Styles --- */
 @media (max-width: 600px) {
