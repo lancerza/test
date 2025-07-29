@@ -116,14 +116,14 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
 .channel-buttons { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
-    gap: 15px; 
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
+    gap: 12px; 
 }
 
 .channel-tile {
     background: var(--card-gradient);
     box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
-    border-radius: 12px;
+    border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
     border: 2px solid transparent;
@@ -135,8 +135,8 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 90px;
-    padding: 10px 8px;
+    min-height: 80px;
+    padding: 8px 6px;
 }
 .channel-tile.visible {
     opacity: 1;
@@ -160,8 +160,8 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     width: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
-    max-height: 40px;
-    margin-bottom: 8px;
+    max-height: 35px;
+    margin-bottom: 6px;
 }
 
 .channel-tile-name {
@@ -172,7 +172,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .channel-badge {
@@ -181,10 +181,10 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     left: -1px;
     background-color: var(--primary-color);
     color: white;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 12px 0 12px 0;
+    padding: 2px 6px;
+    border-radius: 10px 0 10px 0;
     text-transform: uppercase;
     z-index: 3;
 }
