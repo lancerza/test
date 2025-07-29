@@ -159,17 +159,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- Event Listener Setup ---
-    function setupEventListeners() {
-        playPauseBtn.addEventListener('click', playerControls.togglePlay);
-        video.addEventListener('play', () => {
-            playerControls.updatePlayButton();
-            showLoadingIndicator(false);
-            playerControls.showControls();
-        });
-        video.addEventListener('pause', () => {
-            playerControls.updatePlayButton();
-            playerControls.showControls();
-        });
+function setupEventListeners() {
+    playPauseBtn.addEventListener('click', playerControls.togglePlay);
+
+    // 'play' event: ทำงานทันทีเมื่อกดเล่นเพื่อเปลี่ยนไอคอนปุ่ม
+    video.addEventListener('play', () => {
+        playerControls.updatePlayButton();
+        playerControls.showControls();
+    });
+
+    // 'playing' event: ทำงานเมื่อวิดีโอเริ่มเล่นจริงๆ แล้ว (มีภาพขึ้น) ถึงจะซ่อน Loading
+    video.addEventListener('playing', () => {
+        showLoadingIndicator(false);
+    });
+
+    // 'pause' event:
+    video.addEventListener('pause', () => {
+        playerControls.updatePlayButton();
+        playerControls.showControls();
+    });
         progressBar.addEventListener('input', playerControls.setProgress);
         video.addEventListener('timeupdate', playerControls.updateProgress);
         muteBtn.addEventListener('click', playerControls.toggleMute);
