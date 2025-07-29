@@ -84,10 +84,9 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 .channel-tile-name { font-size: 13px; font-weight: 500; color: var(--text-color); text-align: center; }
 
 /* --- Mobile Styles --- */
-@media (max-width: 600px) {
+@media (max-width: 1023px) { /* Changed from 600px to avoid conflict */
     .container { padding: 0 5px; }
     #datetime-display { font-size: 12px; padding: 4px 8px; }
-    #datetime-display::before { font-size: 14px; }
     .channel-category-header { font-size: 20px; }
     .channel-buttons { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
     .channel-tile { min-height: 90px; padding: 8px; }
@@ -103,4 +102,40 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
     /* Hide elements to save space */
     #time-display, #volume-slider { display: none; }
+}
+
+/* --- Desktop Layout (2 Columns) --- */
+@media (min-width: 1024px) {
+    .main-layout {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .player-wrapper {
+        flex: 3;
+        position: sticky;
+        top: 20px;
+    }
+
+    #channel-buttons-container {
+        flex: 1;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+
+    #channel-buttons-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #channel-buttons-container::-webkit-scrollbar-track {
+        background: var(--border-color);
+        border-radius: 4px;
+    }
+
+    #channel-buttons-container::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 4px;
+    }
 }
