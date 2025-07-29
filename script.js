@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 channelButtonsContainer.appendChild(header);
                 const grid = document.createElement('div');
                 grid.className = 'channel-buttons';
-                groupedChannels[category].forEach(channel => {
+                groupedChannels[category].forEach((channel, index) => {
                     const tile = document.createElement('a');
                     tile.className = 'channel-tile';
                     tile.dataset.channelId = channel.id;
@@ -121,7 +121,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     nameSpan.innerText = channel.name;
                     tile.appendChild(logoImg);
                     tile.appendChild(nameSpan);
+
+                    if (channel.badge) {
+                        const badge = document.createElement('div');
+                        badge.className = 'channel-badge';
+                        badge.textContent = channel.badge;
+                        tile.appendChild(badge);
+                    }
+                    
                     grid.appendChild(tile);
+
+                    setTimeout(() => {
+                        tile.classList.add('visible');
+                    }, index * 50);
                 });
                 channelButtonsContainer.appendChild(grid);
             }
@@ -186,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
-
+        
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT') return;
             switch(e.key.toLowerCase()) {
