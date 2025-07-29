@@ -114,15 +114,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     border-bottom: 2px solid var(--border-color);
 }
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; }
+
 .channel-tile {
     background: var(--card-gradient);
     box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
     border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     text-decoration: none;
     cursor: pointer;
     border: 2px solid transparent;
@@ -131,6 +127,12 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
+    /* --- ✨ 1. โค้ดที่ปรับปรุง --- */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 10px;
 }
 .channel-tile.visible {
     opacity: 1;
@@ -149,15 +151,26 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
 }
 .channel-tile.active::before { content: ''; position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background-color: var(--success-indicator); border-radius: 50%; box-shadow: 0 0 8px var(--success-indicator); z-index: 2; }
+
 .channel-tile img {
     width: 100%;
-    max-height: 45px;
+    /* ✨ 2. กำหนดขนาดและระยะห่างใหม่ */
+    max-height: 50px;
     object-fit: contain;
-    margin-bottom: 8px;
-    flex-grow: 0;
+    margin-bottom: 10px;
     transition: transform 0.3s ease;
 }
-.channel-tile-name { font-size: 13px; font-weight: 500; color: var(--text-color); text-align: center; }
+.channel-tile-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-color);
+    text-align: center;
+    /* ✨ 3. จัดการชื่อที่ยาวเกินไป */
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .channel-badge {
     position: absolute;
     top: -1px;
