@@ -33,30 +33,7 @@ body {
 
 /* --- Datetime Display --- */
 #datetime-display {
-    color: var(--text-color-light);
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 8px 15px;
-    background: var(--card-gradient);
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease-in-out;
-}
-#datetime-display:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-#datetime-display time {
-    font-weight: 700;
+    display: none; /* ซ่อนส่วนแสดงวันที่และเวลา */
 }
 
 /* --- Custom Player Styles --- */
@@ -83,7 +60,9 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance
 input[type="range"]::-moz-range-thumb { border: none; background-color: var(--primary-color); height: 16px; width: 16px; border-radius: 50%; }
 #progress-bar { flex-grow: 1; }
 #volume-slider { width: 100px; }
-.time-display { color: white; font-size: 14px; user-select: none; }
+.time-display {
+    display: none; /* ซ่อนส่วนแสดงเวลา 00:00 / 00:00 */
+}
 
 /* --- Error Overlay & Loading Indicator Styles --- */
 .error-overlay, .loading-indicator {
@@ -110,20 +89,20 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     color: var(--primary-color);
     margin-top: 30px;
     margin-bottom: 15px;
-    padding-bottom: 0px;
+    padding-bottom: 5px;
     border-bottom: 2px solid var(--border-color);
 }
 
 .channel-buttons { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
-    gap: 12px; 
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
 }
 
 .channel-tile {
     background: var(--card-gradient);
     box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
-    border-radius: 1px;
+    border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
     border: 2px solid transparent;
@@ -154,7 +133,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     border-color: var(--primary-color);
     box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
 }
-.channel-tile.active::before { content: ''; position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background-color: var(--success-indicator); border-radius: 50%; box-shadow: 0 0 8px var(--success-indicator); z-index: 2; }
+.channel-tile.active::before { content: ''; position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background-color: var(--success-indicator); border-radius: 50%; box-shadow: 0 0 8px var(--success-indicator); z-index: 2; }
 
 .channel-tile img {
     width: 100%;
@@ -192,7 +171,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 /* --- Mobile Styles --- */
 @media (max-width: 1023px) {
     .container { padding: 0 5px; }
-    #datetime-display { font-size: 12px; padding: 4px 8px; }
     .channel-category-header { font-size: 20px; }
     .channel-buttons { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
     .channel-tile { min-height: 90px; padding: 8px; }
@@ -203,7 +181,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #progress-bar { order: 2; margin: 0 10px; }
     #mute-btn { order: 3; }
     #fullscreen-btn { order: 4; }
-    #time-display, #volume-slider { display: none; }
+    #volume-slider { display: none; }
 }
 
 /* --- Desktop Layout (2 Columns) --- */
