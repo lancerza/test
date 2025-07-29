@@ -113,7 +113,12 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     padding-bottom: 5px;
     border-bottom: 2px solid var(--border-color);
 }
-.channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; }
+
+.channel-buttons { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+    gap: 15px; 
+}
 
 .channel-tile {
     background: var(--card-gradient);
@@ -122,17 +127,16 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     text-decoration: none;
     cursor: pointer;
     border: 2px solid transparent;
-    min-height: 100px;
     position: relative;
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
-    /* --- ✨ 1. โค้ดที่ปรับปรุง --- */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 15px 10px;
+    min-height: 90px;
+    padding: 10px 8px;
 }
 .channel-tile.visible {
     opacity: 1;
@@ -154,23 +158,23 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
 .channel-tile img {
     width: 100%;
-    /* ✨ 2. กำหนดขนาดและระยะห่างใหม่ */
-    max-height: 50px;
     object-fit: contain;
-    margin-bottom: 10px;
     transition: transform 0.3s ease;
+    max-height: 40px;
+    margin-bottom: 8px;
 }
+
 .channel-tile-name {
-    font-size: 13px;
     font-weight: 500;
     color: var(--text-color);
     text-align: center;
-    /* ✨ 3. จัดการชื่อที่ยาวเกินไป */
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 12px;
 }
+
 .channel-badge {
     position: absolute;
     top: -1px;
