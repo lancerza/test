@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const video = document.getElementById('video');
-    const posterVideo = document.getElementById('poster-video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const customControls = document.querySelector('.custom-controls');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
@@ -63,8 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setVolume: () => {
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
-            // บันทึกค่า volume ลงใน localStorage
-            localStorage.setItem('playerVolume', volumeSlider.value);
         },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
@@ -82,24 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
             controlsTimeout = setTimeout(playerControls.hideControls, 3000);
         }
     };
-    
-    // --- User Settings ---
-    function restoreUserSettings() {
-        const savedVolume = localStorage.getItem('playerVolume');
-        if (savedVolume !== null) {
-            video.volume = savedVolume;
-            volumeSlider.value = savedVolume;
-        } else {
-            // ตั้งค่าเริ่มต้นถ้าไม่มีข้อมูล
-            video.volume = 0.5;
-            volumeSlider.value = 0.5;
-        }
-        // เริ่มต้นด้วยการปิดเสียงเสมอเมื่อโหลดหน้า
-        video.muted = true;
-        volumeSlider.value = 0;
-        playerControls.updateMuteButton();
-    }
-
 
     // --- Channel Logic ---
     const channelManager = {
@@ -134,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const logoImg = document.createElement('img');
                     logoImg.src = channel.logo;
                     logoImg.alt = channel.name;
+                    logoImg.loading = 'lazy';
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'channel-tile-name';
                     nameSpan.innerText = channel.name;
@@ -181,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function setupEventListeners() {
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
         video.addEventListener('play', () => {
-            if (posterVideo) posterVideo.classList.add('hidden');
             playerControls.updatePlayButton();
             showLoadingIndicator(false);
             playerControls.showControls();
@@ -196,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
         volumeSlider.addEventListener('input', playerControls.setVolume);
         video.addEventListener('volumechange', () => {
             playerControls.updateMuteButton();
-            // ไม่ต้องตั้งค่า volumeSlider.value ที่นี่เพื่อป้องกันการเกิด loop
         });
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
@@ -241,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         setupEventListeners();
-        restoreUserSettings(); // เรียกใช้ฟังก์ชันเพื่อตั้งค่าผู้ใช้
         timeManager.start();
         channelManager.createChannelButtons();
         
