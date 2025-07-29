@@ -4,12 +4,14 @@
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-4/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cdd42d20-b44d-11ee-9687-e7ccd66e1ea3_webp_original.webp"
+    "badge": "ใหม่"
   },
   "hls_truehd2": {
     "name": "ทรูสปอร์ตHD2",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-5/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/ce5c21d0-b44d-11ee-aa7d-afe908f95743_webp_original.webp"
+    "badge": "HD"
   },
   "hls_truehd3": {
     "name": "ทรูสปอร์ตHD3",
@@ -46,5 +48,24 @@
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-3/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5fda18e0-29cc-11ee-846b-a1c4e5181c87_webp_original.webp"
+  },
+  "hls_ipNBT2HD": {
+    "name": "NBT2HD",
+    "category": "IPTV",
+    "url": "https://lb1-live-mv.v2h-cdn.com/hls/fffe/nbt/nbt.m3u8",
+    "logo": "https://img2.pic.in.th/pic/nbt2hd.png"
+      },
+  "hls_ipALTV": {
+    "name": "ALTV",
+    "category": "IPTV",
+    "url": "https://thaipbs-ujxrch.cdn.byteark.com/live/playlist.m3u8",
+    "logo": "https://img2.pic.in.th/pic/altv28e6e1c8efd089d8.png"
+          },
+  "hls_ipThaiPBS": {
+    "name": "ThaiPBS",
+    "category": "IPTV",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv03_tpbshd/playlist.m3u8",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/thaipbs.png"
+    "badge": "ชัดมาก"
   }
 }
