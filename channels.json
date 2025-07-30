@@ -151,5 +151,60 @@
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/07/18/848915e0-44e9-11ef-9e86-a13521bc09bd_webp_original.webp"
-  }
+    },
+  "hls_ip5HD": {
+    "name": "5HD",
+    "category": "IPTV",
+    "url": "https://lb1-live-mv.v2h-cdn.com/hls/fffb/5hd/5hd.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp"
+        },
+    "hls_ip3HD": {
+    "name": "3HD",
+    "category": "IPTV",
+    "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffae/3hd/3hd.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5ff3e270-29cc-11ee-b2f4-e9de482d866e_webp_original.webp"
+          },
+    "hls_ipAmarin": {
+    "name": "Amarin",
+    "category": "IPTV",
+    "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffad/amarin/amarin.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2024/07/23/5e86fbc0-48c0-11ef-9fca-d9696b8af2b7_webp_original.webp"
+              },
+    "hls_ipCH7HD": {
+    "name": "CH7HD",
+    "category": "IPTV",
+    "url": "https://live-cdn-hwc.ch7.com/livech7hd/HD_1080p.m3u8?vhost=streaming-hwc.ch7.com",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
+                 },
+    "hls_ipCH7": {
+    "name": "CH7",
+    "category": "IPTV",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv35_ch7hd/playlist.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
+    "badge": "สำรอง"  
+                  },
+    "hls_ipPPTV": {
+    "name": "PPTV",
+    "category": "IPTV",
+    "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffab/pptv/pptv.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2024/06/26/48fb8a90-338b-11ef-a958-ed31043c43a3_webp_original.webp"
+                  },
+    "hls_ipVIPA": {
+    "name": "VIPA",
+    "category": "IPTV",
+    "url": "https://thaipbs-ophctt.cdn.byteark.com/0db95d655989436dbd571dcb8f70d98f/ap-southeast-1/6075037809001/profile_1/chunklist.m3u8",
+    "logo": "https://img.utdstc.com/icon/965/641/965641a9c5b372eac248b48aa0319bc04fad8c5ba556f885a0a79f3f61a5fb9b:200"
+                 },
+    "hls_ipWhiteChannel": {
+    "name": "WhiteChannel",
+    "category": "IPTV",
+    "url": "https://symc-cdn.violin.co.th/tndedge/whitechannel/playlist.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2022/02/17/3943ca00-8fd6-11ec-b076-dffedf0eab22_webp_original.webp"
+                 },
+    "hls_ipTTD1": {
+    "name": "TTD1",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd01-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+    }
 }
