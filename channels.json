@@ -174,7 +174,7 @@
     "name": "CH7HD",
     "category": "IPTV",
     "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv35_ch7hd/playlist.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
   },
   "hls_ipPPTV": {
     "name": "PPTV",
@@ -198,6 +198,66 @@
     "name": "TTD1",
     "category": "IPTV",
     "url": "https://psiiptv-b.sky-cdn.com/ttd01-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD2": {
+    "name": "TTD2",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd02-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD3": {
+    "name": "TTD3",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd03-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD5": {
+    "name": "TTD5",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd05-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD6": {
+    "name": "TTD6",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd06-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD7": {
+    "name": "TTD7",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd07-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD8": {
+    "name": "TTD8",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd08-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD9": {
+    "name": "TTD9",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd09-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD10": {
+    "name": "TTD10",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd10-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD11": {
+    "name": "TTD11",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd11-playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD12": {
+    "name": "TTD12",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd12-playlist/tracks-v1a1/mono.m3u8",
     "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
   }
 }
