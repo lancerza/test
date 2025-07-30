@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setVolume: () => {
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
+            playerControls.updateMuteButton();
         },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
@@ -271,6 +272,13 @@ document.addEventListener("DOMContentLoaded", () => {
         timeManager.start();
         channelManager.createChannelButtons();
         
+        // --- ตั้งค่าเสียงเริ่มต้น ---
+        video.muted = false;
+        video.volume = 0.5; // ตั้งค่าความดังเริ่มต้นที่ 50%
+        volumeSlider.value = 0.5;
+        playerControls.updateMuteButton(); // อัปเดตไอคอนปุ่มเสียง
+        // ------------------------
+
         const firstChannelId = Object.keys(channels)[0];
         if (firstChannelId) {
             await channelManager.loadChannel(firstChannelId);
