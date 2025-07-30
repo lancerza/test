@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById('mute-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const liveIndicator = document.getElementById('live-indicator');
 
     // --- Player Logic ---
     function showLoadingIndicator(isLoading) {
@@ -46,7 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 video.pause();
             }
         },
-        updatePlayButton: () => playPauseBtn.textContent = video.paused ? '▶️' : '⏸️',
+        updatePlayButton: () => {
+            playPauseBtn.querySelector('.icon-play').classList.toggle('hidden', !video.paused);
+            playPauseBtn.querySelector('.icon-pause').classList.toggle('hidden', video.paused);
+        },
         formatTime: (time) => {
             const minutes = Math.floor(time / 60);
             const seconds = Math.floor(time % 60);
@@ -58,7 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
         toggleMute: () => video.muted = !video.muted,
-        updateMuteButton: () => muteBtn.textContent = video.muted || video.volume === 0 ? '🔇' : '🔊',
+        updateMuteButton: () => {
+            const isMuted = video.muted || video.volume === 0;
+            muteBtn.querySelector('.icon-volume-high').classList.toggle('hidden', isMuted);
+            muteBtn.querySelector('.icon-volume-off').classList.toggle('hidden', !isMuted);
+        },
         setVolume: () => {
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
@@ -77,6 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
             playerWrapper.classList.remove('hide-cursor');
             clearTimeout(controlsTimeout);
             controlsTimeout = setTimeout(playerControls.hideControls, 3000);
+        },
+        checkIfLive: () => {
+            const isLive = !isFinite(video.duration);
+            progressBar.style.display = isLive ? 'none' : 'flex';
+            timeDisplay.style.display = isLive ? 'none' : 'block';
+            liveIndicator.classList.toggle('hidden', !isLive);
         }
     };
 
@@ -188,13 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
             playerControls.updatePlayButton();
             playerControls.showControls();
         });
+        video.addEventListener('loadedmetadata', playerControls.checkIfLive);
         progressBar.addEventListener('input', playerControls.setProgress);
         video.addEventListener('timeupdate', playerControls.updateProgress);
         muteBtn.addEventListener('click', playerControls.toggleMute);
         volumeSlider.addEventListener('input', playerControls.setVolume);
-        video.addEventListener('volumechange', () => {
-            playerControls.updateMuteButton();
-        });
+        video.addEventListener('volumechange', playerControls.updateMuteButton);
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
