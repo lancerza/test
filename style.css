@@ -92,13 +92,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     padding-bottom: 5px;
     border-bottom: 2px solid var(--border-color);
 }
-
 .channel-buttons { 
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
 }
-
 .channel-tile {
     background: var(--card-gradient);
     box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
@@ -134,7 +132,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
 }
 .channel-tile.active::before { content: ''; position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background-color: var(--success-indicator); border-radius: 50%; box-shadow: 0 0 8px var(--success-indicator); z-index: 2; }
-
 .channel-tile img {
     width: 100%;
     object-fit: contain;
@@ -142,7 +139,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     max-height: 40px;
     margin-bottom: 8px;
 }
-
 .channel-tile-name {
     font-weight: 500;
     color: var(--text-color);
@@ -150,7 +146,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     width: 100%;
     font-size: 12px;
 }
-
 .channel-badge {
     position: absolute;
     top: -1px;
@@ -166,7 +161,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 }
 
 /* --- Mobile Styles --- */
-@media (max-width: 1023px) {
+@media (max-width: 600px) { /* <-- แก้ไขกลับเป็น 600px */
     .container { padding: 0 5px; }
     .channel-category-header { font-size: 20px; }
     .channel-buttons { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
@@ -182,43 +177,4 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 }
 
 /* --- Desktop Layout (2 Columns) --- */
-@media (min-width: 1024px) {
-    .main-layout {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-    }
-    .player-wrapper {
-        flex: 3;
-        position: sticky;
-        top: 20px;
-    }
-    #channel-buttons-container {
-        flex: 1;
-        max-height: 85vh;
-        overflow-y: auto;
-        background-color: rgba(30, 30, 30, 0.5);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        padding: 0 10px 10px 10px;
-    }
-    #channel-buttons-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    #channel-buttons-container::-webkit-scrollbar-track {
-        background: var(--border-color);
-        border-radius: 4px;
-    }
-    #channel-buttons-container::-webkit-scrollbar-thumb {
-        background-color: var(--primary-color);
-        border-radius: 4px;
-    }
-    .channel-category-header {
-        position: sticky;
-        top: 0;
-        background-color: rgba(30, 30, 30, 0.7);
-        padding-top: 15px;
-        z-index: 1;
-    }
-}
+/* ส่วนนี้ถูกลบออกทั้งหมด */
