@@ -180,7 +180,7 @@
     "name": "CH7HD",
     "category": "IPTV",
     "url": "https://live-cdn-hwc.ch7.com/livech7hd/HD_1080p.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp",
     "badge": "1080P"
   },
   "hls_ipPPTV": {
