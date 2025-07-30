@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
             const thaiDate = now.toLocaleDateString('th-TH', dateOptions);
             const thaiTime = now.toLocaleTimeString('th-TH', timeOptions);
-            document.getElementById('datetime-display').innerHTML = `🕒 ${thaiDate}, <time>${thaiTime}</time>`;
+            document.getElementById('datetime-display').innerHTML = `🕒 ${thaiDate} <time>${thaiTime}</time>`;
         },
         start: () => {
             timeManager.update();
