@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isLive = !isFinite(video.duration);
             progressBar.style.display = isLive ? 'none' : 'flex';
             timeDisplay.style.display = isLive ? 'none' : 'block';
-            liveIndicator.classList.toggle('hidden', !isLive);
+            if (liveIndicator) liveIndicator.classList.toggle('hidden', !isLive);
         }
     };
 
@@ -122,9 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     tile.dataset.channelId = channel.id;
                     tile.addEventListener('click', () => {
                         channelManager.loadChannel(channel.id);
-                        if (window.innerWidth < 1024) {
-                           playerWrapper.scrollIntoView({ behavior: 'smooth' });
-                        }
+                        playerWrapper.scrollIntoView({ behavior: 'smooth' });
                     });
                     const logoImg = document.createElement('img');
                     logoImg.src = channel.logo;
