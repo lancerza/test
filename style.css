@@ -59,8 +59,20 @@ body {
     font-weight: 700;
 }
 
-/* --- Custom Player Styles --- */
-.player-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); aspect-ratio: 16 / 9; background-color: #000; }
+/* --- Main Layout and Player --- */
+.main-layout {
+    width: 100%;
+}
+.player-wrapper { 
+    position: relative; 
+    width: 100%; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+    aspect-ratio: 16 / 9; 
+    background-color: #000;
+    margin-bottom: 20px;
+}
 video { width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0; }
 #video {
     z-index: 2;
@@ -71,10 +83,13 @@ video { width: 100%; height: 100%; display: block; position: absolute; top: 0; l
 #video.visible {
     opacity: 1;
 }
+
+/* --- Custom Player Controls --- */
 .custom-controls { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px; display: flex; align-items: center; gap: 15px; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); opacity: 1; transition: opacity 0.3s ease; z-index: 4; }
 .custom-controls.controls-hidden { opacity: 0; }
 .player-wrapper.hide-cursor { cursor: none; }
-.control-btn { background: none; border: none; color: white; cursor: pointer; padding: 5px; font-size: 24px; display: flex; align-items: center; justify-content: center; }
+
+.control-btn { background: none; border: none; color: white; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center; }
 .control-btn svg { width: 22px; height: 22px; fill: white; pointer-events: none; transition: all 0.2s ease; }
 .control-btn:hover svg { fill: var(--primary-color); transform: scale(1.1); }
 .control-btn svg.hidden { display: none; }
@@ -84,6 +99,7 @@ input[type="range"]::-webkit-slider-runnable-track { background: var(--progress-
 input[type="range"]::-moz-range-track { background: var(--progress-track-bg); height: 6px; border-radius: 3px; }
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -5px; background-color: var(--primary-color); height: 16px; width: 16px; border-radius: 50%; }
 input[type="range"]::-moz-range-thumb { border: none; background-color: var(--primary-color); height: 16px; width: 16px; border-radius: 50%; }
+
 #progress-bar { flex-grow: 1; }
 #volume-slider { width: 100px; }
 .time-display { color: white; font-size: 14px; user-select: none; }
@@ -98,7 +114,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     margin-left: 10px;
 }
 .live-indicator.hidden { display: none; }
-
 
 /* --- Error Overlay & Loading Indicator Styles --- */
 .error-overlay, .loading-indicator {
@@ -165,9 +180,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     transform: scale(1.1);
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
 }
+
+/* อัปเดตสไตล์ Active ให้เด่นชัดขึ้น */
 .channel-tile.active {
     border-color: var(--primary-color);
-    box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
+    box-shadow: 0 0 25px rgba(0, 170, 255, 0.6), 0 0 8px rgba(0, 170, 255, 0.4) inset;
     transform: translateY(-2px) scale(1.02);
 }
 
@@ -221,44 +238,4 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #time-display, #volume-slider, .live-indicator { display: none; }
 }
 
-/* --- Desktop Layout (2 Columns) --- */
-@media (min-width: 1024px) {
-    .main-layout {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-    }
-    .player-wrapper {
-        flex: 3;
-        position: sticky;
-        top: 20px;
-    }
-    #channel-buttons-container {
-        flex: 1;
-        max-height: 85vh;
-        overflow-y: auto;
-        background-color: rgba(30, 30, 30, 0.5);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        padding: 0 10px 10px 10px;
-    }
-    #channel-buttons-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    #channel-buttons-container::-webkit-scrollbar-track {
-        background: var(--border-color);
-        border-radius: 4px;
-    }
-    #channel-buttons-container::-webkit-scrollbar-thumb {
-        background-color: var(--primary-color);
-        border-radius: 4px;
-    }
-    .channel-category-header {
-        position: sticky;
-        top: 0;
-        background-color: rgba(30, 30, 30, 0.7);
-        padding-top: 15px;
-        z-index: 1;
-    }
-}
+/* --- ลบ Desktop Layout (2 Columns) ออกทั้งหมด --- */
