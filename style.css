@@ -29,7 +29,13 @@ body {
     align-items: center;
     min-height: 100vh;
 }
-.container { width: 100%; max-width: 90%; margin: 20px auto; box-sizing: border-box; padding: 0 10px; }
+.container { 
+    width: 100%; 
+    max-width: 90%;
+    margin: 20px auto; 
+    box-sizing: border-box; 
+    padding: 0 10px; 
+}
 
 /* --- Datetime Display --- */
 #datetime-display {
@@ -84,7 +90,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
 /* --- Channel Grid Styles --- */
 .channel-category-header {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--primary-color);
     margin-top: 30px;
@@ -92,11 +98,13 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     padding-bottom: 5px;
     border-bottom: 2px solid var(--border-color);
 }
+
 .channel-buttons { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 15px;
 }
+
 .channel-tile {
     background: var(--card-gradient);
     box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light);
@@ -112,8 +120,8 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 90px;
-    padding: 10px;
+    min-height: 100px;
+    padding: 12px;
 }
 .channel-tile.visible {
     opacity: 1;
@@ -132,20 +140,23 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     box-shadow: 0 0 25px rgba(0, 170, 255, 0.6);
 }
 .channel-tile.active::before { content: ''; position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background-color: var(--success-indicator); border-radius: 50%; box-shadow: 0 0 8px var(--success-indicator); z-index: 2; }
+
 .channel-tile img {
     width: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
-    max-height: 40px;
-    margin-bottom: 8px;
+    max-height: 45px;
+    margin-bottom: 10px;
 }
+
 .channel-tile-name {
     font-weight: 500;
     color: var(--text-color);
     text-align: center;
     width: 100%;
-    font-size: 12px;
+    font-size: 13px;
 }
+
 .channel-badge {
     position: absolute;
     top: -1px;
@@ -161,7 +172,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 }
 
 /* --- Mobile Styles --- */
-@media (max-width: 600px) { /* <-- แก้ไขกลับเป็น 600px */
+@media (max-width: 600px) {
     .container { padding: 0 5px; }
     .channel-category-header { font-size: 20px; }
     .channel-buttons { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
@@ -175,6 +186,3 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #fullscreen-btn { order: 4; }
     #volume-slider { display: none; }
 }
-
-/* --- Desktop Layout (2 Columns) --- */
-/* ส่วนนี้ถูกลบออกทั้งหมด */
