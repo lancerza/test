@@ -170,11 +170,18 @@
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffad/amarin/amarin.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/07/23/5e86fbc0-48c0-11ef-9fca-d9696b8af2b7_webp_original.webp"
   },
-  "hls_ipCH7HD": {
-    "name": "CH7HD",
+  "hls_ipCH7": {
+    "name": "CH7",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffac/7hd/7hd.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
+  },
+  "hls_ipCH7HD": {
+    "name": "CH7HD",
+    "category": "IPTV",
+    "url": "https://live-cdn-hwc.ch7.com/livech7hd/HD_1080p.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp"
+    "badge": "1080P"
   },
   "hls_ipPPTV": {
     "name": "PPTV",
