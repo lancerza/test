@@ -54,10 +54,14 @@ body::-webkit-scrollbar {
 /* --- Header & Theme Toggle --- */
 .header-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* จัดเรียงในแนวตั้ง */
     align-items: center;
-    gap: 15px;
+    gap: 10px; /* ลดระยะห่าง */
     padding: 20px 0 0 0;
+}
+.header-buttons {
+    display: flex;
+    gap: 15px; /* ระยะห่างระหว่างปุ่ม */
 }
 .theme-toggle-btn {
     background: var(--card-gradient);
