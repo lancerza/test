@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
             const thaiDate = now.toLocaleDateString('th-TH', dateOptions);
             const thaiTime = now.toLocaleTimeString('th-TH', timeOptions);
-            document.getElementById('datetime-display').innerHTML = `🕒 ${thaiDate} <time>${thaiTime}</time>`;
+            document.getElementById('datetime-display').innerHTML = `🕒 ${thaiDate} ${thaiTime}`;
         },
         start: () => {
             timeManager.update();
@@ -244,6 +244,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (Hls.isSupported()) {
             hls = new Hls({
+                // เพิ่มการตั้งค่า User-Agent
+                xhrSetup: function(xhr, url) {
+                    const userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1";
+                    xhr.setRequestHeader('User-Agent', userAgent);
+                },
                 liveSyncDurationCount: 5,
                 liveMaxLatencyDurationCount: 10,
             });
