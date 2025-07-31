@@ -120,17 +120,29 @@
     "url": "https://keela2.com/stream/82/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img2.pic.in.th/pic/1664041351.png"  
   },
+  "hls_spotv5": {
+    "name": "SPOTV5",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/90/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1664125991.png"  
+  },
   "hls_ssc1": {
     "name": "SSC1HD",
     "category": "กีฬา",
     "url": "https://keela2.com/stream/39/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1691933533.png"  
   },
-  "hls_ssc2": {
+  "hls_SSCEXTRA1": {
     "name": "SSCEXTRA1",
     "category": "กีฬา",
     "url": "https://keela2.com/stream/38/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1691948780.png"  
+  },
+  "hls_SSCEXTRA2": {
+    "name": "SSCEXTRA2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/89/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1692334268.png"  
   },
   "hls_mutv": {
     "name": "MUTV",
@@ -161,6 +173,24 @@
     "category": "กีฬา",
     "url": "https://keela2.com/stream/80/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img2.pic.in.th/pic/1699121407.png"  
+  },
+  "hls_AstroArenaBola": {
+    "name": "AstroArenaBola",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/97/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1700012376.png"  
+  },
+  "hls_AstroArenaBola2": {
+    "name": "AstroArenaBola2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/98/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1698351468.png"  
+  },
+  "hls_AstroArena2": {
+    "name": "Astro Arena 2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/105/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://pic.in.th/image/1719768111.c1AbjH"  
   },
   "hls_ipFWMov": {
     "name": "FWMov",
