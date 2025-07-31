@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- DOM Elements ---
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const refreshChannelsBtn = document.getElementById('refresh-channels-btn');
     const video = document.getElementById('video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const customControls = document.querySelector('.custom-controls');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const loadingIndicator = document.getElementById('loading-indicator');
-    const loadingVideo = document.getElementById('loading-video');
     const errorOverlay = document.getElementById('error-overlay');
     const errorMessage = document.getElementById('error-message');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -25,28 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Player Logic ---
     function showLoadingIndicator(isLoading) {
-        if (isLoading) {
-            loadingIndicator.classList.remove('hidden');
-            loadingVideo.play().catch(() => {});
-        } else {
-            loadingIndicator.classList.add('hidden');
-            loadingVideo.pause();
-            loadingVideo.currentTime = 0;
-        }
+        loadingIndicator.classList.toggle('hidden', !isLoading);
     }
 
     const playerControls = {
         showError: (message) => {
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
-            
             const retryBtn = document.getElementById('retry-btn');
             retryBtn.replaceWith(retryBtn.cloneNode(true));
             document.getElementById('retry-btn').addEventListener('click', () => {
-                if (currentChannelId) {
-                    console.log(`Retrying channel: ${currentChannelId}`);
-                    channelManager.loadChannel(currentChannelId);
-                }
+                if (currentChannelId) channelManager.loadChannel(currentChannelId);
             }, { once: true });
         },
         hideError: () => {
@@ -94,19 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
             else document.exitFullscreen();
         },
         togglePip: async () => {
-            if (!document.pictureInPictureEnabled) {
-                alert('เบราว์เซอร์ของคุณไม่รองรับ Picture-in-Picture');
-                return;
-            }
+            if (!document.pictureInPictureEnabled) return alert('เบราว์เซอร์ของคุณไม่รองรับ Picture-in-Picture');
             try {
-                if (document.pictureInPictureElement) {
-                    await document.exitPictureInPicture();
-                } else {
-                    await video.requestPictureInPicture();
-                }
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการเปิดโหมด PiP:", error);
-            }
+                if (document.pictureInPictureElement) await document.exitPictureInPicture();
+                else await video.requestPictureInPicture();
+            } catch (error) { console.error("เกิดข้อผิดพลาดในการเปิดโหมด PiP:", error); }
         },
         hideControls: () => {
             if (video.paused) return;
@@ -130,8 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Channel Logic ---
     const channelManager = {
         updateActiveButton: () => {
-            const tiles = document.querySelectorAll('.channel-tile');
-            tiles.forEach(tile => tile.classList.toggle('active', tile.dataset.channelId === currentChannelId));
+            document.querySelectorAll('.channel-tile').forEach(tile => tile.classList.toggle('active', tile.dataset.channelId === currentChannelId));
         },
         createChannelButtons: () => {
             channelButtonsContainer.innerHTML = '';
@@ -156,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     tile.addEventListener('click', () => {
                         document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
                         tile.classList.add('loading');
-                        
                         channelManager.loadChannel(channel.id);
                         playerWrapper.scrollIntoView({ behavior: 'smooth' });
                     });
@@ -169,16 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     nameSpan.innerText = channel.name;
                     tile.appendChild(logoImg);
                     tile.appendChild(nameSpan);
-
                     if (channel.badge) {
                         const badge = document.createElement('div');
                         badge.className = 'channel-badge';
                         badge.textContent = channel.badge;
                         tile.appendChild(badge);
                     }
-                    
                     tile.style.animationDelay = `${index * 0.05}s`;
-                    
                     grid.appendChild(tile);
                 });
                 channelButtonsContainer.appendChild(grid);
@@ -193,10 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             currentChannelId = channelId;
             localStorage.setItem('webtv_lastChannelId', channelId);
             const channel = channels[channelId];
-            
-            // เปลี่ยนชื่อ Title ของเว็บเมื่อเลือกช่อง
             document.title = `▶️ ${channel.name} - Flow TV`;
-            
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
@@ -226,19 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Event Listener Setup ---
     function setupEventListeners() {
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
-        video.addEventListener('play', () => {
-            playerControls.updatePlayButton();
-            playerControls.showControls();
-        });
+        video.addEventListener('play', () => { playerControls.updatePlayButton(); playerControls.showControls(); });
         video.addEventListener('playing', () => {
             document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
             showLoadingIndicator(false);
             video.classList.add('visible'); 
         });
-        video.addEventListener('pause', () => {
-            playerControls.updatePlayButton();
-            playerControls.showControls();
-        });
+        video.addEventListener('pause', () => { playerControls.updatePlayButton(); playerControls.showControls(); });
         video.addEventListener('loadedmetadata', playerControls.checkIfLive);
         progressBar.addEventListener('input', playerControls.setProgress);
         video.addEventListener('timeupdate', playerControls.updateProgress);
@@ -255,25 +222,36 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem('webtv_theme', isLight ? 'light' : 'dark');
         });
 
+        refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
+
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
         
         document.addEventListener('keydown', (e) => {
             if (e.target.tagName === 'INPUT') return;
             switch(e.key.toLowerCase()) {
-                case ' ':
-                    e.preventDefault();
-                    playerControls.togglePlay();
-                    break;
-                case 'm':
-                    playerControls.toggleMute();
-                    break;
-                case 'f':
-                    playerControls.toggleFullscreen();
-                    break;
+                case ' ': e.preventDefault(); playerControls.togglePlay(); break;
+                case 'm': playerControls.toggleMute(); break;
+                case 'f': playerControls.toggleFullscreen(); break;
             }
         });
     }
+
+    // --- Data Fetching ---
+    async function fetchAndRenderChannels() {
+        console.log("Fetching channel list...");
+        try {
+            // เพิ่ม `cache: 'no-store'` เพื่อให้แน่ใจว่าดึงข้อมูลใหม่เสมอ
+            const response = await fetch('channels.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error('Network response was not ok');
+            channels = await response.json();
+            channelManager.createChannelButtons();
+        } catch (e) {
+            console.error("Could not fetch or render channels:", e);
+            playerControls.showError("ไม่สามารถรีเฟรชรายการช่องได้");
+        }
+    }
+
 
     // --- Initialization ---
     async function init() {
@@ -283,42 +261,21 @@ document.addEventListener("DOMContentLoaded", () => {
             themeToggleBtn.textContent = '🌙';
         }
 
-        try {
-            const response = await fetch('channels.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            channels = await response.json();
-        } catch (e) {
-            console.error("Fatal Error: Could not load channel data.", e);
+        await fetchAndRenderChannels().catch(e => {
+            console.error("Fatal Error: Could not load initial channel data.", e);
             playerControls.showError("เกิดข้อผิดพลาด: ไม่สามารถโหลดข้อมูลช่องได้");
             return;
-        }
+        });
 
         if (Hls.isSupported()) {
-            hls = new Hls({
-                enableWorker: true,
-                maxBufferLength: 30,
-                maxMaxBufferLength: 600,
-                liveSyncDurationCount: 5,
-                liveMaxLatencyDurationCount: 10,
-            });
+            hls = new Hls({ enableWorker: true, maxBufferLength: 30, maxMaxBufferLength: 600, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
             hls.attachMedia(video);
-            hls.on(Hls.Events.ERROR, function (event, data) {
+            hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
                     switch(data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ\n(Network Error)');
-                            hls.startLoad();
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                             playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ\n(Media Error)');
-                            hls.recoverMediaError();
-                            break;
-                        default:
-                            playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้');
-                            hls.destroy();
-                            break;
+                        case Hls.ErrorTypes.NETWORK_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ\n(Network Error)'); hls.startLoad(); break;
+                        case Hls.ErrorTypes.MEDIA_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ\n(Media Error)'); hls.recoverMediaError(); break;
+                        default: playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); hls.destroy(); break;
                     }
                 }
             });
@@ -326,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         setupEventListeners();
         timeManager.start();
-        channelManager.createChannelButtons();
         
         const savedVolume = localStorage.getItem('webtv_volume');
         const savedMuted = localStorage.getItem('webtv_muted') === 'true';
