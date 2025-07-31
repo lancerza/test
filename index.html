@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DONOK</title>
+    <title>Web TV Player</title>
     <link rel="icon" href="data:;base64,=">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div id="datetime-display"></div>
+        <div class="header-container">
+            <div id="datetime-display"></div>
+            <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="สลับธีม">☀️</button>
+        </div>
         
         <div class="main-layout">
             <div class="player-wrapper">
