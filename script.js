@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let controlsTimeout;
 
     // --- DOM Elements ---
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const video = document.getElementById('video');
     const playerWrapper = document.querySelector('.player-wrapper');
     const customControls = document.querySelector('.custom-controls');
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById('mute-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const pipBtn = document.getElementById('pip-btn'); // เพิ่มตัวแปร PiP
+    const pipBtn = document.getElementById('pip-btn');
     const liveIndicator = document.getElementById('live-indicator');
 
     // --- Player Logic ---
@@ -38,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
             
-            // เพิ่ม Logic สำหรับปุ่ม Retry
             const retryBtn = document.getElementById('retry-btn');
             retryBtn.replaceWith(retryBtn.cloneNode(true));
             document.getElementById('retry-btn').addEventListener('click', () => {
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log(`Retrying channel: ${currentChannelId}`);
                     channelManager.loadChannel(currentChannelId);
                 }
-            }, { once: true }); // { once: true } เพื่อให้ event ทำงานแค่ครั้งเดียว
+            }, { once: true });
         },
         hideError: () => {
             if (errorOverlay) errorOverlay.classList.add('hidden');
@@ -183,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
             const channel = channels[channelId];
-            document.title = `▶️ ${channel.name} - DONOK`;
+            document.title = `▶️ ${channel.name} - Web TV Player`;
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
@@ -232,7 +233,16 @@ document.addEventListener("DOMContentLoaded", () => {
         volumeSlider.addEventListener('input', playerControls.setVolume);
         video.addEventListener('volumechange', playerControls.updateMuteButton);
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
-        pipBtn.addEventListener('click', playerControls.togglePip); // เพิ่ม Event Listener สำหรับ PiP
+        pipBtn.addEventListener('click', playerControls.togglePip);
+        
+        // Event Listener สำหรับปุ่มสลับธีม
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            const isLight = body.classList.contains('light-theme');
+            themeToggleBtn.textContent = isLight ? '🌙' : '☀️';
+            localStorage.setItem('webtv_theme', isLight ? 'light' : 'dark');
+        });
+
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
         
@@ -255,6 +265,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Initialization ---
     async function init() {
+        // โหลดธีมที่บันทึกไว้
+        const savedTheme = localStorage.getItem('webtv_theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggleBtn.textContent = '🌙';
+        }
+
         try {
             const response = await fetch('channels.json');
             if (!response.ok) {
