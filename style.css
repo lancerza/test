@@ -134,6 +134,19 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 .hidden { opacity: 0; pointer-events: none; }
 
 /* --- Channel Grid Styles --- */
+
+/* เพิ่ม Keyframes สำหรับ Animation */
+@keyframes tile-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .channel-category-header {
     font-size: 24px;
     font-weight: 700;
@@ -159,19 +172,20 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     border: 2px solid transparent;
     position: relative;
     transition: all 0.3s ease;
-    opacity: 0;
-    transform: translateY(20px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 80px;
     padding: 8px 6px;
+    
+    /* เรียกใช้ Animation */
+    opacity: 0;
+    animation: tile-fade-in 0.4s ease forwards;
 }
-.channel-tile.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
+
+/* ลบ .channel-tile.visible ออกได้เลย */
+
 .channel-tile:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 170, 255, 0.2);
@@ -180,14 +194,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     transform: scale(1.1);
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
 }
-
-/* อัปเดตสไตล์ Active ให้เด่นชัดขึ้น */
 .channel-tile.active {
     border-color: var(--primary-color);
     box-shadow: 0 0 25px rgba(0, 170, 255, 0.6), 0 0 8px rgba(0, 170, 255, 0.4) inset;
     transform: translateY(-2px) scale(1.02);
 }
-
 .channel-tile img {
     width: 100%;
     object-fit: contain;
@@ -195,7 +206,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     max-height: 35px;
     margin-bottom: 6px;
 }
-
 .channel-tile-name {
     font-weight: 500;
     color: var(--text-color);
@@ -206,7 +216,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     text-overflow: ellipsis;
     font-size: 11px;
 }
-
 .channel-badge {
     position: absolute;
     top: -1px;
@@ -237,5 +246,3 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #fullscreen-btn { order: 4; }
     #time-display, #volume-slider, .live-indicator { display: none; }
 }
-
-/* --- ลบ Desktop Layout (2 Columns) ออกทั้งหมด --- */
