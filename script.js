@@ -73,7 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
             timeDisplay.textContent = `${playerControls.formatTime(video.currentTime)} / ${playerControls.formatTime(video.duration || 0)}`;
         },
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
-        toggleMute: () => video.muted = !video.muted,
+        toggleMute: () => {
+            video.muted = !video.muted;
+            localStorage.setItem('webtv_muted', video.muted);
+        },
         updateMuteButton: () => {
             const isMuted = video.muted || video.volume === 0;
             muteBtn.querySelector('.icon-volume-high').classList.toggle('hidden', isMuted);
@@ -83,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
             playerControls.updateMuteButton();
+            localStorage.setItem('webtv_volume', video.volume);
+            localStorage.setItem('webtv_muted', video.muted);
         },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
@@ -149,6 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     tile.className = 'channel-tile';
                     tile.dataset.channelId = channel.id;
                     tile.addEventListener('click', () => {
+                        document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
+                        tile.classList.add('loading');
+                        
                         channelManager.loadChannel(channel.id);
                         playerWrapper.scrollIntoView({ behavior: 'smooth' });
                     });
@@ -183,8 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
             showLoadingIndicator(true);
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
+            localStorage.setItem('webtv_lastChannelId', channelId);
             const channel = channels[channelId];
-            document.title = `▶️ ${channel.name} - Web TV Player`;
+            
+            // เปลี่ยนชื่อ Title ของเว็บเมื่อเลือกช่อง
+            document.title = `▶️ ${channel.name} - Flow TV`;
+            
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
@@ -219,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
             playerControls.showControls();
         });
         video.addEventListener('playing', () => {
+            document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
             showLoadingIndicator(false);
             video.classList.add('visible'); 
         });
@@ -235,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         pipBtn.addEventListener('click', playerControls.togglePip);
         
-        // Event Listener สำหรับปุ่มสลับธีม
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('light-theme');
             const isLight = body.classList.contains('light-theme');
@@ -265,7 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Initialization ---
     async function init() {
-        // โหลดธีมที่บันทึกไว้
         const savedTheme = localStorage.getItem('webtv_theme');
         if (savedTheme === 'light') {
             body.classList.add('light-theme');
@@ -317,13 +328,24 @@ document.addEventListener("DOMContentLoaded", () => {
         timeManager.start();
         channelManager.createChannelButtons();
         
-        video.muted = false;
-        video.volume = 0.5;
-        volumeSlider.value = 0.5;
+        const savedVolume = localStorage.getItem('webtv_volume');
+        const savedMuted = localStorage.getItem('webtv_muted') === 'true';
+        if (savedVolume !== null) {
+            video.volume = savedVolume;
+            volumeSlider.value = savedVolume;
+        } else {
+            video.volume = 0.5;
+            volumeSlider.value = 0.5;
+        }
+        video.muted = savedMuted;
         playerControls.updateMuteButton();
 
+        const lastChannelId = localStorage.getItem('webtv_lastChannelId');
         const firstChannelId = Object.keys(channels)[0];
-        if (firstChannelId) {
+        
+        if (lastChannelId && channels[lastChannelId]) {
+            await channelManager.loadChannel(lastChannelId);
+        } else if (firstChannelId) {
             await channelManager.loadChannel(firstChannelId);
         }
     }
