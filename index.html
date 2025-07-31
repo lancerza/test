@@ -13,6 +13,7 @@
         <div class="header-container">
             <div id="datetime-display"></div>
             <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="สลับธีม">☀️</button>
+            <button id="refresh-channels-btn" class="theme-toggle-btn" aria-label="รีเฟรชรายการช่อง">🔄</button>
         </div>
         
         <div class="main-layout">
@@ -20,7 +21,7 @@
                 <video id="video" autoplay playsinline></video>
                 
                 <div id="loading-indicator" class="loading-indicator hidden">
-                    <video id="loading-video" loop muted playsinline src="assets/loading.mp4"></video>
+                    <div class="spinner"></div>
                 </div>
 
                 <div id="error-overlay" class="error-overlay hidden">
