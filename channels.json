@@ -63,7 +63,7 @@
   "hls_sptv1": {
     "name": "SportTV1",
     "category": "กีฬา",
-    "url": "https://keela2.com/stream/31/index.m3u8",
+    "url": "https://keela2.com/stream/31/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1663979709.png"      
   },
   "hls_sptv2": {
@@ -71,6 +71,24 @@
     "category": "กีฬา",
     "url": "https://keela2.com/stream/30/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1663979801.png"  
+  },
+  "hls_espn1": {
+    "name": "ESPN1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/33/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1664501652.png"  
+  },
+  "hls_espn2": {
+    "name": "ESPN2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/34/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1664501662.png"  
+  },
+  "hls_espn3": {
+    "name": "ESPN3",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/35/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1664501676.png"  
   },
   "hls_ipFWMov": {
     "name": "FWMov",
