@@ -48,12 +48,54 @@
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-3/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5fda18e0-29cc-11ee-846b-a1c4e5181c87_webp_original.webp"
-  },
-  "hls_ipNBT2HD1": {
-    "name": "NBT2HD",
+      },
+  "hls_ipFWMov": {
+    "name": "FWMov",
     "category": "IPTV",
-    "url": "https://lb1-live-mv.v2h-cdn.com/hls/fffe/nbt/nbt.m3u8",
-    "logo": "https://img2.pic.in.th/pic/nbt2hd.png"
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwmov_fw-iptv.stream/chunks.m3u8",
+    "logo": "https://i.postimg.cc/Gpy7R98r/IMG-2544.png"
+      },
+  "hls_ipFWSov": {
+    "name": "FWSov",
+    "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwsov_fw-iptv.stream/chunks.m3u8",
+    "logo": "https://i.postimg.cc/02yVQVMV/IMG-2546.png"  
+      },
+  "hls_ipFWSov": {
+    "name": "FWSov",
+    "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwsov_fw-iptv.stream/chunks.m3u8",
+    "logo": "https://i.postimg.cc/02yVQVMV/IMG-2546.png"    
+  },
+  "hls_ipFWDoc": {
+    "name": "FWDoc",
+    "category": "IPTV",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwdoc_fw-iptv.stream/playlist.m3u8",
+    "logo": "https://i.postimg.cc/vHnv2Tjd/IMG-2556.png"
+  },
+  "hls_ipFWToon": {
+    "name": "FWToon",
+    "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwtoon_fw-iptv.stream/chunks.m3u8",
+    "logo": "https://i.postimg.cc/8PxLS4hJ/IMG-2552.png"  
+  },
+  "hls_ipChiangraiChannel": {
+    "name": "ChiangraiChannel",
+    "category": "IPTV",
+    "url": "http://live.thaitvstream.com/play/chiangrai/index.m3u8",
+    "logo": "https://i.postimg.cc/GtRYFgq8/IMG-2429.png"    
+  },
+  "hls_ipCoolChannel": {
+    "name": "CoolChannel",
+    "category": "IPTV",
+    "url": "https://live-iptv.cool-channel.com/cool/live-720P.m3u8",
+    "logo": "https://i.postimg.cc/63sPMnRJ/IMG-1854.png"  
+  },
+  "hls_ipChannel8": {
+    "name": "Channel8",
+    "category": "IPTV",
+    "url": "https://cdn-th-vip.livestreaming.in.th/ch8/ch8/chunklist_w1708048131.m3u8",
+    "logo": "https://i.postimg.cc/RFVxDzJm/IMG-1839.png"  
   },
   "hls_ipNBT2HD2": {
     "name": "NBT11 ภาคเหนือ",
@@ -198,11 +240,19 @@
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/07/18/848915e0-44e9-11ef-9e86-a13521bc09bd_webp_original.webp"
   },
-  "hls_ip5HD": {
+  "hls_ip5HD1": {
+    "name": "5HD",
+    "category": "IPTV",
+    "url": "https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp",
+    "badge": "HD"
+  },
+  "hls_ip5HD2": {
     "name": "5HD",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/fffb/5hd/5hd.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp"
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp",
+    "badge": "สำรอง"    
   },
   "hls_ip3HD": {
     "name": "3HD",
@@ -225,9 +275,9 @@
   "hls_ipCH7HD": {
     "name": "CH7HD",
     "category": "IPTV",
-    "url": "https://live-cdn-hwc.ch7.com/livech7hd/HD_1080p.m3u8",
+    "url": "https://live-cdn-hwc.ch7.com/livech7hd/HD_720p.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/19/212d15e0-25e7-11ee-bfc1-85e95548413c_webp_original.webp",
-    "badge": "1080P"
+    "badge": "720P"
   },
   "hls_ipPPTV": {
     "name": "PPTV",
@@ -264,6 +314,12 @@
     "category": "IPTV",
     "url": "https://psiiptv-b.sky-cdn.com/ttd03-playlist/tracks-v1a1/mono.m3u8",
     "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_ipTTD4": {
+    "name": "TTD4",
+    "category": "IPTV",
+    "url": "https://psiiptv-b.sky-cdn.com/ttd04-Playlist/tracks-v1a1/mono.m3u8",
+    "logo": "https://i.postimg.cc/Xvd8hhmY/IMG-2548.png"  
   },
   "hls_ipTTD5": {
     "name": "TTD5",
