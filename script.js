@@ -142,11 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         tile.appendChild(badge);
                     }
                     
+                    // ตั้งค่า animation-delay ให้แต่ละ tile เพื่อให้แสดงผลแบบไล่ระดับ
+                    tile.style.animationDelay = `${index * 0.05}s`;
+                    
                     grid.appendChild(tile);
-
-                    setTimeout(() => {
-                        tile.classList.add('visible');
-                    }, index * 50);
                 });
                 channelButtonsContainer.appendChild(grid);
             }
@@ -244,6 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (Hls.isSupported()) {
             hls = new Hls({
+                // ปรับแต่งประสิทธิภาพ HLS.js
+                enableWorker: true,
+                maxBufferLength: 30,
+                maxMaxBufferLength: 600,
+                // -----
                 liveSyncDurationCount: 5,
                 liveMaxLatencyDurationCount: 10,
             });
@@ -274,9 +278,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // --- ตั้งค่าเสียงเริ่มต้น ---
         video.muted = false;
-        video.volume = 0.5; // ตั้งค่าความดังเริ่มต้นที่ 50%
+        video.volume = 0.5;
         volumeSlider.value = 0.5;
-        playerControls.updateMuteButton(); // อัปเดตไอคอนปุ่มเสียง
+        playerControls.updateMuteButton();
         // ------------------------
 
         const firstChannelId = Object.keys(channels)[0];
