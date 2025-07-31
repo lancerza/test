@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById('mute-btn');
     const volumeSlider = document.getElementById('volume-slider');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const pipBtn = document.getElementById('pip-btn'); // เพิ่มตัวแปร PiP
     const liveIndicator = document.getElementById('live-indicator');
 
     // --- Player Logic ---
@@ -36,6 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
         showError: (message) => {
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
+            
+            // เพิ่ม Logic สำหรับปุ่ม Retry
+            const retryBtn = document.getElementById('retry-btn');
+            retryBtn.replaceWith(retryBtn.cloneNode(true));
+            document.getElementById('retry-btn').addEventListener('click', () => {
+                if (currentChannelId) {
+                    console.log(`Retrying channel: ${currentChannelId}`);
+                    channelManager.loadChannel(currentChannelId);
+                }
+            }, { once: true }); // { once: true } เพื่อให้ event ทำงานแค่ครั้งเดียว
         },
         hideError: () => {
             if (errorOverlay) errorOverlay.classList.add('hidden');
@@ -75,6 +86,21 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
             else document.exitFullscreen();
+        },
+        togglePip: async () => {
+            if (!document.pictureInPictureEnabled) {
+                alert('เบราว์เซอร์ของคุณไม่รองรับ Picture-in-Picture');
+                return;
+            }
+            try {
+                if (document.pictureInPictureElement) {
+                    await document.exitPictureInPicture();
+                } else {
+                    await video.requestPictureInPicture();
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการเปิดโหมด PiP:", error);
+            }
         },
         hideControls: () => {
             if (video.paused) return;
@@ -142,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         tile.appendChild(badge);
                     }
                     
-                    // ตั้งค่า animation-delay ให้แต่ละ tile เพื่อให้แสดงผลแบบไล่ระดับ
                     tile.style.animationDelay = `${index * 0.05}s`;
                     
                     grid.appendChild(tile);
@@ -158,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
             const channel = channels[channelId];
-            document.title = `▶️ ${channel.name} - Web TV Player`;
+            document.title = `▶️ ${channel.name} - DONOK`;
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
@@ -207,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         volumeSlider.addEventListener('input', playerControls.setVolume);
         video.addEventListener('volumechange', playerControls.updateMuteButton);
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
+        pipBtn.addEventListener('click', playerControls.togglePip); // เพิ่ม Event Listener สำหรับ PiP
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
         
@@ -243,11 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (Hls.isSupported()) {
             hls = new Hls({
-                // ปรับแต่งประสิทธิภาพ HLS.js
                 enableWorker: true,
                 maxBufferLength: 30,
                 maxMaxBufferLength: 600,
-                // -----
                 liveSyncDurationCount: 5,
                 liveMaxLatencyDurationCount: 10,
             });
@@ -276,12 +300,10 @@ document.addEventListener("DOMContentLoaded", () => {
         timeManager.start();
         channelManager.createChannelButtons();
         
-        // --- ตั้งค่าเสียงเริ่มต้น ---
         video.muted = false;
         video.volume = 0.5;
         volumeSlider.value = 0.5;
         playerControls.updateMuteButton();
-        // ------------------------
 
         const firstChannelId = Object.keys(channels)[0];
         if (firstChannelId) {
