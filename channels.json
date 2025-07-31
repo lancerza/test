@@ -90,12 +90,48 @@
     "url": "https://keela2.com/stream/35/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img2.pic.in.th/pic/1664501676.png"  
   },
+  "hls_spotv1": {
+    "name": "SPOTV1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/36/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1664529562.png"  
+  },
+  "hls_spotv2": {
+    "name": "SPOTV2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/37/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1664529575.png"  
+  },
+  "hls_ssc1": {
+    "name": "SSC1HD",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/39/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1691933533.png"  
+  },
+  "hls_ssc2": {
+    "name": "SSCEXTRA1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/38/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1691948780.png"  
+  },
+  "hls_mutv": {
+    "name": "MUTV",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/74/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1665106261.png"  
+  },
+  "hls_DiemaSport": {
+    "name": "DiemaSport",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/77/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/1664315169.png"
+  },
   "hls_ipFWMov": {
     "name": "FWMov",
     "category": "IPTV",
     "url": "https://freelive.inwstream.com:1936/freelive-edge/fwmov_fw-iptv.stream/chunks.m3u8",
-    "logo": "https://i.postimg.cc/Gpy7R98r/IMG-2544.png"
-      },
+    "logo": "https://i.postimg.cc/Gpy7R98r/IMG-2544.png"      
+  },
   "hls_ipFWSov": {
     "name": "FWSov",
     "category": "IPTV",
