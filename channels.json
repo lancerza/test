@@ -49,11 +49,35 @@
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-3/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5fda18e0-29cc-11ee-846b-a1c4e5181c87_webp_original.webp"
   },
-  "hls_ipNBT2HD": {
+  "hls_ipNBT2HD1": {
     "name": "NBT2HD",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/fffe/nbt/nbt.m3u8",
     "logo": "https://img2.pic.in.th/pic/nbt2hd.png"
+  },
+  "hls_ipNBT2HD2": {
+    "name": "NBT11 ภาคเหนือ",
+    "category": "IPTV",
+    "url": "https://cdn-edge-ott.prd.go.th/live_vlc/smil:bfe6-faf5-827f-6228-2aa1.smil/chunklist_w695610859_b2128000.m3u8",
+    "logo": "https://i.postimg.cc/nLfbZvzV/IMG-2399.png"  
+  },
+  "hls_ipNBT2HD3": {
+    "name": "NBT11 ภาคอีสาน",
+    "category": "IPTV",
+    "url": "https://cdn-edge-ott.prd.go.th/live_vlc/smil:7721-732d-60a6-13c1-b16d.smil/chunklist_w579192591_b2128000.m3u8",
+    "logo": "https://i.postimg.cc/xTN4CcBX/IMG-2401.png"    
+  },
+  "hls_ipNBT2HD4": {
+    "name": "NBT11 ภาคกลาง",
+    "category": "IPTV",
+    "url": "https://cdn-edge-ott.prd.go.th/live_vlc/smil:01f1-8b4b-971e-aa35-d5fa.smil/playlist.m3u8",
+    "logo": "https://i.postimg.cc/fTY1CVC6/IMG-2403.png"  
+  },
+  "hls_ipNBT2HD4": {
+    "name": "NBT11 ภาคใต้",
+    "category": "IPTV",
+    "url": "https://cdn-edge-ott.prd.go.th/live_vlc/smil:406a-211e-df39-045c-4048.smil/chunklist_w1186889088_b2128000.m3u8",
+    "logo": "https://i.postimg.cc/5t2GfnJV/IMG-2405.png"  
   },
   "hls_ipALTV": {
     "name": "ALTV",
