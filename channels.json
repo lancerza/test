@@ -145,11 +145,33 @@
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffbe/ch8/ch8.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/12/24/f5c6ee50-c1d3-11ef-962c-55a14ec29c2c_webp_original.webp"
   },
-  "hls_ipMono29": {
-    "name": "Mono29",
+  "hls_ipMono291": {
+    "name": "Mono29 (หนังพากย์ไทย)",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/720p/index.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
+    "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png",
+    "badge": "HD"
+  },
+  "hls_ipMono292": {
+    "name": "Mono29 (หนังพากย์ไทย)",
+    "category": "IPTV",
+    "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/playlist.m3u8",
+    "logo": "https://i.postimg.cc/26dJcxGv/IMG-2741.png",  
+    "badge": "สำรอง"
+  },
+  "hls_ipMono293": {
+    "name": "Mono29 (หนังSoundtrack)",
+    "category": "IPTV",
+    "url": "https://monomax-uiripn.cdn.byteark.com/plain/st/720p/index.m3u8",
+    "logo": "https://i.postimg.cc/26dJcxGv/IMG-2741.png",  
+    "badge": "HD"  
+  },
+  "hls_ipMono294": {
+    "name": "Mono29 (หนังSoundtrack)",
+    "category": "IPTV",
+    "url": "https://monomax-uiripn.cdn.byteark.com/plain/st/playlist.m3u8",
+    "logo": "https://i.postimg.cc/26dJcxGv/IMG-2741.png",  
+    "badge": "สำรอง"  
   },
   "hls_ipMCOTHD": {
     "name": "MCOTHD",
