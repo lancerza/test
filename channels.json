@@ -29,6 +29,12 @@
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-8/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cf4a2b50-b44d-11ee-aa7d-afe908f95743_webp_original.webp"
   },
+  "hls_truehd7": {
+    "name": "ทรูสปอร์ตHD7",
+    "category": "กีฬา",
+    "url": "http://45.150.128.170:8080/live/sakchai/36572/18999.ts",
+    "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cf4a2b50-b44d-11ee-aa7d-afe908f95743_webp_original.webp"  
+  },
   "hls_bg1": {
     "name": "beIN SPORTS 1",
     "category": "กีฬา",
