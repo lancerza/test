@@ -30,8 +30,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const playerControls = {
         showError: (message) => {
+            const errorChannelName = document.getElementById('error-channel-name');
+
+            // --- เพิ่ม Logic แสดงชื่อช่อง ---
+            if (currentChannelId && channels[currentChannelId]) {
+                errorChannelName.textContent = channels[currentChannelId].name;
+                errorChannelName.style.display = 'block';
+            } else {
+                errorChannelName.style.display = 'none';
+            }
+            // --- สิ้นสุด ---
+
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
+
             const retryBtn = document.getElementById('retry-btn');
             retryBtn.replaceWith(retryBtn.cloneNode(true));
             document.getElementById('retry-btn').addEventListener('click', () => {
@@ -241,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchAndRenderChannels() {
         console.log("Fetching channel list...");
         try {
-            // เพิ่ม `cache: 'no-store'` เพื่อให้แน่ใจว่าดึงข้อมูลใหม่เสมอ
             const response = await fetch('channels.json', { cache: 'no-store' });
             if (!response.ok) throw new Error('Network response was not ok');
             channels = await response.json();
