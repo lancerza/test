@@ -44,20 +44,16 @@ body {
 }
 .container { width: 100%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; padding: 0 10px; }
 
-/* --- Custom Scrollbar --- */
-::-webkit-scrollbar {
-    width: 10px;
+/* --- ซ่อน Scrollbar --- */
+body {
+  /* สำหรับ Firefox */
+  scrollbar-width: none;
+  /* สำหรับ Internet Explorer และ Edge รุ่นเก่า */
+  -ms-overflow-style: none;
 }
-::-webkit-scrollbar-track {
-    background: var(--background-color);
-}
-::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    border: 2px solid var(--background-color);
-}
-::-webkit-scrollbar-thumb:hover {
-    background-color: #0088cc;
+/* สำหรับเบราว์เซอร์กลุ่ม WebKit (Chrome, Safari, Edge รุ่นใหม่) */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* --- Header & Theme Toggle --- */
