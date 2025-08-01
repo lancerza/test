@@ -41,8 +41,15 @@
   "hls_truehd4": {
     "name": "ทรูสปอร์ตHD4",
     "category": "กีฬา",
+    "url": "http://mooseven.ddns.net:9090/memfs/1c3ad503-2c97-4157-8047-e1538bdc5f36.m3u8",
+    "logo": "https://img2.pic.in.th/pic/true4.webp"  
+  },
+  "hls_truehd42": {
+    "name": "ทรูสปอร์ตHD4",
+    "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-7/playlist.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cf36f170-b44d-11ee-b20d-816339e67c2d_webp_original.webp"
+    "logo": "https://img2.pic.in.th/pic/true4.webp",
+    "badge": "สำรอง"
   },
   "hls_truehd5": {
     "name": "ทรูสปอร์ตHD5",
