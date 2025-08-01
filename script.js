@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const playerControls = {
-        // --- ส่วนที่แก้ไข ---
         showError: (message) => {
             const errorChannelName = document.getElementById('error-channel-name');
             if (currentChannelId && channels[currentChannelId]) {
@@ -54,24 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 errorChannelName.style.display = 'none';
             }
-
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
-
-            const oldBtn = document.getElementById('retry-btn');
-            const newBtn = oldBtn.cloneNode(true); // สร้างปุ่มใหม่ที่ไม่มี event listener ติดอยู่
-
+            const retryBtn = document.getElementById('retry-btn');
+            const newBtn = retryBtn.cloneNode(true);
             newBtn.addEventListener('click', () => {
-                if (currentChannelId) {
-                    console.log(`Retrying channel: ${currentChannelId}`);
-                    channelManager.loadChannel(currentChannelId);
-                }
+                if (currentChannelId) channelManager.loadChannel(currentChannelId);
             });
-
-            oldBtn.parentNode.replaceChild(newBtn, oldBtn); // นำปุ่มใหม่ไปแทนที่ปุ่มเก่า
+            retryBtn.parentNode.replaceChild(newBtn, retryBtn);
         },
-        // --- สิ้นสุดการแก้ไข ---
-
         hideError: () => {
             if (errorOverlay) errorOverlay.classList.add('hidden');
         },
@@ -322,9 +312,18 @@ document.addEventListener("DOMContentLoaded", () => {
             hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
                     switch(data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ\n(Network Error)'); hls.startLoad(); break;
-                        case Hls.ErrorTypes.MEDIA_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ\n(Media Error)'); hls.recoverMediaError(); break;
-                        default: playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); hls.destroy(); break;
+                        case Hls.ErrorTypes.NETWORK_ERROR: 
+                            playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ'); 
+                            hls.startLoad(); 
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR: 
+                            playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ'); 
+                            hls.recoverMediaError(); 
+                            break;
+                        default: 
+                            playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); 
+                            hls.destroy(); 
+                            break;
                     }
                 }
             });
