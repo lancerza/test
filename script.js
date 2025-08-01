@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Global Variables ---
     let hls, channels = {}, currentChannelId = null;
     let controlsTimeout;
+    let isAudioUnlocked = false;
 
     // --- DOM Elements ---
     const body = document.body;
@@ -22,6 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById('fullscreen-btn');
     const pipBtn = document.getElementById('pip-btn');
     const liveIndicator = document.getElementById('live-indicator');
+
+    // --- Audio Unlock Function ---
+    function unlockAudio() {
+        if (isAudioUnlocked) return;
+        
+        console.log("Audio unlocked by user interaction.");
+        isAudioUnlocked = true;
+        
+        const savedMuted = localStorage.getItem('webtv_muted') === 'true';
+        video.muted = savedMuted;
+        playerControls.updateMuteButton();
+
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('keydown', unlockAudio);
+    }
 
     // --- Player Logic ---
     function showLoadingIndicator(isLoading) {
@@ -70,8 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
         toggleMute: () => {
+            unlockAudio();
             video.muted = !video.muted;
             localStorage.setItem('webtv_muted', video.muted);
+            playerControls.updateMuteButton();
         },
         updateMuteButton: () => {
             const isMuted = video.muted || video.volume === 0;
@@ -79,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             muteBtn.querySelector('.icon-volume-off').classList.toggle('hidden', !isMuted);
         },
         setVolume: () => {
+            unlockAudio();
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
             playerControls.updateMuteButton();
@@ -217,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         video.addEventListener('timeupdate', playerControls.updateProgress);
         muteBtn.addEventListener('click', playerControls.toggleMute);
         volumeSlider.addEventListener('input', playerControls.setVolume);
-        video.addEventListener('volumechange', playerControls.updateMuteButton);
+        
         fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
         pipBtn.addEventListener('click', playerControls.togglePip);
         
@@ -294,11 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setupEventListeners();
         timeManager.start();
         
-        // --- อ่านค่าที่บันทึกไว้ ---
         const savedVolume = localStorage.getItem('webtv_volume');
-        // ทำให้สถานะ Mute เริ่มต้นเป็น true เสมอถ้าไม่มีการบันทึกไว้ เพื่อให้สอดคล้องกับ <video muted>
-        const savedMuted = localStorage.getItem('webtv_muted') === 'true' || localStorage.getItem('webtv_muted') === null;
-
         if (savedVolume !== null) {
             video.volume = savedVolume;
             volumeSlider.value = savedVolume;
@@ -306,11 +321,10 @@ document.addEventListener("DOMContentLoaded", () => {
             video.volume = 0.5;
             volumeSlider.value = 0.5;
         }
-        
-        // กำหนดสถานะ Mute จากค่าที่อ่านได้
-        video.muted = savedMuted;
         playerControls.updateMuteButton();
-        // -------------------------
+
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
 
         const lastChannelId = localStorage.getItem('webtv_lastChannelId');
         const firstChannelId = Object.keys(channels)[0];
