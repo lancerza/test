@@ -610,5 +610,551 @@
     "category": "IPTV",
     "url": "https://psiiptv-b.sky-cdn.com/ttd12-playlist/tracks-v1a1/mono.m3u8",
     "logo": "https://media-mvtv.imgix.net/channel/95_y_LE97J2C1QVIHgyeotdSD4vsMz3cnkK8b.png"
+  },
+  "hls_doomovic1": {
+    "name": "28 Years Later (2025) : 28 ปีให้หลัง เชื้อเขมือบคน",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15398.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-11.jpg"
+  },
+  "hls_doomovic2": {
+    "name": "Untold (2025) ซ่อนเร้น",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15397.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-14.jpg"
+  },
+  "hls_doomovic3": {
+    "name": "Osiris (2025) โอซิริส (ซับอังกฤษ)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15396.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-13.jpg"
+  },
+  "hls_doomovic4": {
+    "name": "Happy Gilmore 2 (2025) แฮปปี้ กิลมอร์ 2",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15395.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3-5.jpg"
+  },
+  "hls_doomovic5": {
+    "name": "The Ritual (2025) : ไล่มันออกจากร่าง",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15393.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-12.jpg"
+  },
+  "hls_doomovic6": {
+    "name": "A Normal Woman (2025) ผู้หญิงธรรมดา",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15394.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-10.jpg"
+  },
+  "hls_doomovic7": {
+    "name": "Alarum (2025)  คู่เดือดโคตรคนระห่ำ",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15392.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-9.jpg"
+  },
+  "hls_doomovic8": {
+    "name": "Almost Family (2025) กว่าจะเป็นครอบครัว",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15391.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-11.jpg"
+  },
+  "hls_doomovic9": {
+    "name": "Wall to Wall (2025) ฝันร้าย 84 ตร ม",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15390.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-10.jpg"
+  },
+  "hls_doomovic10": {
+    "name": "Fantastic Four: First Steps (2025)  เดอะ แฟนแทสติก 4 จุดเริ่มต้นปฐม",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15389.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3-4.jpg"
+  },
+  "hls_doomovic11": {
+    "name": "Smurfs (2025)  สเมิร์ฟส์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15387.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-9.jpg"
+  },
+  "hls_doomovic12": {
+    "name": "Lilim (2025) ซ่อนในเงามืด",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15388.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-8.jpg"
+  },
+  "hls_doomovic13": {
+    "name": "Zombies 4: Dawn of the Vampires (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15386.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-7.jpg"
+  },
+  "hls_doomovic14": {
+    "name": "Final Destination: Bloodlines (2025) ไฟนอลเดสติเนชั่น ทายาทโกงตาย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15385.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-8-scaled.jpg"
+  },
+  "hls_doomovic15": {
+    "name": "Madeas Destination Wedding (2025) ป้าลุยแหลกแหกวิวาห์ป่วน",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15382.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-6.jpg"
+  },
+  "hls_doomovic16": {
+    "name": "Almost Cops (2025) คู่สืบ คู่อันตราย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15381.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-6.jpg"
+  },
+  "hls_doomovic17": {
+    "name": "Aap Jaisa Koi (2025) ใครสักคนที่เหมือนเธอ",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15383.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3-3.jpg"
+  },
+  "hls_doomovic18": {
+    "name": "The Noisy Mansion (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15380.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-5.jpg"
+  },
+  "hls_doomovic19": {
+    "name": "Superman (2025) ซูเปอร์แมน",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15378.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3-2.jpg"
+  },
+  "hls_doomovic20": {
+    "name": "High Rollers (2025) แผนปล้นคนหักเหลี่ยม: ทะลวงกาสิโนเดือด",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15375.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-4-scaled.jpg"
+  },
+  "hls_doomovic21": {
+    "name": "Ziam (2025) ปากกัด ตีนถีบ",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15377.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-4.jpg"
+  },
+  "hls_doomovic22": {
+    "name": "Uppu Kappurambu (2025) สุสานอลวน เมืองอลเวง",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15374.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-3.jpg"
+  },
+  "hls_doomovic23": {
+    "name": "Bring Her Back (2025) เป็นภาพยนตร์สยองขวัญเหนือธรรมชาติของออสเตรเลีย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15376.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-3.jpg"
+  },
+  "hls_doomovic24": {
+    "name": "Yadang: The Snitch (2025) : ทรชนคนสองหน้า",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15372.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3-1.jpg"
+  },
+  "hls_doomovic25": {
+    "name": "Jurassic World: Rebirth (2025) : กำเนิดชีวิตใหม่",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15367.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-2.jpg"
+  },
+  "hls_doomovic26": {
+    "name": "Ice Road: Vengeance (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15371.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-2.jpg"
+  },
+  "hls_doomovic27": {
+    "name": "Dora And The Search For Sol Dorado (2025) ดอร่ากับการผจญภัยโซลดอราโด้",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15373.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/4.jpg"
+  },
+  "hls_doomovic28": {
+    "name": "F1 The Movie (2025) F1 เดอะ มูฟวี่",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15341.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-10-scaled.jpg"
+  },
+  "hls_doomovic29": {
+    "name": "The Old Guard 2 (2025) ดิ โอลด์ การ์ด 2",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15370.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/3.jpg"
+  },
+  "hls_doomovic30": {
+    "name": "Heads of State (2025) | ผู้นำสายบู๊กู้วิกฤต",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15369.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2-1.jpg"
+  },
+  "hls_doomovic31": {
+    "name": "Un-ex You (2025) จับแฟนเก่ามารักใหม่",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15368.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1-1.jpg"
+  },
+  "hls_doomovic32": {
+    "name": "Teachers Pet (2025) : โรบิน",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15366.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/2.jpg"
+  },
+  "hls_doomovic33": {
+    "name": "Ligaw (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15365.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/07/1.jpg"
+  },
+  "hls_doomovic34": {
+    "name": "How to Train Your Dragon (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15338.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-6.jpg"
+  },
+  "hls_doomovic35": {
+    "name": "M3GAN 2.0 (2025) เมแกน 2.0",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15364.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-8.jpg"
+  },
+  "hls_doomovic36": {
+    "name": "Clown in a Cornfield (2025) คืนวิปลาสแห่งเคตเทิลสปริงส์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15362.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-11.jpg"
+  },
+  "hls_doomovic37": {
+    "name": "Elio (2025) เอลิโอ",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15340.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-9-scaled.jpg"
+  },
+  "hls_doomovic38": {
+    "name": "RAID 2 (2025) เจ้าหน้าที่ระห่ำ ท้าทรชน 2",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15363.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-8.jpg"
+  },
+  "hls_doomovic39": {
+    "name": "Eternal Bond (2025) นาคบรรพ์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15339.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-7.jpg"
+  },
+  "hls_doomovic40": {
+    "name": "Kraken (2025) คราเคน เลื้อยสยอง 20,000 โยชน์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15336.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-5.jpg"
+  },
+  "hls_doomovic41": {
+    "name": "Semi-Soeter (2025) เรื่องรักกึ่งหวาน งานนี้บานปลาย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15334.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-5.jpg"
+  },
+  "hls_doomovic42": {
+    "name": "The Third Case (2025) HIT: คดีที่สาม",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15337.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/4-3.jpg"
+  },
+  "hls_doomovic43": {
+    "name": "Retro (2025) แค้นข้ามเวลา",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15333.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-4.jpg"
+  },
+  "hls_doomovic44": {
+    "name": "Our Times (2025) : ข้ามเวลาของสองเรา",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15335.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-4.jpg"
+  },
+  "hls_doomovic45": {
+    "name": "Echo Valley (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15332.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-3.jpg"
+  },
+  "hls_doomovic46": {
+    "name": "Deep Cover (2025)  ภารกิจด้นสด ปลดล็อกสกิลรั่ว",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15331.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-3-scaled.jpg"
+  },
+  "hls_doomovic47": {
+    "name": "Flat Girls (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15329.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/4-2.jpg"
+  },
+  "hls_doomovic48": {
+    "name": "Cheers to Life (2025) เชียร์ส ทู ไลฟ์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15330.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/5-2.jpg"
+  },
+  "hls_doomovic49": {
+    "name": "Mumu (2025) รักที่ไม่เอื้อนเอ่ย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15327.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-2.jpg"
+  },
+  "hls_doomovic50": {
+    "name": "K.O (2025) น็อกเอาท์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15326.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-2.jpg"
+  },
+  "hls_doomovic51": {
+    "name": "Uninvited (2025) แค้นไม่ได้รับเชิญ",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15328.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/3-4.jpg"
+  },
+  "hls_doomovic52": {
+    "name": "แต่ง…Monk (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15324.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/4-1.jpg"
+  },
+  "hls_doomovic53": {
+    "name": "Jaat (2025) เดือดล้างอิทธิพล",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15323.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/3-3.jpg"
+  },
+  "hls_doomovic54": {
+    "name": "Bhool Chuk Maaf (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15322.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2-1-scaled.jpg"
+  },
+  "hls_doomovic55": {
+    "name": "The King Of Kings (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15320.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1-1.jpg"
+  },
+  "hls_doomovic56": {
+    "name": "STRAW (2025) ฟางเส้นสุดท้าย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15325.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/5-1.jpg"
+  },
+  "hls_doomovic57": {
+    "name": "Karate Kid: Legends (2025) คาราเต้ คิด ผนึกพลังตำนานนักสู้",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15321.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/5.jpg"
+  },
+  "hls_doomovic58": {
+    "name": "Mountainhead 2025",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15316.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/1.jpg"
+  },
+  "hls_doomovic59": {
+    "name": "Secret: Untold Melody (2025) ซีเคร็ท: ทำนองรักข้ามเวลา",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15319.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/4.jpg"
+  },
+  "hls_doomovic60": {
+    "name": "Jack (2025) จารชนคนป่วน",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15318.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/3.jpg"
+  },
+  "hls_doomovic61": {
+    "name": "A Widows Game (2025) กลเกมแม่ม่าย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15317.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/06/2.jpg"
+  },
+  "hls_doomovic62": {
+    "name": "Graduation Trip : Mallorca (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15314.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-12.jpg"
+  },
+  "hls_doomovic63": {
+    "name": "The Heart Knows (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15312.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-15.jpg"
+  },
+  "hls_doomovic64": {
+    "name": "Lulu Is a Rhinoceros (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15308.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-17.jpg"
+  },
+  "hls_doomovic65": {
+    "name": "A Widows Game (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15315.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/4-7.jpg"
+  },
+  "hls_doomovic66": {
+    "name": "The Diplomat 2025",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15310.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-11.jpg"
+  },
+  "hls_doomovic67": {
+    "name": "Catalyst 2025",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15309.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-14.jpg"
+  },
+  "hls_doomovic68": {
+    "name": "Going Places 2025",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15307.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-16.jpg"
+  },
+  "hls_doomovic69": {
+    "name": "Crazy Texas 2025",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15311.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/4-6.jpg"
+  },
+  "hls_doomovic70": {
+    "name": "Sikandar (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15306.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-15.jpg"
+  },
+  "hls_doomovic71": {
+    "name": "Thunderbolts* (2025) ธันเดอร์โบลต์ส*",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15305.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-13.jpg"
+  },
+  "hls_doomovic72": {
+    "name": "The Devil’s Bride (2025) ชู้จากนรก",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15304.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-14.jpg"
+  },
+  "hls_doomovic73": {
+    "name": "Fountain of Youth (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15302.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-10.jpg"
+  },
+  "hls_doomovic74": {
+    "name": "I Want to Be Boss (2025) ก็อยากจะเป็นบอส",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15301.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-12.jpg"
+  },
+  "hls_doomovic75": {
+    "name": "Vadakkan (2025) เป็นหนังแนวลี้ลับจากอินเดีย",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15300.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-13.jpg"
+  },
+  "hls_doomovic76": {
+    "name": "Off Track 2 (2025) ออฟแทร็ค 2",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15299.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-9.jpg"
+  },
+  "hls_doomovic77": {
+    "name": "Fear Street Prom Queen (2025) ถนนอาถรรพ์: ราชินีงานพรอม",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15298.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-11.jpg"
+  },
+  "hls_doomovic78": {
+    "name": "Lilo & Stitch (2025) ลีโล & สติทช์",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15297.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-12.jpg"
+  },
+  "hls_doomovic79": {
+    "name": "Until Dawn (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15303.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/4-5.jpg"
+  },
+  "hls_doomovic80": {
+    "name": "Happy Mondays (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15294.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-10.jpg"
+  },
+  "hls_doomovic81": {
+    "name": "The Legend of Ochi (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15292.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-11.jpg"
+  },
+  "hls_doomovic82": {
+    "name": "Ex Ex Lovers (2025) อดีตแฟนเก่า",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15295.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-8.jpg"
+  },
+  "hls_doomovic83": {
+    "name": "The Wizard of the Emerald City (2025) พ่อมดแห่งเมืองมรกต",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15222.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/04/2-10.jpg"
+  },
+  "hls_doomovic84": {
+    "name": "Night of Deception (2025) คืนลวง",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15268.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-4.jpg"
+  },
+  "hls_doomovic85": {
+    "name": "Untold The Fall of Favre (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15293.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/5-7.jpg"
+  },
+  "hls_doomovic86": {
+    "name": "Everyone is Going to Die (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15291.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-7.jpg"
+  },
+  "hls_doomovic87": {
+    "name": "Gangers (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15290.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-9.jpg"
+  },
+  "hls_doomovic88": {
+    "name": "Project MKHEXE (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15287.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-10.jpg"
+  },
+  "hls_doomovic89": {
+    "name": "Broke (2025) โบรค",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15288.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/3-6.jpg"
+  },
+  "hls_doomovic90": {
+    "name": "Karol G (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/M15286.mp4/playlist.m3u8",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/2-8.jpg"
+  },
+  "hls_doomovic91": {
+    "name": "Azaad (2025)",
+    "category": "หนัง",
+    "url": "https://serverdatam3u8.com/movie/",
+    "logo": "https://moviesdoofree.com/wp-content/uploads/2025/05/1-9.jpg"
   }
 }
