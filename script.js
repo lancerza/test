@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const body = document.body;
+    const categorySidebar = document.getElementById('category-sidebar');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const refreshChannelsBtn = document.getElementById('refresh-channels-btn');
     const video = document.getElementById('video');
@@ -147,6 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         createChannelButtons: () => {
             channelButtonsContainer.innerHTML = '';
+            categorySidebar.innerHTML = '';
+            
             const groupedChannels = {};
             for (const channelId in channels) {
                 const channel = channels[channelId];
@@ -154,11 +157,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!groupedChannels[category]) groupedChannels[category] = [];
                 groupedChannels[category].push({ id: channelId, ...channel });
             }
-            for (const category in groupedChannels) {
+
+            const categories = Object.keys(groupedChannels);
+
+            for (const category of categories) {
                 const header = document.createElement('h2');
                 header.className = 'channel-category-header';
                 header.textContent = category;
+                header.id = `category-${category.replace(/\s+/g, '-')}`;
                 channelButtonsContainer.appendChild(header);
+                
                 const grid = document.createElement('div');
                 grid.className = 'channel-buttons';
                 groupedChannels[category].forEach((channel, index) => {
@@ -200,6 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 channelButtonsContainer.appendChild(grid);
             }
+            setupCategorySidebar(categories);
         },
         loadChannel: async (channelId) => {
             if (!channels[channelId] || currentChannelId === channelId) return;
@@ -235,6 +244,48 @@ document.addEventListener("DOMContentLoaded", () => {
             setInterval(timeManager.update, 1000);
         }
     };
+
+    // --- Sidebar Logic ---
+    function setupCategorySidebar(categories) {
+        categories.forEach(category => {
+            const link = document.createElement('a');
+            link.className = 'category-link';
+            link.textContent = category;
+            const categoryId = `category-${category.replace(/\s+/g, '-')}`;
+            link.href = `#${categoryId}`;
+
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById(categoryId)?.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            categorySidebar.appendChild(link);
+        });
+
+        const headers = document.querySelectorAll('.channel-category-header');
+        const links = document.querySelectorAll('.category-link');
+        let scrollTimeout;
+
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                let current = '';
+                headers.forEach(header => {
+                    const headerTop = header.getBoundingClientRect().top;
+                    if (headerTop < window.innerHeight / 2) {
+                        current = header.getAttribute('id');
+                    }
+                });
+
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 100);
+        });
+    }
 
     // --- Event Listener Setup ---
     function setupEventListeners() {
