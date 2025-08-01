@@ -168,6 +168,12 @@
     "url": "https://keela2.com/stream/79/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1694689157.png"   
   },
+  "hls_PrimaSport3": {
+    "name": "PrimaSport3",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/114/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/1695604346.png"  
+  },
   "hls_TyCSports": {
     "name": "TyCSports",
     "category": "กีฬา",
@@ -191,6 +197,18 @@
     "category": "กีฬา",
     "url": "https://keela2.com/stream/105/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/1719768111.png"  
+  },
+  "hls_tntsports1": {
+    "name": "tntsports1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/100/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/d90c87a7-968b-47b4-bf66-98686bcd043b.jpg"  
+  },
+  "hls_tntsports4": {
+    "name": "tntsports4",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/101/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/174fef29-55ec-48ee-af18-bc4a3011287a.png"  
   },
   "hls_ipFWMov": {
     "name": "FWMov",
@@ -299,6 +317,13 @@
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffda/jkn18/jkn18.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2021/06/15/3e4e0540-cdb4-11eb-9a22-7958179a38a7_original.png"
+  },
+  "hls_ipJKN182": {
+    "name": "JKN18",
+    "category": "IPTV",
+    "url": "https://keela2.com/stream/115/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://cms.dmpcdn.com/livetv/2021/06/15/3e4e0540-cdb4-11eb-9a22-7958179a38a7_original.png",  
+    "badge": "สำรอง" 
   },
   "hls_ipNationTV": {
     "name": "NationTV",
