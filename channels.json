@@ -50,6 +50,13 @@
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-8/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cf4a2b50-b44d-11ee-aa7d-afe908f95743_webp_original.webp"
   },
+  "hls_truehd52": {
+    "name": "ทรูสปอร์ตHD5",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/20/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cf4a2b50-b44d-11ee-aa7d-afe908f95743_webp_original.webp",  
+    "badge": "สำรอง"
+  },
   "hls_truehd71": {
     "name": "ทรูสปอร์ตHD7",
     "category": "กีฬา",
