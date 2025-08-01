@@ -200,10 +200,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #pip-btn { order: 5; }
     #time-display, #volume-slider, .live-indicator { display: none; }
 
-    /* --- ปรับแก้ Error Overlay สำหรับมือถือ --- */
+    /* --- ส่วนที่แก้ไข --- */
     .error-overlay {
-        align-items: flex-start; /* จัดชิดบน */
-        padding: 50px 10px 0 10px; /* เพิ่ม padding ด้านบน ดันลงมาเล็กน้อย */
+        align-items: center; /* กลับมาจัดกึ่งกลางแนวตั้ง */
+        justify-content: center; /* จัดกึ่งกลางแนวนอน */
+        padding: 10px; /* เพิ่ม padding ด้านข้างเล็กน้อย */
     }
     .error-content {
         padding: 20px;
