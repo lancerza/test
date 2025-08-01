@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Global Variables ---
     let hls, channels = {}, currentChannelId = null;
     let controlsTimeout;
-    let isAudioUnlocked = false;
 
     // --- DOM Elements ---
     const body = document.body;
@@ -24,22 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById('fullscreen-btn');
     const pipBtn = document.getElementById('pip-btn');
     const liveIndicator = document.getElementById('live-indicator');
-    const playOverlay = document.getElementById('play-overlay');
-
-    // --- Audio Unlock Function ---
-    function unlockAudio() {
-        if (isAudioUnlocked) return;
-        
-        console.log("Audio unlocked by user interaction.");
-        isAudioUnlocked = true;
-        
-        const savedMuted = localStorage.getItem('webtv_muted') === 'true';
-        video.muted = savedMuted;
-        playerControls.updateMuteButton();
-
-        document.removeEventListener('click', unlockAudio);
-        document.removeEventListener('keydown', unlockAudio);
-    }
 
     // --- Player Logic ---
     function showLoadingIndicator(isLoading, message = '') {
@@ -92,9 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
         toggleMute: () => {
-            unlockAudio();
             video.muted = !video.muted;
-            localStorage.setItem('webtv_muted', video.muted);
             playerControls.updateMuteButton();
         },
         updateMuteButton: () => {
@@ -103,12 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
             muteBtn.querySelector('.icon-volume-off').classList.toggle('hidden', !isMuted);
         },
         setVolume: () => {
-            unlockAudio();
             video.volume = volumeSlider.value;
             video.muted = Number(volumeSlider.value) === 0;
             playerControls.updateMuteButton();
-            localStorage.setItem('webtv_volume', video.volume);
-            localStorage.setItem('webtv_muted', video.muted);
         },
         toggleFullscreen: () => {
             if (!document.fullscreenElement) playerWrapper.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
@@ -208,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
             showLoadingIndicator(true, 'กำลังโหลดช่อง...');
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
-            localStorage.setItem('webtv_lastChannelId', channelId);
             const channel = channels[channelId];
             document.title = `▶️ ${channel.name} - Flow TV`;
             channelManager.updateActiveButton();
@@ -259,19 +236,11 @@ document.addEventListener("DOMContentLoaded", () => {
             body.classList.toggle('light-theme');
             const isLight = body.classList.contains('light-theme');
             themeToggleBtn.textContent = isLight ? '🌙' : '☀️';
-            localStorage.setItem('webtv_theme', isLight ? 'light' : 'dark');
         });
 
         refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
 
-        playOverlay.addEventListener('click', () => {
-            playOverlay.classList.add('hidden');
-            showLoadingIndicator(true, 'กำลังเชื่อมต่อ...');
-            playerControls.togglePlay();
-        });
-
         video.addEventListener('play', () => {
-            playOverlay.classList.add('hidden');
             playerControls.updatePlayButton();
             playerControls.showControls();
         });
@@ -306,12 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Initialization ---
     async function init() {
-        const savedTheme = localStorage.getItem('webtv_theme');
-        if (savedTheme === 'light') {
-            body.classList.add('light-theme');
-            themeToggleBtn.textContent = '🌙';
-        }
-
         await fetchAndRenderChannels().catch(e => {
             console.error("Fatal Error: Could not load initial channel data.", e);
             playerControls.showError("เกิดข้อผิดพลาด: ไม่สามารถโหลดข้อมูลช่องได้");
@@ -330,16 +293,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        playOverlay.classList.add('hidden');
-                    }).catch(error => {
-                        console.error("Autoplay was prevented:", error);
-                        playOverlay.classList.remove('hidden');
-                        playerControls.updatePlayButton();
-                    });
-                }
+                video.play().catch(e => {
+                    console.error("Autoplay was prevented.", e);
+                });
             });
             hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
@@ -355,29 +311,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setupEventListeners();
         timeManager.start();
         
-        const savedVolume = localStorage.getItem('webtv_volume');
-        const savedMuted = localStorage.getItem('webtv_muted') === 'true' || localStorage.getItem('webtv_muted') === null;
-
-        if (savedVolume !== null) {
-            video.volume = savedVolume;
-            volumeSlider.value = savedVolume;
-        } else {
-            video.volume = 0.5;
-            volumeSlider.value = 0.5;
-        }
-        
-        video.muted = savedMuted;
+        // ตั้งค่าเสียงเริ่มต้นแบบง่าย
+        video.volume = 0.5;
+        volumeSlider.value = 0.5;
         playerControls.updateMuteButton();
 
-        document.addEventListener('click', unlockAudio, { once: true });
-        document.addEventListener('keydown', unlockAudio, { once: true });
-
-        const lastChannelId = localStorage.getItem('webtv_lastChannelId');
         const firstChannelId = Object.keys(channels)[0];
-        
-        if (lastChannelId && channels[lastChannelId]) {
-            await channelManager.loadChannel(lastChannelId);
-        } else if (firstChannelId) {
+        if (firstChannelId) {
             await channelManager.loadChannel(firstChannelId);
         }
     }
