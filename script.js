@@ -234,3 +234,153 @@ document.addEventListener("DOMContentLoaded", () => {
             timeManager.update();
             setInterval(timeManager.update, 1000);
         }
+    };
+
+    // --- Event Listener Setup ---
+    function setupEventListeners() {
+        playPauseBtn.addEventListener('click', playerControls.togglePlay);
+        
+        video.addEventListener('playing', () => {
+            document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
+            showLoadingIndicator(false);
+            video.classList.add('visible'); 
+        });
+        video.addEventListener('pause', () => { playerControls.updatePlayButton(); playerControls.showControls(); });
+        video.addEventListener('loadedmetadata', playerControls.checkIfLive);
+        progressBar.addEventListener('input', playerControls.setProgress);
+        video.addEventListener('timeupdate', playerControls.updateProgress);
+        muteBtn.addEventListener('click', playerControls.toggleMute);
+        volumeSlider.addEventListener('input', playerControls.setVolume);
+        
+        fullscreenBtn.addEventListener('click', playerControls.toggleFullscreen);
+        pipBtn.addEventListener('click', playerControls.togglePip);
+        
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+            const isLight = body.classList.contains('light-theme');
+            themeToggleBtn.textContent = isLight ? '🌙' : '☀️';
+            localStorage.setItem('webtv_theme', isLight ? 'light' : 'dark');
+        });
+
+        refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
+
+        playOverlay.addEventListener('click', () => {
+            playOverlay.classList.add('hidden');
+            showLoadingIndicator(true, 'กำลังเชื่อมต่อ...');
+            playerControls.togglePlay();
+        });
+
+        video.addEventListener('play', () => {
+            playOverlay.classList.add('hidden');
+            playerControls.updatePlayButton();
+            playerControls.showControls();
+        });
+
+        playerWrapper.addEventListener('mousemove', playerControls.showControls);
+        playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            switch(e.key.toLowerCase()) {
+                case ' ': e.preventDefault(); playerControls.togglePlay(); break;
+                case 'm': playerControls.toggleMute(); break;
+                case 'f': playerControls.toggleFullscreen(); break;
+            }
+        });
+    }
+
+    // --- Data Fetching ---
+    async function fetchAndRenderChannels() {
+        console.log("Fetching channel list...");
+        try {
+            const response = await fetch('channels.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error('Network response was not ok');
+            channels = await response.json();
+            channelManager.createChannelButtons();
+        } catch (e) {
+            console.error("Could not fetch or render channels:", e);
+            playerControls.showError("ไม่สามารถรีเฟรชรายการช่องได้");
+        }
+    }
+
+
+    // --- Initialization ---
+    async function init() {
+        const savedTheme = localStorage.getItem('webtv_theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-theme');
+            themeToggleBtn.textContent = '🌙';
+        }
+
+        await fetchAndRenderChannels().catch(e => {
+            console.error("Fatal Error: Could not load initial channel data.", e);
+            playerControls.showError("เกิดข้อผิดพลาด: ไม่สามารถโหลดข้อมูลช่องได้");
+            return;
+        });
+
+        if (Hls.isSupported()) {
+            hls = new Hls({
+                enableWorker: true,
+                maxBufferLength: 30,
+                maxMaxBufferLength: 600,
+                liveSyncDurationCount: 5,
+                liveMaxLatencyDurationCount: 10,
+                liveStartLatency: 1,
+                abrEwmaDefaultEstimate: 500000,
+            });
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        playOverlay.classList.add('hidden');
+                    }).catch(error => {
+                        console.error("Autoplay was prevented:", error);
+                        playOverlay.classList.remove('hidden');
+                        playerControls.updatePlayButton();
+                    });
+                }
+            });
+            hls.on(Hls.Events.ERROR, (event, data) => {
+                if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ'); hls.startLoad(); break;
+                        case Hls.ErrorTypes.MEDIA_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ'); hls.recoverMediaError(); break;
+                        default: playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); hls.destroy(); break;
+                    }
+                }
+            });
+        }
+        
+        setupEventListeners();
+        timeManager.start();
+        
+        const savedVolume = localStorage.getItem('webtv_volume');
+        const savedMuted = localStorage.getItem('webtv_muted') === 'true' || localStorage.getItem('webtv_muted') === null;
+
+        if (savedVolume !== null) {
+            video.volume = savedVolume;
+            volumeSlider.value = savedVolume;
+        } else {
+            video.volume = 0.5;
+            volumeSlider.value = 0.5;
+        }
+        
+        video.muted = savedMuted;
+        playerControls.updateMuteButton();
+
+        document.addEventListener('click', unlockAudio, { once: true });
+        document.addEventListener('keydown', unlockAudio, { once: true });
+
+        const lastChannelId = localStorage.getItem('webtv_lastChannelId');
+        const firstChannelId = Object.keys(channels)[0];
+        
+        if (lastChannelId && channels[lastChannelId]) {
+            await channelManager.loadChannel(lastChannelId);
+        } else if (firstChannelId) {
+            await channelManager.loadChannel(firstChannelId);
+        }
+    }
+    
+    init();
+});
