@@ -261,9 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
 
+        // --- ส่วนที่แก้ไข ---
         playOverlay.addEventListener('click', () => {
+            playOverlay.classList.add('hidden');
+            showLoadingIndicator(true);
             playerControls.togglePlay();
         });
+        // --- สิ้นสุดการแก้ไข ---
 
         video.addEventListener('play', () => {
             playOverlay.classList.add('hidden');
