@@ -3,13 +3,27 @@
     "name": "ทรูสปอร์ตHD1",
     "category": "กีฬา",
     "url": "https://keela2.com/stream/16/index.m3u8?token=mvFWafOIir5JDlQN",
-    "logo": "https://cms.dmpcdn.com/livetv/2024/01/16/cdd42d20-b44d-11ee-9687-e7ccd66e1ea3_webp_original.webp"
+    "logo": "https://img2.pic.in.th/pic/bg1.webp"
+{
+  "hls_truehd12": {
+    "name": "ทรูสปอร์ตHD1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/8/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/bg1.webp",  
+    "badge": "สำรอง"
   },
   "hls_truehd2": {
     "name": "ทรูสปอร์ตHD2",
     "category": "กีฬา",
-    "url": "https://dolive.thaim3u.com/doodii-live/siamsport-5/playlist.m3u8",
+    "url": "https://keela2.com/stream/9/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img2.pic.in.th/pic/true2.webp"
+  },
+  "hls_truehd22": {
+    "name": "ทรูสปอร์ตHD2",
+    "category": "กีฬา",
+    "url": "https://dolive.thaim3u.com/doodii-live/siamsport-5/playlist.m3u8",
+    "logo": "https://img2.pic.in.th/pic/true2.webp",
+    "badge": "สำรอง"
   },
   "hls_truehd3": {
     "name": "ทรูสปอร์ตHD3",
