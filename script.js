@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const playerControls = {
+        // --- ส่วนที่แก้ไข ---
         showError: (message) => {
             const errorChannelName = document.getElementById('error-channel-name');
             if (currentChannelId && channels[currentChannelId]) {
@@ -53,14 +54,24 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 errorChannelName.style.display = 'none';
             }
+
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
-            const retryBtn = document.getElementById('retry-btn');
-            retryBtn.replaceWith(retryBtn.cloneNode(true));
-            document.getElementById('retry-btn').addEventListener('click', () => {
-                if (currentChannelId) channelManager.loadChannel(currentChannelId);
-            }, { once: true });
+
+            const oldBtn = document.getElementById('retry-btn');
+            const newBtn = oldBtn.cloneNode(true); // สร้างปุ่มใหม่ที่ไม่มี event listener ติดอยู่
+
+            newBtn.addEventListener('click', () => {
+                if (currentChannelId) {
+                    console.log(`Retrying channel: ${currentChannelId}`);
+                    channelManager.loadChannel(currentChannelId);
+                }
+            });
+
+            oldBtn.parentNode.replaceChild(newBtn, oldBtn); // นำปุ่มใหม่ไปแทนที่ปุ่มเก่า
         },
+        // --- สิ้นสุดการแก้ไข ---
+
         hideError: () => {
             if (errorOverlay) errorOverlay.classList.add('hidden');
         },
