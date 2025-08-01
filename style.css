@@ -200,9 +200,10 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     #pip-btn { order: 5; }
     #time-display, #volume-slider, .live-indicator { display: none; }
 
-    /* --- ปรับขนาด Error Overlay สำหรับมือถือ --- */
+    /* --- ปรับแก้ Error Overlay สำหรับมือถือ --- */
     .error-overlay {
-        padding: 0;
+        align-items: flex-start; /* จัดชิดบน */
+        padding: 50px 10px 0 10px; /* เพิ่ม padding ด้านบน ดันลงมาเล็กน้อย */
     }
     .error-content {
         padding: 20px;
