@@ -180,8 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
-                // --- เอา video.play() ออกจากตรงนี้ ---
-                // video.play().catch(e => { if (e.name !== 'AbortError') console.error("Error playing video:", e); });
             } catch (error) {
                 console.error("Error loading channel:", error);
             }
@@ -277,15 +275,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (Hls.isSupported()) {
             hls = new Hls({ enableWorker: true, maxBufferLength: 30, maxMaxBufferLength: 600, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
             hls.attachMedia(video);
-
-            // --- เพิ่ม Event Listener ใหม่ตรงนี้ ---
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play().catch(e => { 
+                video.play().catch(e => {
                     console.error("Autoplay was prevented.", e);
-                    // อาจจะแสดงข้อความบอกผู้ใช้ว่าต้องกดเล่นเอง
                 });
             });
-
             hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
                     switch(data.type) {
@@ -300,8 +294,11 @@ document.addEventListener("DOMContentLoaded", () => {
         setupEventListeners();
         timeManager.start();
         
+        // --- อ่านค่าที่บันทึกไว้ ---
         const savedVolume = localStorage.getItem('webtv_volume');
-        const savedMuted = localStorage.getItem('webtv_muted') === 'true';
+        // ทำให้สถานะ Mute เริ่มต้นเป็น true เสมอถ้าไม่มีการบันทึกไว้ เพื่อให้สอดคล้องกับ <video muted>
+        const savedMuted = localStorage.getItem('webtv_muted') === 'true' || localStorage.getItem('webtv_muted') === null;
+
         if (savedVolume !== null) {
             video.volume = savedVolume;
             volumeSlider.value = savedVolume;
@@ -309,8 +306,11 @@ document.addEventListener("DOMContentLoaded", () => {
             video.volume = 0.5;
             volumeSlider.value = 0.5;
         }
+        
+        // กำหนดสถานะ Mute จากค่าที่อ่านได้
         video.muted = savedMuted;
         playerControls.updateMuteButton();
+        // -------------------------
 
         const lastChannelId = localStorage.getItem('webtv_lastChannelId');
         const firstChannelId = Object.keys(channels)[0];
