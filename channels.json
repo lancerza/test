@@ -12,6 +12,12 @@
     "logo": "https://img5.pic.in.th/file/secure-sv1/true1.webp",
     "badge": "สำรอง"
   },
+  "hls_truehd21": {
+    "name": "ทรูสปอร์ตHD2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/17/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/true2.webp" 
+  },
   "hls_truehd22": {
     "name": "ทรูสปอร์ตHD2",
     "category": "กีฬา",
