@@ -4,13 +4,6 @@
     "category": "กีฬา",
     "url": "https://keela2.com/stream/16/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/true1.webp"
-
-  },
-  "hls_truehd2": {
-    "name": "ทรูสปอร์ตHD2",
-    "category": "กีฬา",
-    "url": "https://keela2.com/stream/9/index.m3u8?token=mvFWafOIir5JDlQN",
-    "logo": "https://img2.pic.in.th/pic/true2.webp"
   },
   "hls_truehd22": {
     "name": "ทรูสปอร์ตHD2",
@@ -74,7 +67,14 @@
     "name": "beINSPORTS2",
     "category": "กีฬา",
     "url": "https://keela2.com/stream/9/index.m3u8?token=mvFWafOIir5JDlQN",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5f346300-29cc-11ee-b2f4-e9de482d866e_webp_original.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/bg2d277716feb3f04d2.png"
+    },
+  "hls_bg22": {
+    "name": "beINSPORTS2",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/9/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/true2.webp",
+    "badge": "สำรอง"  
   },
   "hls_bg3": {
     "name": "beINSPORTS3",
