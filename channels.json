@@ -65,7 +65,14 @@
     "name": "beINSPORTS3",
     "category": "กีฬา",
     "url": "https://dolive.thaim3u.com/doodii-live/siamsport-3/playlist.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5fda18e0-29cc-11ee-846b-a1c4e5181c87_webp_original.webp"
+    "logo": "https://img2.pic.in.th/pic/bg37f188872f67815d9.webp"
+  },
+  "hls_bg31": {
+    "name": "beINSPORTS3",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/10/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/bg37f188872f67815d9.webp",  
+    "badge": "สำรอง"  
   },
   "hls_sptv1": {
     "name": "SportTV1",
