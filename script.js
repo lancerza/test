@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const customControls = document.querySelector('.custom-controls');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const loadingIndicator = document.getElementById('loading-indicator');
+    const loadingMessage = document.getElementById('loading-message');
     const errorOverlay = document.getElementById('error-overlay');
     const errorMessage = document.getElementById('error-message');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById('fullscreen-btn');
     const pipBtn = document.getElementById('pip-btn');
     const liveIndicator = document.getElementById('live-indicator');
+    const playOverlay = document.getElementById('play-overlay');
 
     // --- Audio Unlock Function ---
     function unlockAudio() {
@@ -40,8 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Player Logic ---
-    function showLoadingIndicator(isLoading) {
+    function showLoadingIndicator(isLoading, message = '') {
         loadingIndicator.classList.toggle('hidden', !isLoading);
+        if (isLoading) {
+            loadingMessage.textContent = message;
+        }
     }
 
     const playerControls = {
@@ -200,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!channels[channelId] || currentChannelId === channelId) return;
             video.classList.remove('visible');
             playerControls.hideError();
-            showLoadingIndicator(true);
+            showLoadingIndicator(true, 'กำลังโหลดช่อง...');
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
             localStorage.setItem('webtv_lastChannelId', channelId);
@@ -234,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Event Listener Setup ---
     function setupEventListeners() {
         playPauseBtn.addEventListener('click', playerControls.togglePlay);
-        video.addEventListener('play', () => { playerControls.updatePlayButton(); playerControls.showControls(); });
+        
         video.addEventListener('playing', () => {
             document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
             showLoadingIndicator(false);
@@ -258,6 +263,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
+
+        playOverlay.addEventListener('click', () => {
+            playOverlay.classList.add('hidden');
+            showLoadingIndicator(true, 'กำลังเชื่อมต่อ...');
+            playerControls.togglePlay();
+        });
+
+        video.addEventListener('play', () => {
+            playOverlay.classList.add('hidden');
+            playerControls.updatePlayButton();
+            playerControls.showControls();
+        });
 
         playerWrapper.addEventListener('mousemove', playerControls.showControls);
         playerWrapper.addEventListener('mouseleave', playerControls.hideControls);
@@ -302,28 +319,34 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (Hls.isSupported()) {
-            hls = new Hls({ enableWorker: true, maxBufferLength: 30, maxMaxBufferLength: 600, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
+            hls = new Hls({
+                enableWorker: true,
+                maxBufferLength: 30,
+                maxMaxBufferLength: 600,
+                liveSyncDurationCount: 5,
+                liveMaxLatencyDurationCount: 10,
+                liveStartLatency: 1,
+                abrEwmaDefaultEstimate: 500000,
+            });
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play().catch(e => {
-                    console.error("Autoplay was prevented.", e);
-                });
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        playOverlay.classList.add('hidden');
+                    }).catch(error => {
+                        console.error("Autoplay was prevented:", error);
+                        playOverlay.classList.remove('hidden');
+                        playerControls.updatePlayButton();
+                    });
+                }
             });
             hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
                     switch(data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR: 
-                            playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ'); 
-                            hls.startLoad(); 
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR: 
-                            playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ'); 
-                            hls.recoverMediaError(); 
-                            break;
-                        default: 
-                            playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); 
-                            hls.destroy(); 
-                            break;
+                        case Hls.ErrorTypes.NETWORK_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการโหลดวิดีโอ'); hls.startLoad(); break;
+                        case Hls.ErrorTypes.MEDIA_ERROR: playerControls.showError('เกิดข้อผิดพลาดในการเล่นวิดีโอ'); hls.recoverMediaError(); break;
+                        default: playerControls.showError('เกิดข้อผิดพลาด ไม่สามารถเล่นวิดีโอได้'); hls.destroy(); break;
                     }
                 }
             });
@@ -333,6 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
         timeManager.start();
         
         const savedVolume = localStorage.getItem('webtv_volume');
+        const savedMuted = localStorage.getItem('webtv_muted') === 'true' || localStorage.getItem('webtv_muted') === null;
+
         if (savedVolume !== null) {
             video.volume = savedVolume;
             volumeSlider.value = savedVolume;
@@ -340,6 +365,8 @@ document.addEventListener("DOMContentLoaded", () => {
             video.volume = 0.5;
             volumeSlider.value = 0.5;
         }
+        
+        video.muted = savedMuted;
         playerControls.updateMuteButton();
 
         document.addEventListener('click', unlockAudio, { once: true });
