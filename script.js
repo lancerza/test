@@ -31,19 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const playerControls = {
         showError: (message) => {
             const errorChannelName = document.getElementById('error-channel-name');
-
-            // --- เพิ่ม Logic แสดงชื่อช่อง ---
             if (currentChannelId && channels[currentChannelId]) {
                 errorChannelName.textContent = channels[currentChannelId].name;
                 errorChannelName.style.display = 'block';
             } else {
                 errorChannelName.style.display = 'none';
             }
-            // --- สิ้นสุด ---
-
             if (errorMessage) errorMessage.textContent = message;
             if (errorOverlay) errorOverlay.classList.remove('hidden');
-
             const retryBtn = document.getElementById('retry-btn');
             retryBtn.replaceWith(retryBtn.cloneNode(true));
             document.getElementById('retry-btn').addEventListener('click', () => {
@@ -185,7 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
             channelManager.updateActiveButton();
             try {
                 if (hls) hls.loadSource(channel.url);
-                video.play().catch(e => { if (e.name !== 'AbortError') console.error("Error playing video:", e); });
+                // --- เอา video.play() ออกจากตรงนี้ ---
+                // video.play().catch(e => { if (e.name !== 'AbortError') console.error("Error playing video:", e); });
             } catch (error) {
                 console.error("Error loading channel:", error);
             }
@@ -281,6 +277,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (Hls.isSupported()) {
             hls = new Hls({ enableWorker: true, maxBufferLength: 30, maxMaxBufferLength: 600, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
             hls.attachMedia(video);
+
+            // --- เพิ่ม Event Listener ใหม่ตรงนี้ ---
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play().catch(e => { 
+                    console.error("Autoplay was prevented.", e);
+                    // อาจจะแสดงข้อความบอกผู้ใช้ว่าต้องกดเล่นเอง
+                });
+            });
+
             hls.on(Hls.Events.ERROR, (event, data) => {
                 if (data.fatal) {
                     switch(data.type) {
