@@ -190,9 +190,9 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     .channel-tile { min-height: 90px; padding: 8px; }
     
     /* --- ส่วนที่แก้ไข --- */
-    .channel-tile img { max-height: 80px; } /* ปรับขนาดโลโก้ในมือถือ */
+    .channel-tile img { max-height: 70px; } /* ปรับขนาดโลโก้ในมือถือ */
     
-    .channel-tile-name { font-size: 13px; } /* ปรับขนาดตัวอักษรชื่อช่องเล็กน้อย */
+    .channel-tile-name { font-size: 11px; } /* ปรับขนาดตัวอักษรชื่อช่องเล็กน้อย */
     .custom-controls { gap: 0; justify-content: space-between; }
     #play-pause-btn { order: 1; }
     #progress-bar { order: 2; margin: 0 5px; }
