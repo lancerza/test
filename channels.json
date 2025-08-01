@@ -2,8 +2,15 @@
   "hls_truehd1": {
     "name": "ทรูสปอร์ตHD1",
     "category": "กีฬา",
-    "url": "https://keela2.com/stream/16/index.m3u8?token=mvFWafOIir5JDlQN",
+    "url": "https://dolive.thaim3u.com/doodii-live/siamsport-4/playlist.m3u8",
     "logo": "https://img5.pic.in.th/file/secure-sv1/true1.webp"
+  },  
+  "hls_truehd12": {
+    "name": "ทรูสปอร์ตHD1",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/16/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/true1.webp",
+    "badge": "สำรอง"
   },
   "hls_truehd22": {
     "name": "ทรูสปอร์ตHD2",
