@@ -172,13 +172,42 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 .channel-category-header { font-size: 24px; font-weight: 700; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; padding-bottom: 0px; border-bottom: 2px solid var(--border-color); }
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
 
-.channel-tile { background: var(--card-gradient); box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light); border-radius: 1px; text-decoration: none; cursor: pointer; border: 2px solid transparent; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100px; padding: 8px 6px; opacity: 0; animation: tile-fade-in 0.4s ease forwards; }
+/* --- ส่วนที่แก้ไข --- */
+.channel-tile { 
+    background: var(--card-gradient); 
+    box-shadow: 5px 5px 10px var(--shadow-color-dark), -5px -5px 10px var(--shadow-color-light); 
+    border-radius: 1px; 
+    cursor: pointer; 
+    border: 2px solid transparent; 
+    position: relative; 
+    transition: all 0.3s ease; 
+    display: flex; 
+    flex-direction: column; 
+    
+    /* เปลี่ยน justify-content เพื่อกระจายพื้นที่ และลด min-height */
+    justify-content: space-evenly; 
+    min-height: 95px; 
+
+    align-items: center; 
+    padding: 5px 6px; /* ปรับ padding เล็กน้อย */
+    opacity: 0; 
+    animation: tile-fade-in 0.4s ease forwards; 
+}
 .channel-tile.loading::after { content: 'กำลังโหลด...'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; border-radius: 1px; z-index: 4; }
 .channel-tile:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 170, 255, 0.2); }
 .channel-tile:hover img { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)); }
 .channel-tile.active { border-color: var(--primary-color); box-shadow: 0 0 25px rgba(0, 170, 255, 0.6), 0 0 8px rgba(0, 170, 255, 0.4) inset; transform: translateY(-2px) scale(1.02); }
 
-.channel-logo-wrapper { height: 50px; width: 100%; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+.channel-logo-wrapper { 
+    height: 45px; /* ปรับขนาดกล่องโลโก้ให้พอดี */
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 0; /* เอา margin ออก ให้ flex จัดการ */
+}
+/* --- สิ้นสุดการแก้ไข --- */
+
 .channel-tile img { width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
 .channel-tile-name { font-weight: 500; color: var(--text-color); text-align: center; width: 100%; white-space: normal; overflow-wrap: break-word; line-height: 1.3; font-size: 11px; }
 .channel-badge { position: absolute; top: -1px; left: -1px; background-color: var(--primary-color); color: white; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px 0 10px 0; text-transform: uppercase; z-index: 3; }
