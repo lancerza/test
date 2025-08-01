@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const customControls = document.querySelector('.custom-controls');
     const channelButtonsContainer = document.getElementById('channel-buttons-container');
     const loadingIndicator = document.getElementById('loading-indicator');
+    const loadingMessage = document.getElementById('loading-message');
     const errorOverlay = document.getElementById('error-overlay');
     const errorMessage = document.getElementById('error-message');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const pipBtn = document.getElementById('pip-btn');
     const liveIndicator = document.getElementById('live-indicator');
     const playOverlay = document.getElementById('play-overlay');
-    const bigPlayBtn = document.getElementById('big-play-btn');
 
     // --- Audio Unlock Function ---
     function unlockAudio() {
@@ -42,8 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Player Logic ---
-    function showLoadingIndicator(isLoading) {
+    function showLoadingIndicator(isLoading, message = '') {
         loadingIndicator.classList.toggle('hidden', !isLoading);
+        if (isLoading) {
+            loadingMessage.textContent = message;
+        }
     }
 
     const playerControls = {
@@ -202,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!channels[channelId] || currentChannelId === channelId) return;
             video.classList.remove('visible');
             playerControls.hideError();
-            showLoadingIndicator(true);
+            showLoadingIndicator(true, 'กำลังโหลดช่อง...');
             await new Promise(resolve => setTimeout(resolve, 300));
             currentChannelId = channelId;
             localStorage.setItem('webtv_lastChannelId', channelId);
@@ -261,13 +264,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
 
-        // --- ส่วนที่แก้ไข ---
         playOverlay.addEventListener('click', () => {
             playOverlay.classList.add('hidden');
-            showLoadingIndicator(true);
+            showLoadingIndicator(true, 'กำลังเชื่อมต่อ...');
             playerControls.togglePlay();
         });
-        // --- สิ้นสุดการแก้ไข ---
 
         video.addEventListener('play', () => {
             playOverlay.classList.add('hidden');
@@ -318,7 +319,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (Hls.isSupported()) {
-            hls = new Hls({ enableWorker: true, maxBufferLength: 30, maxMaxBufferLength: 600, liveSyncDurationCount: 5, liveMaxLatencyDurationCount: 10 });
+            hls = new Hls({
+                enableWorker: true,
+                maxBufferLength: 30,
+                maxMaxBufferLength: 600,
+                liveSyncDurationCount: 5,
+                liveMaxLatencyDurationCount: 10,
+                liveStartLatency: 1,
+                abrEwmaDefaultEstimate: 500000,
+            });
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
                 const playPromise = video.play();
