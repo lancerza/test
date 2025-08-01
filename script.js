@@ -165,21 +165,30 @@ document.addEventListener("DOMContentLoaded", () => {
                         channelManager.loadChannel(channel.id);
                         playerWrapper.scrollIntoView({ behavior: 'smooth' });
                     });
+                    
+                    const logoWrapper = document.createElement('div');
+                    logoWrapper.className = 'channel-logo-wrapper';
+                    
                     const logoImg = document.createElement('img');
                     logoImg.src = channel.logo;
                     logoImg.alt = channel.name;
                     logoImg.loading = 'lazy';
+                    
+                    logoWrapper.appendChild(logoImg);
+                    tile.appendChild(logoWrapper);
+
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'channel-tile-name';
                     nameSpan.innerText = channel.name;
-                    tile.appendChild(logoImg);
                     tile.appendChild(nameSpan);
+
                     if (channel.badge) {
                         const badge = document.createElement('div');
                         badge.className = 'channel-badge';
                         badge.textContent = channel.badge;
                         tile.appendChild(badge);
                     }
+                    
                     tile.style.animationDelay = `${index * 0.05}s`;
                     grid.appendChild(tile);
                 });
