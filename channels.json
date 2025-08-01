@@ -266,6 +266,24 @@
     "url": "https://keela2.com/stream/101/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img5.pic.in.th/file/secure-sv1/174fef29-55ec-48ee-af18-bc4a3011287a.png"
   },
+  "hls_trt1": {
+    "name": "TRTSpor",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/103/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/trt.webp"  
+  },
+  "hls_ArenaSport3": {
+    "name": "ArenaSport3",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/106/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/-2025-08-01-184333.jpg"  
+  },
+  "hls_SK4HD": {
+    "name": "SK4HD",
+    "category": "กีฬา",
+    "url": "https://keela2.com/stream/110/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img2.pic.in.th/pic/sportklub4slovenia175642f67a88d922.png"  
+  },
   "hls_ipFWMov": {
     "name": "FWMov",
     "category": "IPTV",
@@ -385,7 +403,13 @@
     "name": "Workpoint",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffcb/workpoint/workpoint.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/11/17/2a1de990-852d-11ee-bf98-41acc8fd04fc_webp_original.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/wt1.webp"
+  },
+  "hls_ipWorkpoint2": {
+    "name": "Workpoint",
+    "category": "IPTV",
+    "url": "https://keela2.com/stream/117/index.m3u8?token=mvFWafOIir5JDlQN",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/wt1.webp"  
   },
   "hls_ipTrue24": {
     "name": "True24",
