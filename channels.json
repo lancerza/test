@@ -356,11 +356,18 @@
     "url": "https://thaipbs-ujxrch.cdn.byteark.com/live/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2020/07/14/72c22620-c5aa-11ea-a8d3-2b56c8ce453d_original.png"
   },
+  "hls_ipThaiPBSHD": {
+    "name": "ThaiPBSHD",
+    "category": "IPTV",
+    "url": "http://freelive2.inwstream.com:1935/freelive-edge/dtv03_tpbshd/playlist.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/09/15/ab170410-5377-11ee-8e1b-194edbb69638_webp_original.webp"  
+  },
   "hls_ipThaiPBS": {
     "name": "ThaiPBS",
     "category": "IPTV",
     "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv03_tpbshd/playlist.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/09/15/ab170410-5377-11ee-8e1b-194edbb69638_webp_original.webp"
+    "logo": "https://cms.dmpcdn.com/livetv/2023/09/15/ab170410-5377-11ee-8e1b-194edbb69638_webp_original.webp",
+    "badge": "สำรอง"  
   },
   "hls_ipTSport7": {
     "name": "TSport7",
@@ -430,14 +437,14 @@
     "logo": "https://cms.dmpcdn.com/livetv/2024/12/24/f5c6ee50-c1d3-11ef-962c-55a14ec29c2c_webp_original.webp"
   },
   "hls_ipMono291": {
-    "name": "Mono29 หนังพากย์ไทย",
+    "name": "Mono29     พากย์ไทย",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/720p/index.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png",
     "badge": "HD"
   },
   "hls_ipMono292": {
-    "name": "Mono29 หนังพากย์ไทย",
+    "name": "Mono29     พากย์ไทย",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png",
