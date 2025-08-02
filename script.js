@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const body = document.body;
-    const categorySidebar = document.getElementById('category-sidebar');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const refreshChannelsBtn = document.getElementById('refresh-channels-btn');
     const video = document.getElementById('video');
@@ -212,6 +211,13 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         loadChannel: async (channelId) => {
             if (!channels[channelId] || currentChannelId === channelId) return;
+            
+            // --- ส่วนที่แก้ไข ---
+            if (hls) {
+                hls.stopLoad(); // หยุดการโหลดสตรีมเก่าก่อน
+            }
+            // --- สิ้นสุดการแก้ไข ---
+
             video.classList.remove('visible');
             playerControls.hideError();
             showLoadingIndicator(true, 'กำลังโหลดช่อง...');
@@ -386,9 +392,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     playPromise.then(_ => {
                         playOverlay.classList.add('hidden');
                     }).catch(error => {
-                        console.error("Autoplay was prevented:", error);
-                        playOverlay.classList.remove('hidden');
-                        playerControls.updatePlayButton();
+                        if (error.name !== 'AbortError') {
+                            console.error("Autoplay was prevented:", error);
+                            playOverlay.classList.remove('hidden');
+                            playerControls.updatePlayButton();
+                        }
                     });
                 }
             });
