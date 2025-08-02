@@ -511,9 +511,9 @@
   "hls_ip3HD2": {
     "name": "3HD",
     "category": "IPTV",
-    "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/playlist.m3u8",
+    "url": "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_6660.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5ff3e270-29cc-11ee-b2f4-e9de482d866e_webp_original.webp",  
-    "badge": "สำรอง"
+    "badge": "TEST"
   },
   "hls_ipAmarin": {
     "name": "Amarin",
