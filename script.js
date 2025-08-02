@@ -82,8 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
             playPauseBtn.querySelector('.icon-play').classList.toggle('hidden', !video.paused);
             playPauseBtn.querySelector('.icon-pause').classList.toggle('hidden', video.paused);
         },
-        
-        // --- ส่วนที่แก้ไข ---
         formatTime: (timeInSeconds) => {
             const time = !isNaN(timeInSeconds) ? timeInSeconds : 0;
             const hours = Math.floor(time / 3600);
@@ -99,8 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `${formattedMinutes}:${formattedSeconds}`;
             }
         },
-        // --- สิ้นสุดการแก้ไข ---
-
         updateProgress: () => {
             progressBar.value = (video.currentTime / video.duration) * 100 || 0;
             timeDisplay.textContent = `${playerControls.formatTime(video.currentTime)} / ${playerControls.formatTime(video.duration)}`;
@@ -303,11 +299,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         current = header.getAttribute('id');
                     }
                 });
+                
+                headers.forEach(h => h.classList.remove('active'));
 
                 links.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${current}`) {
                         link.classList.add('active');
+                        document.getElementById(current)?.classList.add('active');
                     }
                 });
             }, 100);
@@ -340,7 +339,13 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem('webtv_theme', isLight ? 'light' : 'dark');
         });
 
-        refreshChannelsBtn.addEventListener('click', fetchAndRenderChannels);
+        refreshChannelsBtn.addEventListener('click', () => {
+            refreshChannelsBtn.classList.add('refresh-active');
+            fetchAndRenderChannels();
+            setTimeout(() => {
+                refreshChannelsBtn.classList.remove('refresh-active');
+            }, 1000);
+        });
 
         playOverlay.addEventListener('click', () => {
             playOverlay.classList.add('hidden');
