@@ -660,5 +660,35 @@
     "category": "หนัง",
     "url": "https://master.streamhls.com/hlsr2/dfe198227eca08fef985fd061f37e7fd/master.m3u8",
     "logo": "https://www.037hdd-movie.com/wp-content/uploads/2025/07/Locked-2025.jpg"
+  },
+  "hls_doomovic6": {
+    "name": "รถทัวร์วีไอผี VIP Death Seat (2024)",
+    "category": "หนัง",
+    "url": "https://m8.inwstream.com:1935/movie4/VIP_Death_Seat_2024/VIP_Death_Seat_2024_th_1080.mp4/chunk.m3u8",
+    "logo": "https://img2.pic.in.th/pic/n114b14e836ca6ec15.jpg"  
+  },
+  "hls_doomovic7": {
+    "name": "NeZha2 นาจา2(2025)",
+    "category": "หนัง",
+    "url": "https://m8.inwstream.com:1935/movie4/Ne_Zha_2_2025/Ne_Zha_2_2025_thr_z1.mp4/chunk.m3u8",
+    "logo": "https://img2.pic.in.th/pic/naja.jpg"  
+  },
+  "hls_doomovic8": {
+    "name": "นัมเบอร์ทู(2025)บรรยายไทย",
+    "category": "หนัง",
+    "url": "https://m8.inwstream.com:1936/movie4/Number_2_2025/Number_2_2025_ST_1080p.mp4/chunk.m3u8",
+    "logo": "https://img2.pic.in.th/pic/nu2.jpg"  
+  },
+  "hls_doomovic9": {
+    "name": "มือปราบปืนเปลือย(2025)",
+    "category": "หนัง",
+    "url": "https://m8.inwstream.com:1936/movie4/The_Naked_Gun_2025/The_Naked_Gun_2025_thr_v1.mp4/chunk.m3u8",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/dd1fbcf45a178155354.jpg"   
+  },
+  "hls_doomovic10": {
+    "name": "ซูเปอร์แมน(2025)",
+    "category": "หนัง",
+    "url": "https://m1free.inwstream.com:1936/movie4/Superman_2025/Superman_2025_thr_v2.mp4/playlist.m3u8",
+    "logo": "https://img2.pic.in.th/pic/sp1ac15153fb0de7b1a.jpg"  
   }
 }
