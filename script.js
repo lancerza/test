@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const body = document.body;
-    const categorySidebar = document.getElementById('category-sidebar'); // <-- This line was likely missing
+    const categorySidebar = document.getElementById('category-sidebar');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const refreshChannelsBtn = document.getElementById('refresh-channels-btn');
     const video = document.getElementById('video');
@@ -169,9 +169,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const grid = document.createElement('div');
                 grid.className = 'channel-buttons';
+                
+                // --- ส่วนที่แก้ไข ---
+                if (category === 'หนัง') {
+                    grid.classList.add('movie-grid');
+                }
+                // --- สิ้นสุดการแก้ไข ---
+
                 groupedChannels[category].forEach((channel, index) => {
                     const tile = document.createElement('a');
                     tile.className = 'channel-tile';
+
+                    // --- ส่วนที่แก้ไข ---
+                    if (category === 'หนัง') {
+                        tile.classList.add('movie-tile');
+                    }
+                    // --- สิ้นสุดการแก้ไข ---
+
                     tile.dataset.channelId = channel.id;
                     tile.addEventListener('click', () => {
                         document.querySelectorAll('.channel-tile.loading').forEach(t => t.classList.remove('loading'));
