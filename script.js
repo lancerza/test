@@ -82,14 +82,28 @@ document.addEventListener("DOMContentLoaded", () => {
             playPauseBtn.querySelector('.icon-play').classList.toggle('hidden', !video.paused);
             playPauseBtn.querySelector('.icon-pause').classList.toggle('hidden', video.paused);
         },
-        formatTime: (time) => {
-            const minutes = Math.floor(time / 60);
+        
+        // --- ส่วนที่แก้ไข ---
+        formatTime: (timeInSeconds) => {
+            const time = !isNaN(timeInSeconds) ? timeInSeconds : 0;
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
             const seconds = Math.floor(time % 60);
-            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            const formattedSeconds = seconds.toString().padStart(2, '0');
+
+            if (hours > 0) {
+                return `${hours}:${formattedMinutes}:${formattedSeconds}`;
+            } else {
+                return `${formattedMinutes}:${formattedSeconds}`;
+            }
         },
+        // --- สิ้นสุดการแก้ไข ---
+
         updateProgress: () => {
             progressBar.value = (video.currentTime / video.duration) * 100 || 0;
-            timeDisplay.textContent = `${playerControls.formatTime(video.currentTime)} / ${playerControls.formatTime(video.duration || 0)}`;
+            timeDisplay.textContent = `${playerControls.formatTime(video.currentTime)} / ${playerControls.formatTime(video.duration)}`;
         },
         setProgress: () => video.currentTime = (progressBar.value / 100) * video.duration,
         toggleMute: () => {
@@ -170,21 +184,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const grid = document.createElement('div');
                 grid.className = 'channel-buttons';
                 
-                // --- ส่วนที่แก้ไข ---
                 if (category === 'หนัง') {
                     grid.classList.add('movie-grid');
                 }
-                // --- สิ้นสุดการแก้ไข ---
 
                 groupedChannels[category].forEach((channel, index) => {
                     const tile = document.createElement('a');
                     tile.className = 'channel-tile';
 
-                    // --- ส่วนที่แก้ไข ---
                     if (category === 'หนัง') {
                         tile.classList.add('movie-tile');
                     }
-                    // --- สิ้นสุดการแก้ไข ---
 
                     tile.dataset.channelId = channel.id;
                     tile.addEventListener('click', () => {
