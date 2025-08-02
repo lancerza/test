@@ -493,8 +493,7 @@
     "name": "5HD",
     "category": "IPTV",
     "url": "https://639bc5877c5fe.streamlock.net/tv5hdlive/tv5hdlive/playlist.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp",
-    "badge": "HD"
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/18/7e060a10-2515-11ee-864f-a52221dad038_webp_original.webp"
   },
   "hls_ip5HD2": {
     "name": "5HD",
@@ -509,11 +508,25 @@
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffae/3hd/3hd.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5ff3e270-29cc-11ee-b2f4-e9de482d866e_webp_original.webp"
   },
+  "hls_ip3HD2": {
+    "name": "3HD",
+    "category": "IPTV",
+    "url": "http://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/playlist.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5ff3e270-29cc-11ee-b2f4-e9de482d866e_webp_original.webp",  
+    "badge": "สำรอง"
+  },
   "hls_ipAmarin": {
+    "name": "Amarin",
+    "category": "IPTV",
+    "url": "http://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/chunks.m3u8",
+    "logo": "https://cms.dmpcdn.com/livetv/2024/07/23/5e86fbc0-48c0-11ef-9fca-d9696b8af2b7_webp_original.webp"  
+  },
+  "hls_ipAmarin2": {
     "name": "Amarin",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffad/amarin/amarin.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/07/23/5e86fbc0-48c0-11ef-9fca-d9696b8af2b7_webp_original.webp"
+    "badge": "สำรอง"
   },
   "hls_ipCH7": {
     "name": "CH7",
@@ -639,7 +652,7 @@
   "hls_doomovic4": {
     "name": "28ปีให้หลังเชื้อเขมือบคน(2025)",
     "category": "หนัง",
-    "url": "https://master.streamhls.com/hlsr2/77738fadc2abe5da7ca3aee73a6a4571/master.m3",
+    "url": "https://master.streamhls.com/hlsr2/77738fadc2abe5da7ca3aee73a6a4571/master.m3u8",
     "logo": "https://www.037hdd-movie.com/wp-content/uploads/2025/06/28-Years-Later-2025.jpg"
   },
   "hls_doomovic5": {
