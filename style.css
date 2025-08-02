@@ -259,7 +259,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
 /* --- Movie Category Styles --- */
 .channel-buttons.movie-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 20px;
 }
 .channel-tile.movie-tile {
