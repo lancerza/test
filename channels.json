@@ -511,14 +511,14 @@
   "hls_ip3HD2": {
     "name": "3HD",
     "category": "IPTV",
-    "url": "http://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/playlist.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/07/24/5ff3e270-29cc-11ee-b2f4-e9de482d866e_webp_original.webp",  
     "badge": "สำรอง"
   },
   "hls_ipAmarin": {
     "name": "Amarin",
     "category": "IPTV",
-    "url": "http://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/chunks.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/dtv33_ch3hd/chunks.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2024/07/23/5e86fbc0-48c0-11ef-9fca-d9696b8af2b7_webp_original.webp"  
   },
   "hls_ipAmarin2": {
