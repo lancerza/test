@@ -25,8 +25,8 @@
     "logo": "https://img2.pic.in.th/pic/true2.webp",
     "badge": "สำรอง"
   },
-  "hls_truehd3": {
-    "name": "ทรูสปอร์ตHD3",
+  "hls_true3": {
+    "name": "ทรูสปอร์ต3",
     "category": "กีฬา",
     "url": "https://keela2.com/stream/18/index.m3u8?token=mvFWafOIir5JDlQN",
     "logo": "https://img2.pic.in.th/pic/true3.webp"
@@ -473,8 +473,7 @@
     "name": "Mono29 หนังSoundtrack",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/st/720p/index.m3u8",
-    "logo": "https://i.postimg.cc/26dJcxGv/IMG-2741.png",
-    "badge": "HD"
+    "logo": "https://i.postimg.cc/26dJcxGv/IMG-2741.png"
   },
   "hls_ipMono294": {
     "name": "Mono29 หนังSoundtrack",
