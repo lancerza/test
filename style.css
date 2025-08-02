@@ -258,7 +258,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
 
 /* --- Movie Category Styles --- */
-.channel-buttons.movie-grid {
+
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 20px;
 }
@@ -329,7 +329,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
     /* Movie grid on mobile */
     .channel-buttons.movie-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
         gap: 15px;
     }
 
