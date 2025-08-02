@@ -323,6 +323,12 @@
   "hls_ipChannel8": {
     "name": "Channel8",
     "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/dtv27_ch8/chunks.m3u8",
+    "logo": "https://i.postimg.cc/RFVxDzJm/IMG-1839.png"  
+  },
+  "hls_ipChannel82": {
+    "name": "Channel8",
+    "category": "IPTV",
     "url": "https://cdn-th-vip.livestreaming.in.th/ch8/ch8/chunklist_w1708048131.m3u8",
     "logo": "https://i.postimg.cc/RFVxDzJm/IMG-1839.png"
   },
@@ -416,13 +422,20 @@
     "name": "Workpoint",
     "category": "IPTV",
     "url": "https://keela2.com/stream/117/index.m3u8?token=mvFWafOIir5JDlQN",
-    "logo": "https://img5.pic.in.th/file/secure-sv1/wt1.webp"  
-  },
+    "logo": "https://img5.pic.in.th/file/secure-sv1/wt1.webp",  
+    "badge": "สำรอง"
+    },
   "hls_ipTrue24": {
     "name": "True24",
     "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/true4u/chunks.m3u8",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/true4u.webp"
+  },
+  "hls_ipTrue242": {
+    "name": "True24",
+    "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffca/true24/true24.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/09/15/84504210-5377-11ee-aaa1-7d584d8ca7a4_webp_original.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/true4u.webp"
   },
   "hls_ipGmm25": {
     "name": "Gmm25",
@@ -433,18 +446,24 @@
   "hls_ipCH8": {
     "name": "CH8",
     "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/dtv27_ch8/chunks.m3u8",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/ch8.webp"  
+  },
+  "hls_ipCH82": {
+    "name": "CH8",
+    "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffbe/ch8/ch8.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2024/12/24/f5c6ee50-c1d3-11ef-962c-55a14ec29c2c_webp_original.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/ch8.webp",
+    "badge": "สำรอง"
   },
   "hls_ipMono291": {
-    "name": "Mono29     พากย์ไทย",
+    "name": "Mono29TH",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/720p/index.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png",
-    "badge": "HD"
+    "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png"
   },
   "hls_ipMono292": {
-    "name": "Mono29     พากย์ไทย",
+    "name": "Mono29TH",
     "category": "IPTV",
     "url": "https://monomax-uiripn.cdn.byteark.com/plain/th/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2019/01/10/35a35017-8473-4953-8474-5c58d805b74a.png",
