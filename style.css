@@ -125,6 +125,10 @@ body::-webkit-scrollbar {
 .theme-toggle-btn:hover {
     transform: scale(1.1);
 }
+.refresh-active {
+    animation: spin 1s ease-in-out;
+}
+
 
 /* --- Datetime Display --- */
 #datetime-display {
@@ -254,7 +258,11 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 /* --- Channel Grid Styles --- */
 @keyframes tile-fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.channel-category-header { font-size: 24px; font-weight: 700; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; padding-bottom: 0px; border-bottom: 2px solid var(--border-color); }
+.channel-category-header { font-size: 24px; font-weight: 700; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; padding-bottom: 0px; border-bottom: 2px solid var(--border-color); transition: color 0.3s, text-shadow 0.3s; }
+.channel-category-header.active {
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-color);
+}
 .channel-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
 
 /* --- Movie Category Styles --- */
@@ -345,6 +353,7 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
         box-sizing: border-box;
         overflow-x: auto;
         white-space: nowrap;
+        justify-content: center;
     }
     .category-sidebar::-webkit-scrollbar {
         display: none;
