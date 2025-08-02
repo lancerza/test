@@ -492,8 +492,14 @@
   "hls_ipThairath": {
     "name": "Thairath",
     "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/dtv32_thairahttvhd/chunks.m3u8",
+    "logo": "https://img2.pic.in.th/pic/th1.jpg"  
+  },
+  "hls_ipThairath2": {
+    "name": "Thairath",
+    "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2024/07/18/848915e0-44e9-11ef-9e86-a13521bc09bd_webp_original.webp"
+    "logo": "https://img2.pic.in.th/pic/th1.jpg"
   },
   "hls_ip5HD1": {
     "name": "5HD",
