@@ -324,9 +324,39 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
 
 /* --- Mobile Styles --- */
 @media (max-width: 1023px) {
+    body {
+        padding-bottom: 80px;
+    }
     .category-sidebar {
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        transform: none;
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(20, 20, 20, 0.7);
+        backdrop-filter: blur(15px);
+        border-top: 1px solid var(--border-color);
+        border-radius: 0;
+        box-sizing: border-box;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .category-sidebar::-webkit-scrollbar {
         display: none;
     }
+    .light-theme .category-sidebar {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+    .category-link {
+        flex-shrink: 0;
+        font-size: 15px;
+    }
+    
     .header-container { padding: 10px; }
     #datetime-display { font-size: 12px; padding: 4px 8px; }
     .channel-category-header { font-size: 20px; }
@@ -335,7 +365,6 @@ input[type="range"]::-moz-range-thumb { border: none; background-color: var(--pr
     .channel-logo-wrapper { height: 60px; }
     .channel-tile-name { font-size: 13px; }
 
-    /* Movie grid on mobile */
     .channel-buttons.movie-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 15px;
