@@ -245,9 +245,13 @@ document.addEventListener("DOMContentLoaded", () => {
             document.title = `▶️ ${channel.name} - Flow TV`;
             channelManager.updateActiveButton();
             try {
-                if (hls) hls.loadSource(channel.url);
+                if (hls) {
+                    // --- This is the only line that changes ---
+                    hls.loadSource(atob(channel.url)); // Use atob() to decode the Base64 URL
+                }
             } catch (error) {
                 console.error("Error loading channel:", error);
+                playerControls.showError("URL ของช่องไม่ถูกต้อง (Invalid URL)");
             }
         }
     };
