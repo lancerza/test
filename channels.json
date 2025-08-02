@@ -474,7 +474,8 @@
     "name": "MCOTHD",
     "category": "IPTV",
     "url": "https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/chunklist_w2118341630_b3000000.m3u8",
-    "logo": "https://img5.pic.in.th/file/secure-sv1/mcot30.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/mcot30.webp",
+    "badge": "สำรอง" 
   },
   "hls_ipONE31FHD": {
     "name": "ONE31FHD",
@@ -499,7 +500,8 @@
     "name": "Thairath",
     "category": "IPTV",
     "url": "https://lb1-live-mv.v2h-cdn.com/hls/ffaf/thairath/thairath.m3u8",
-    "logo": "https://img2.pic.in.th/pic/th1.jpg"
+    "logo": "https://img2.pic.in.th/pic/th1.jpg",
+    "badge": "สำรอง"  
   },
   "hls_ip5HD1": {
     "name": "5HD",
