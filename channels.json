@@ -467,8 +467,14 @@
   "hls_ipMCOTHD": {
     "name": "MCOTHD",
     "category": "IPTV",
+    "url": "https://freelive.inwstream.com:1936/freelive-edge/dtv30_mcothd/chunks.m3u8",
+    "logo": "https://img5.pic.in.th/file/secure-sv1/mcot30.webp"  
+  },
+  "hls_ipMCOTHD2": {
+    "name": "MCOTHD",
+    "category": "IPTV",
     "url": "https://mcothd-streaming-edge-cdn.mcot.net/tencentmcot/smil:tencentmcot.smil/chunklist_w2118341630_b3000000.m3u8",
-    "logo": "https://cms.dmpcdn.com/livetv/2023/09/09/9cc40970-4ebe-11ee-9801-97f95b5eed9a_webp_original.webp"
+    "logo": "https://img5.pic.in.th/file/secure-sv1/mcot30.webp"
   },
   "hls_ipONE31FHD": {
     "name": "ONE31FHD",
