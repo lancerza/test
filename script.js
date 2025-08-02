@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DOM Elements ---
     const body = document.body;
+    const categorySidebar = document.getElementById('category-sidebar'); // <-- This line was likely missing
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const refreshChannelsBtn = document.getElementById('refresh-channels-btn');
     const video = document.getElementById('video');
@@ -211,13 +212,9 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         loadChannel: async (channelId) => {
             if (!channels[channelId] || currentChannelId === channelId) return;
-            
-            // --- ส่วนที่แก้ไข ---
             if (hls) {
-                hls.stopLoad(); // หยุดการโหลดสตรีมเก่าก่อน
+                hls.stopLoad();
             }
-            // --- สิ้นสุดการแก้ไข ---
-
             video.classList.remove('visible');
             playerControls.hideError();
             showLoadingIndicator(true, 'กำลังโหลดช่อง...');
@@ -386,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 abrEwmaDefaultEstimate: 500000,
             });
             hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
                 const playPromise = video.play();
                 if (playPromise !== undefined) {
                     playPromise.then(_ => {
