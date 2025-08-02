@@ -287,25 +287,25 @@
   "hls_ipFWMov": {
     "name": "FWMov",
     "category": "IPTV",
-    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwmov_fw-iptv.stream/chunks.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwmov_fw-iptv.stream/playlist.m3u8",
     "logo": "https://i.postimg.cc/Gpy7R98r/IMG-2544.png"
   },
   "hls_ipFWSov": {
     "name": "FWSov",
     "category": "IPTV",
-    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwsov_fw-iptv.stream/chunks.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwsov_fw-iptv.stream/playlist.m3u8",
     "logo": "https://i.postimg.cc/02yVQVMV/IMG-2546.png"
   },
   "hls_ipFWDoc": {
     "name": "FWDoc",
     "category": "IPTV",
-    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwdoc_fw-iptv.stream/playlist.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwdoc_fw-iptv.stream/chunks.m3u8",
     "logo": "https://i.postimg.cc/vHnv2Tjd/IMG-2556.png"
   },
   "hls_ipFWToon": {
     "name": "FWToon",
     "category": "IPTV",
-    "url": "https://freelive.inwstream.com:1936/freelive-edge/fwtoon_fw-iptv.stream/chunks.m3u8",
+    "url": "https://freelive2.inwstream.com:1936/freelive-edge/fwtoon_fw-iptv.stream/chunks.m3u8",
     "logo": "https://i.postimg.cc/8PxLS4hJ/IMG-2552.png"
   },
   "hls_ipChiangraiChannel": {
