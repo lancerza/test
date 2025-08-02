@@ -359,7 +359,7 @@
   "hls_ipThaiPBSHD": {
     "name": "ThaiPBSHD",
     "category": "IPTV",
-    "url": "http://freelive2.inwstream.com:1935/freelive-edge/dtv03_tpbshd/playlist.m3u8",
+    "url": "https://freelive2.inwstream.com:1935/freelive-edge/dtv03_tpbshd/playlist.m3u8",
     "logo": "https://cms.dmpcdn.com/livetv/2023/09/15/ab170410-5377-11ee-8e1b-194edbb69638_webp_original.webp"  
   },
   "hls_ipThaiPBS": {
