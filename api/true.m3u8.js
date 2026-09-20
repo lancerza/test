@@ -1,61 +1,91 @@
 export default async function handler(req, res) {
-    const { channel } = req.query;
+    const { channel, ts } = req.query;
 
     // ==========================================
-    // ช่อง True4U
+    // โหมด 1: ตัวดูดไฟล์วิดีโอย่อย (.ts) 
+    // (เปลี่ยนไฟล์ HTTP ให้กลายเป็น HTTPS ผ่าน Vercel)
     // ==========================================
-    if (channel === 'true4u') {
+    if (ts) {
         try {
-            // 1. ลองดึงจากเว็บ True4U ด้วยตัวเองก่อน (เผื่อเว็บ iptv36 ล่ม เราก็จะยังรอด)
-            const response = await fetch('https://true4u.com/live/', {
+            const tsUrl = decodeURIComponent(ts);
+            const response = await fetch(tsUrl, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36',
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                 }
             });
-            const html = await response.text();
-
-            // ค้นหาลิงก์แบบยืดหยุ่น ทะลวงรหัส JSON Escape (รองรับเครื่องหมาย \ ที่ซ่อนอยู่)
-            const regex = /(https[^\s"']+(?:byteark\.com|true4u)[^\s"']+\.m3u8[^\s"']*)/i;
-            const match = html.match(regex);
-
-            if (match && match[1]) {
-                // ล้างเครื่องหมาย \ (backslash) ออกให้หมดเพื่อให้ได้ลิงก์ที่ใช้งานได้จริง
-                let finalUrl = match[1].replace(/\\/g, '');
-                return res.redirect(302, finalUrl);
-            } 
             
-            // 2. แผนสำรอง (Fallback) หาก True4U ซ่อนลิงก์ลึกเกินไป
-            // ให้วิ่งไปดึง Redirect Location ของ iptv36 มาใช้งานแทนแบบเนียนๆ
-            const fallbackRes = await fetch('https://iptv36.vercel.app/api/true.m3u8?channel=true4u', {
-                redirect: 'manual' // สำคัญมาก: สั่งไม่ให้วิ่งตามลิงก์ แต่ให้ดักจับว่ามันจะโยนไปไหน
+            if (!response.ok) throw new Error('TS fetch failed');
+            
+            const arrayBuffer = await response.arrayBuffer();
+            
+            // ส่งไฟล์วิดีโอกลับไปให้เบราว์เซอร์
+            res.setHeader('Content-Type', 'video/mp2t');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Cache-Control', 'public, max-age=3600');
+            return res.status(200).send(Buffer.from(arrayBuffer));
+        } catch (error) {
+            return res.status(500).send('TS Proxy Error');
+        }
+    }
+
+    // ==========================================
+    // โหมด 2: ตัวดึงเพลย์ลิสต์หลัก (.m3u8)
+    // ==========================================
+    if (channel === 'true4u') {
+        // ลิงก์ต้นทาง (เปลี่ยน .ts เป็น .m3u8 เพื่อให้เบราว์เซอร์เล่นได้)
+        const targetUrl = 'http://alb4k.tv:80/live/MAGWWMC2NN/MAGYAEYZAD/980406.m3u8'; 
+
+        try {
+            const response = await fetch(targetUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                }
             });
+            
+            const finalUrl = response.url;
+            const m3u8Text = await response.text();
+            
+            // แยก Base URL ของลิงก์ต้นทาง
+            const baseUrl = finalUrl.substring(0, finalUrl.lastIndexOf('/') + 1);
+            const urlObj = new URL(finalUrl);
+            const originUrl = urlObj.origin;
 
-            // ดึงลิงก์ ByteArk + Token ล่าสุด จาก Header ที่ชื่อว่า 'location'
-            const fallbackUrl = fallbackRes.headers.get('location');
+            // ดึง Domain ของ Vercel เราเอง เพื่อเอาไปทำ Proxy
+            const host = req.headers.host;
+            const proxyUrl = `https://${host}/api/true.m3u8?ts=`;
 
-            if (fallbackUrl) {
-                // โยนผู้ชมไปยังลิงก์จริงที่ได้มา
-                return res.redirect(302, fallbackUrl);
-            }
+            // เขียนไฟล์ M3U8 ใหม่ทั้งหมด
+            const rewrittenM3u8 = m3u8Text.split('\n').map(line => {
+                const trimmedLine = line.trim();
+                if (trimmedLine === '' || trimmedLine.startsWith('#')) {
+                    return line;
+                }
+                
+                // ถอดรหัสหาลิงก์ไฟล์ .ts ที่แท้จริง
+                let absoluteTsUrl = '';
+                if (trimmedLine.startsWith('http')) {
+                    absoluteTsUrl = trimmedLine;
+                } else if (trimmedLine.startsWith('/')) {
+                    absoluteTsUrl = originUrl + trimmedLine;
+                } else {
+                    absoluteTsUrl = baseUrl + trimmedLine;
+                }
+                
+                // บังคับให้เบราว์เซอร์วิ่งไปโหลดไฟล์ .ts ผ่าน Vercel ของเรา! (แก้ปัญหาจอดำ HTTP)
+                return proxyUrl + encodeURIComponent(absoluteTsUrl);
+                
+            }).join('\n');
 
-            // ถ้าพังทั้ง 2 ทาง ค่อยยอมแพ้
-            return res.status(404).send('ไม่พบลิงก์สตรีมบนเว็บ True4U และเซิร์ฟเวอร์สำรองไม่ตอบสนอง');
+            // ส่งไฟล์ M3U8 คืนเบราว์เซอร์
+            res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate');
+            return res.status(200).send(rewrittenM3u8);
 
         } catch (error) {
-            return res.status(500).send('Error fetching True4U: ' + error.message);
+            return res.status(500).send('M3U8 Proxy Error: ' + error.message);
         }
-    } 
-    
-    // ==========================================
-    // ช่องอื่นๆ (สมมติถ้าอยากทำลิงก์ช่องอื่นเพิ่ม)
-    // ==========================================
-    else if (channel === 'ch3') {
-        return res.redirect(302, 'https://ch3-33-web.cdn.byteark.com/live/playlist_720p/index.m3u8');
     }
 
-    // กรณีพิมพ์ชื่อช่องผิด
-    else {
-        return res.status(404).send('Channel not found');
-    }
+    return res.status(404).send('Channel not found');
 }
