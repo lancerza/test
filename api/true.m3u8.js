@@ -6,96 +6,669 @@ const USER_AGENT =
     'AppleWebKit/537.36 (KHTML, like Gecko) ' +
     'Chrome/152.0.0.0 Safari/537.36';
 
-function absoluteUrl(uri, baseUrl) {
+
+// ============================================================
+// QUERY
+// ============================================================
+
+function getQuery(value) {
+    if (Array.isArray(value)) {
+        return value[0] || '';
+    }
+
+    return typeof value === 'string'
+        ? value
+        : '';
+}
+
+
+// ============================================================
+// URL ของ Vercel ตัวเอง
+// ============================================================
+
+function getProxyBase(req) {
+    const host = req.headers.host;
+
+    // Production Vercel ใช้ HTTPS
+    // localhost ใช้ HTTP
+    const protocol =
+        host?.includes('localhost') ||
+        host?.startsWith('127.0.0.1')
+            ? 'http'
+            : 'https';
+
+    return `${protocol}://${host}/api/true.m3u8`;
+}
+
+
+// ============================================================
+// relative -> absolute
+// ============================================================
+
+function resolveUrl(uri, baseUrl) {
     try {
-        return new URL(uri, baseUrl).toString();
+        return new URL(
+            uri,
+            baseUrl
+        ).toString();
     } catch {
-        return uri;
+        return null;
     }
 }
 
-// แก้ URI="..." เช่น EXT-X-KEY / EXT-X-MAP
-function rewriteTagUri(line, baseUrl) {
+
+// ============================================================
+// สร้าง URL proxy
+//
+// http://46.249.../abc.ts
+//
+// กลายเป็น:
+//
+// https://xxx.vercel.app/api/true.m3u8?url=...
+// ============================================================
+
+function makeProxyUrl(req, upstreamUrl) {
+    return (
+        getProxyBase(req) +
+        '?url=' +
+        encodeURIComponent(upstreamUrl)
+    );
+}
+
+
+// ============================================================
+// Rewrite URI="..."
+//
+// รองรับ:
+//
+// #EXT-X-KEY
+// #EXT-X-MAP
+// #EXT-X-MEDIA
+// #EXT-X-I-FRAME-STREAM-INF
+// ============================================================
+
+function rewriteTagUri(
+    line,
+    playlistUrl,
+    req
+) {
     return line.replace(
         /URI=(?:"([^"]+)"|([^,\s]+))/gi,
-        (match, quoted, raw) => {
-            const uri = quoted || raw;
+
+        (
+            match,
+            quotedUri,
+            rawUri
+        ) => {
+
+            const uri =
+                quotedUri ||
+                rawUri;
 
             if (!uri) {
                 return match;
             }
 
-            return `URI="${absoluteUrl(uri, baseUrl)}"`;
+            const absolute =
+                resolveUrl(
+                    uri,
+                    playlistUrl
+                );
+
+            if (!absolute) {
+                return match;
+            }
+
+            return (
+                'URI="' +
+                makeProxyUrl(
+                    req,
+                    absolute
+                ) +
+                '"'
+            );
         }
     );
 }
 
-// ทำ URL segment ให้เป็น URL เต็มของ CDN
-function rewritePlaylist(text, finalPlaylistUrl) {
+
+// ============================================================
+// Rewrite playlist
+// ============================================================
+
+function rewritePlaylist(
+    text,
+    playlistUrl,
+    req
+) {
     return text
         .split(/\r?\n/)
+
         .map((line) => {
-            const trimmed = line.trim();
+
+            const trimmed =
+                line.trim();
+
+
+            // ------------------------------
+            // บรรทัดว่าง
+            // ------------------------------
 
             if (!trimmed) {
                 return line;
             }
 
-            // เช่น:
-            // #EXT-X-KEY:URI="..."
-            // #EXT-X-MAP:URI="..."
-            if (trimmed.startsWith('#')) {
-                if (/URI=/i.test(trimmed)) {
+
+            // ------------------------------
+            // TAG
+            // ------------------------------
+
+            if (
+                trimmed.startsWith('#')
+            ) {
+
+                if (
+                    /URI=/i.test(trimmed)
+                ) {
                     return rewriteTagUri(
                         line,
-                        finalPlaylistUrl
+                        playlistUrl,
+                        req
                     );
                 }
 
                 return line;
             }
 
-            // segment หรือ playlist ย่อย
-            return absoluteUrl(
-                trimmed,
-                finalPlaylistUrl
+
+            // ------------------------------
+            // URL
+            //
+            // segment.ts
+            // playlist.m3u8
+            // .aac
+            // .m4s
+            // .mp4
+            // absolute HTTP
+            // absolute HTTPS
+            // ------------------------------
+
+            const absolute =
+                resolveUrl(
+                    trimmed,
+                    playlistUrl
+                );
+
+            if (!absolute) {
+                return line;
+            }
+
+
+            // สำคัญ:
+            // ห้ามคืน absolute ต้นทางให้ browser
+            //
+            // ต้อง proxy ผ่าน HTTPS Vercel
+            return makeProxyUrl(
+                req,
+                absolute
             );
         })
+
         .join('\n');
 }
 
-async function fetchSource(req) {
-    const headers = {
-        'User-Agent': USER_AGENT,
-        Accept:
-            'application/vnd.apple.mpegurl,' +
-            'application/x-mpegURL,' +
-            'application/octet-stream,' +
-            '*/*',
 
-        'Accept-Language':
-            'th-TH,th;q=0.9,en-US;q=0.8,en;q=0.7',
+// ============================================================
+// ตรวจว่า response เป็น M3U8 หรือไม่
+// ============================================================
 
-        'Accept-Encoding': 'identity'
-    };
+function isPlaylist(
+    response,
+    url
+) {
 
-    if (req.headers.range) {
-        headers.Range = req.headers.range;
+    const contentType =
+        response.headers
+            .get('content-type') ||
+        '';
+
+    if (
+        contentType.includes(
+            'mpegurl'
+        )
+    ) {
+        return true;
     }
 
-    return fetch(SOURCE_URL, {
-        method: 'GET',
+    try {
+
+        const pathname =
+            new URL(url)
+                .pathname
+                .toLowerCase();
+
+        return (
+            pathname.endsWith('.m3u8') ||
+            pathname.endsWith('.m3u')
+        );
+
+    } catch {
+
+        return false;
+    }
+}
+
+
+// ============================================================
+// FETCH
+// ============================================================
+
+async function fetchUpstream(
+    url,
+    req
+) {
+
+    const headers = {
+
+        'User-Agent':
+            USER_AGENT,
+
+        'Accept':
+            '*/*',
+
+        'Accept-Encoding':
+            'identity'
+    };
+
+
+    // สำคัญสำหรับ video range
+    if (req.headers.range) {
+
+        headers.Range =
+            req.headers.range;
+    }
+
+
+    return fetch(url, {
+
+        method:
+            req.method === 'HEAD'
+                ? 'HEAD'
+                : 'GET',
+
         headers,
-        redirect: 'follow',
-        cache: 'no-store',
-        signal: AbortSignal.timeout(15000)
+
+        redirect:
+            'follow',
+
+        cache:
+            'no-store',
+
+        signal:
+            AbortSignal.timeout(
+                15000
+            )
     });
 }
 
-export default async function handler(req, res) {
-    // ==========================================
+
+// ============================================================
+// PROXY PLAYLIST / SEGMENT
+// ============================================================
+
+async function proxyResource(
+    upstreamUrl,
+    req,
+    res
+) {
+
+    let parsed;
+
+
+    // -----------------------------
+    // Validate URL
+    // -----------------------------
+
+    try {
+
+        parsed =
+            new URL(
+                upstreamUrl
+            );
+
+    } catch {
+
+        return res
+            .status(400)
+            .send(
+                'Invalid URL'
+            );
+    }
+
+
+    if (
+        parsed.protocol !== 'http:' &&
+        parsed.protocol !== 'https:'
+    ) {
+
+        return res
+            .status(400)
+            .send(
+                'Unsupported protocol'
+            );
+    }
+
+
+    // -----------------------------
+    // Fetch
+    // -----------------------------
+
+    let upstream;
+
+    try {
+
+        upstream =
+            await fetchUpstream(
+                upstreamUrl,
+                req
+            );
+
+    } catch (error) {
+
+        console.error(
+            '[TRUE4U FETCH ERROR]',
+            error
+        );
+
+        return res
+            .status(502)
+            .send(
+                'Upstream fetch failed'
+            );
+    }
+
+
+    const finalUrl =
+        upstream.url ||
+        upstreamUrl;
+
+
+    console.log(
+        '[TRUE4U]',
+        upstream.status,
+        finalUrl
+    );
+
+
+    // -----------------------------
+    // ERROR
+    // -----------------------------
+
+    if (
+        !upstream.ok &&
+        upstream.status !== 206
+    ) {
+
+        const body =
+            await upstream
+                .text()
+                .catch(
+                    () => ''
+                );
+
+        console.error(
+            '[UPSTREAM ERROR]',
+            upstream.status,
+            body.substring(
+                0,
+                300
+            )
+        );
+
+        return res
+            .status(
+                upstream.status
+            )
+            .send(
+                `Upstream HTTP ${upstream.status}`
+            );
+    }
+
+
+    // ========================================================
+    // HEAD
+    // ========================================================
+
+    if (
+        req.method === 'HEAD'
+    ) {
+
+        const contentType =
+            upstream.headers.get(
+                'content-type'
+            );
+
+        const contentLength =
+            upstream.headers.get(
+                'content-length'
+            );
+
+        const contentRange =
+            upstream.headers.get(
+                'content-range'
+            );
+
+        if (contentType) {
+            res.setHeader(
+                'Content-Type',
+                contentType
+            );
+        }
+
+        if (contentLength) {
+            res.setHeader(
+                'Content-Length',
+                contentLength
+            );
+        }
+
+        if (contentRange) {
+            res.setHeader(
+                'Content-Range',
+                contentRange
+            );
+        }
+
+        return res
+            .status(
+                upstream.status
+            )
+            .end();
+    }
+
+
+    // ========================================================
+    // PLAYLIST
+    // ========================================================
+
+    if (
+        isPlaylist(
+            upstream,
+            finalUrl
+        )
+    ) {
+
+        const text =
+            await upstream.text();
+
+
+        // ตรวจอีกชั้น
+        if (
+            text
+                .trimStart()
+                .startsWith(
+                    '#EXTM3U'
+                )
+        ) {
+
+            const rewritten =
+                rewritePlaylist(
+                    text,
+                    finalUrl,
+                    req
+                );
+
+
+            res.setHeader(
+
+                'Content-Type',
+
+                'application/vnd.apple.mpegurl; charset=utf-8'
+            );
+
+
+            res.setHeader(
+
+                'Cache-Control',
+
+                'no-store, no-cache, must-revalidate'
+            );
+
+
+            res.setHeader(
+
+                'X-Final-URL',
+
+                finalUrl
+            );
+
+
+            return res
+                .status(200)
+                .send(
+                    rewritten
+                );
+        }
+    }
+
+
+    // ========================================================
+    // BINARY
+    //
+    // .ts
+    // .m4s
+    // .mp4
+    // .aac
+    // key
+    // ========================================================
+
+    const arrayBuffer =
+        await upstream
+            .arrayBuffer();
+
+    const buffer =
+        Buffer.from(
+            arrayBuffer
+        );
+
+
+    // -----------------------------
+    // Headers
+    // -----------------------------
+
+    const contentType =
+        upstream.headers.get(
+            'content-type'
+        );
+
+    const contentRange =
+        upstream.headers.get(
+            'content-range'
+        );
+
+    const acceptRanges =
+        upstream.headers.get(
+            'accept-ranges'
+        );
+
+
+    if (contentType) {
+
+        res.setHeader(
+            'Content-Type',
+            contentType
+        );
+
+    } else {
+
+        res.setHeader(
+            'Content-Type',
+            'application/octet-stream'
+        );
+    }
+
+
+    if (contentRange) {
+
+        res.setHeader(
+            'Content-Range',
+            contentRange
+        );
+    }
+
+
+    if (acceptRanges) {
+
+        res.setHeader(
+            'Accept-Ranges',
+            acceptRanges
+        );
+
+    } else {
+
+        res.setHeader(
+            'Accept-Ranges',
+            'bytes'
+        );
+    }
+
+
+    res.setHeader(
+        'Content-Length',
+        buffer.length
+    );
+
+
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10'
+    );
+
+
+    // รักษา 206
+    res.statusCode =
+        upstream.status;
+
+
+    return res.send(
+        buffer
+    );
+}
+
+
+// ============================================================
+// HANDLER
+// ============================================================
+
+export default async function handler(
+    req,
+    res
+) {
+
+    // ========================================================
     // CORS
-    // ==========================================
+    // ========================================================
+
     res.setHeader(
         'Access-Control-Allow-Origin',
         '*'
@@ -108,35 +681,44 @@ export default async function handler(req, res) {
 
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'Range, Content-Type, Accept, Origin'
+        'Range, Accept, Content-Type, Origin'
     );
 
     res.setHeader(
         'Access-Control-Expose-Headers',
-        'Content-Type, Content-Length, Content-Range, X-Final-URL, X-HLS-Mode'
+        [
+            'Content-Length',
+            'Content-Range',
+            'Accept-Ranges',
+            'Content-Type',
+            'X-Final-URL'
+        ].join(', ')
     );
 
-    res.setHeader(
-        'Cache-Control',
-        'no-store, no-cache, must-revalidate'
-    );
 
-    // ==========================================
+    // ========================================================
     // OPTIONS
-    // ==========================================
-    if (req.method === 'OPTIONS') {
+    // ========================================================
+
+    if (
+        req.method === 'OPTIONS'
+    ) {
+
         return res
             .status(204)
             .end();
     }
 
-    // ==========================================
+
+    // ========================================================
     // METHOD
-    // ==========================================
+    // ========================================================
+
     if (
         req.method !== 'GET' &&
         req.method !== 'HEAD'
     ) {
+
         res.setHeader(
             'Allow',
             'GET, HEAD, OPTIONS'
@@ -144,195 +726,76 @@ export default async function handler(req, res) {
 
         return res
             .status(405)
-            .send('Method Not Allowed');
+            .send(
+                'Method Not Allowed'
+            );
     }
 
-    // ==========================================
-    // CHANNEL
-    // ==========================================
-    const channel = Array.isArray(
-        req.query.channel
-    )
-        ? req.query.channel[0]
-        : req.query.channel;
 
-    if (channel !== 'true4u') {
-        return res
-            .status(404)
-            .send('Channel not found');
-    }
+    const channel =
+        getQuery(
+            req.query.channel
+        );
+
+    const url =
+        getQuery(
+            req.query.url
+        );
+
 
     try {
-        // ======================================
-        // ลองให้ Vercel ดึงต้นฉบับ
-        // ======================================
-        const upstream =
-            await fetchSource(req);
 
-        const finalUrl =
-            upstream.url || SOURCE_URL;
-
-        console.log(
-            '[TRUE4U] STATUS:',
-            upstream.status
-        );
-
-        console.log(
-            '[TRUE4U] FINAL URL:',
-            finalUrl
-        );
-
-        // ======================================
-        // ถ้าโดน 401 / 403
+        // ====================================================
+        // RESOURCE
         //
-        // ให้ browser ไป alb4k โดยตรง
-        // วิธีนี้คือแบบที่ภาพก่อนหน้าของคุณเล่นได้
-        // ======================================
+        // segment / playlist ย่อย / key
+        // ====================================================
+
+        if (url) {
+
+            return await proxyResource(
+                url,
+                req,
+                res
+            );
+        }
+
+
+        // ====================================================
+        // TRUE4U
+        // ====================================================
+
         if (
-            upstream.status === 401 ||
-            upstream.status === 403
+            channel === 'true4u'
         ) {
-            console.log(
-                '[TRUE4U] Server blocked. ' +
-                'Fallback to browser redirect.'
-            );
 
-            res.setHeader(
-                'X-HLS-Mode',
-                'browser-redirect-fallback'
-            );
-
-            return res.redirect(
-                302,
-                SOURCE_URL
+            return await proxyResource(
+                SOURCE_URL,
+                req,
+                res
             );
         }
 
-        // ======================================
-        // Error อื่น
-        // ======================================
-        if (!upstream.ok) {
-            const body =
-                await upstream
-                    .text()
-                    .catch(() => '');
-
-            console.error(
-                '[TRUE4U] UPSTREAM ERROR:',
-                upstream.status,
-                body.substring(0, 300)
-            );
-
-            return res
-                .status(upstream.status)
-                .send(
-                    `Upstream HTTP ${upstream.status}`
-                );
-        }
-
-        // ======================================
-        // HEAD
-        // ======================================
-        if (req.method === 'HEAD') {
-            res.setHeader(
-                'X-Final-URL',
-                finalUrl
-            );
-
-            res.setHeader(
-                'X-HLS-Mode',
-                'server-proxy'
-            );
-
-            return res
-                .status(200)
-                .end();
-        }
-
-        // ======================================
-        // อ่าน playlist
-        // ======================================
-        const text =
-            await upstream.text();
-
-        // ======================================
-        // ตรวจว่าเป็น M3U8 จริง
-        // ======================================
-        if (
-            !text
-                .trimStart()
-                .startsWith('#EXTM3U')
-        ) {
-            console.error(
-                '[TRUE4U] Not M3U8:',
-                text.substring(0, 300)
-            );
-
-            return res
-                .status(502)
-                .send(
-                    'Upstream did not return an M3U8 playlist'
-                );
-        }
-
-        // ======================================
-        // ทำ segment URL ให้เป็น absolute URL
-        //
-        // เช่นเดิม:
-        //
-        // 2032680_1793354.ts?x_ark_...
-        //
-        // กลายเป็น:
-        //
-        // https://true4u-....byteark.com/
-        // live/pl_720p/
-        // 2032680_1793354.ts?x_ark_...
-        //
-        // เพื่อให้เปิดผ่าน Vercel แล้วยังเล่นได้
-        // ======================================
-        const playlist =
-            rewritePlaylist(
-                text,
-                finalUrl
-            );
-
-        res.setHeader(
-            'Content-Type',
-            'application/vnd.apple.mpegurl; charset=utf-8'
-        );
-
-        res.setHeader(
-            'X-Final-URL',
-            finalUrl
-        );
-
-        res.setHeader(
-            'X-HLS-Mode',
-            'server-proxy'
-        );
 
         return res
-            .status(200)
-            .send(playlist);
+            .status(404)
+            .send(
+                'Channel not found'
+            );
+
 
     } catch (error) {
+
         console.error(
-            '[TRUE4U] ERROR:',
+            '[TRUE4U ERROR]',
             error
         );
 
-        // ======================================
-        // ถ้า Vercel fetch ไม่สำเร็จเลย
-        // fallback ไปต้นทาง
-        // ======================================
-        res.setHeader(
-            'X-HLS-Mode',
-            'browser-redirect-fallback'
-        );
 
-        return res.redirect(
-            302,
-            SOURCE_URL
-        );
+        return res
+            .status(500)
+            .send(
+                'Internal Proxy Error'
+            );
     }
 }
