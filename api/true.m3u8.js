@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     // ==========================================
     else if (channel === 'true4u_alb') {
         // ถ้าคุณมีลิงก์ตรงอยู่แล้ว ก็สามารถสั่ง Redirect โยนไปได้เลยเช่นกัน
-        return res.redirect(302, 'http://alb4k.tv:80/live/MAGWWMC2NN/MAGYAEYZAD/980406.m3u8');
+        return res.redirect(302, 'http://alb4k.tv:80/live/MAGWWMC2NN/MAGYAEYZAD/980406.ts');
     } 
     
     // ==========================================
