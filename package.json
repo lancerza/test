@@ -1,0 +1,7 @@
+{
+  "name": "iptv-proxy-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node api/true.m3u8.js"
+  }
+}
